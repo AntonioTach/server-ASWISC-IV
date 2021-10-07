@@ -15,3 +15,4 @@ router.get('/',(request,response)=>{
 })
 //----------------------------------------------
 module.exports = router;
+//no me deja hacer query alv
