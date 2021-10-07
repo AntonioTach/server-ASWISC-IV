@@ -2,12 +2,10 @@ const mysql = require('mysql');
 
 const { promisify } = require('util');
 
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    database: 'aswisc_database',
-    password: 'root'
-});
+const {database} = require('../keys'); 
+
+const pool = mysql.createPool(database);        //la configuracion se genera a la base de datos y la llamamos pool\
+//usamos la conexion antes de exportarla para no llamadla a cada momento cuando ejecutemos el codigo asi solo llamamos al modulo con la conexion
 
 pool.getConnection((err, connection) => {
     if (err){
@@ -26,6 +24,9 @@ pool.getConnection((err, connection) => {
     return;
 });
 
+
+
+//Convirtiendo a promesas lo que era callbacks 
 //Promisify Pool Querys
 pool.query = promisify(pool.query);
 

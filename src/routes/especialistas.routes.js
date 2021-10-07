@@ -5,13 +5,16 @@ const router = Router();
 
 const especialistasCtrl = require('../controllers/especialistas.controller.js');
 
-router.get('/', especialistasCtrl.getEspecialistas);
 
-router.post('/', especialistasCtrl.createEspecialista);
+//Creacion De usuario Especialista [POST]
+router.post('/registro/', especialistasCtrl.createEspecialista);
+
+router.get('/registro/', especialistasCtrl.getEspecialistas);
+
 
 router.get('/:id', especialistasCtrl.getEspecialista);
 
-router.get('/:id', especialistasCtrl.editEspecialista);
+router.put('/:id', especialistasCtrl.editEspecialista);
 
 router.delete('/:id', especialistasCtrl.deleteEspecialista);
 
