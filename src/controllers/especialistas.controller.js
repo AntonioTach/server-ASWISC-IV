@@ -1,5 +1,6 @@
 //const express = require('express');
 
+
 const pool = require('../database');
 
 const especialistasCtrl = {};
@@ -17,7 +18,6 @@ especialistasCtrl.getEspecialistas = (req, res) => {
 //Creacion Especialista
 especialistasCtrl.createEspecialista = (req, res) =>
 {
-    //res.send('AAAAAAA'); Si descomento esto truena lit
     console.log(req.body);
     res.send({message: 'Especialista creado!'});
     //pool.query('DESCRIBE especialistas');
@@ -28,14 +28,10 @@ especialistasCtrl.createEspecialista = (req, res) =>
 
 
 
-
-
-
-
-
 especialistasCtrl.getEspecialista = (req, res) => {}     
 especialistasCtrl.editEspecialista = (req, res) => {} 
-especialistasCtrl.deleteEspecialista = (req, res) => {}         
+especialistasCtrl.deleteEspecialista = (req, res) => {}      
+especialistasCtrl.signin = (req,res) => {}
 
 
 
