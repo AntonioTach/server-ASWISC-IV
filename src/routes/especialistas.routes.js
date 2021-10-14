@@ -9,19 +9,19 @@ const especialistasCtrl = require('../controllers/especialistas.controller.js');
 //Creacion De usuario Especialista [POST]
 router.post('/registro/', especialistasCtrl.createEspecialista);
 
+//Listar todos los Especialistas [GET]
+router.get('/', especialistasCtrl.listarEspecialistas);
 
-router.get('/registro/', especialistasCtrl.getEspecialistas);
-
-//Buscar usuario Especialista por su id
+//Buscar usuario Especialista por su id [GET]
 router.get('/:id', especialistasCtrl.getEspecialista);
 
-//Editar usuario Especialista por su id
+//Editar usuario Especialista por su id [PUT]
 router.put('/:id', especialistasCtrl.editEspecialista);
 
-//Eliminar usuario Especialista por su id
+//Eliminar usuario Especialista por su id [DELETE]
 router.delete('/:id', especialistasCtrl.deleteEspecialista);
 
-//Login 
+//Login [POST]
 router.post('', especialistasCtrl.signin);
 
 module.exports = router;
