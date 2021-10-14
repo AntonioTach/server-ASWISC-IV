@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //Rutas
 app.use("/api/especialistas", require('./routes/especialistas.routes'));
-app.use('', require('./routes/pacientes.routes'));
+//app.use('', require('./routes/pacientes.routes'));
 
 
 
