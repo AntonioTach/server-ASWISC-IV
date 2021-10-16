@@ -41,3 +41,4 @@ ALTER TABLE pacientes
 
 ALTER TABLE pacientes
     MODIFY id_paciente INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
+
