@@ -1,5 +1,6 @@
 const pool = require('../database');
 const mysql = require('mysql');
+
 const pacientesCtrl = {};
 
 pacientesCtrl.createPaciente = async (req, res) => 

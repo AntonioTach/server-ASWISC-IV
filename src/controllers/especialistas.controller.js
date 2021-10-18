@@ -25,7 +25,8 @@ especialistasCtrl.createEspecialista = async (req, res) =>
 //Listar todos los Especialistas
 especialistasCtrl.listarEspecialistas = async (req, res) => 
 {
-    await pool.query('SELECT * FROM especialistas');
+    const Especialistas = await pool.query('SELECT * FROM especialistas');
+    res.send({message: Especialistas});
 }
 
 //Obtener Especialista por id
