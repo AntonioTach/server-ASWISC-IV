@@ -29,19 +29,32 @@ especialistasCtrl.listarEspecialistas = async (req, res) =>
     res.send({message: Especialistas});
 }
 
-//Obtener Especialista por id
-especialistasCtrl.getEspecialista = (req, res) => {
+//Obtener Un Especialista por id
+especialistasCtrl.getEspecialista = async (req, res) => {
+    const { id } = req.params;                      //Se obtiene una parte de un objeto, en este caso el ID
+    const EspecialistaID = await pool.query('SELECT * FROM especialistas WHERE id_especialista = ?', [id]);    //Se devuelve el arreglo con los datos que coincida con el id requerido
+    
+    // console.log(EspecialistaID); //asi se obtiene el arreglo por lo que no es lo mejor
+
+    if (EspecialistaID.length > 0){
+        return res.json(EspecialistaID[0]); //Se obtiene el objeto
+    }
+    res.status(404).json({text: "El especialista no existe"}); //Si no existe el ID que se esta buscando tira error 404 y mensaje
 
 }   
 
 //Editar Especialista por id
-especialistasCtrl.editEspecialista = (req, res) => {
-    res.send({message: 'Actualizando Especialista ' + req.params.id})
+especialistasCtrl.editEspecialista = async(req, res) => {
+    const { id } = req.params;  
+    
+    await pool.query('UPDATE especialistas set ? WHERE id_especialista = ?', [req.body, id]);  
 } 
 
 //Eliminar Especialista por id
-especialistasCtrl.deleteEspecialista = (req, res) => {
-    res.send({message: 'Eliminando Especialista ' + req.params.id})
+especialistasCtrl.deleteEspecialista = async (req, res) => {
+    const { id } = req.params;
+    await pool.query('DELETE FROM especialistas WHERE id_especialista = ?', [id]);
+    res.send({message: 'Especialista Eliminado'});
 
 }   
 
