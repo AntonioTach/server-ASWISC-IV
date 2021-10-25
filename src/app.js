@@ -19,5 +19,4 @@ app.use("/api/especialistas", require('./routes/especialistas.routes'));
 app.use('/api/pacientes', require('./routes/pacientes.routes'));
 
 
-
 module.exports = app;
