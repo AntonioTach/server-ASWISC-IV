@@ -20,5 +20,4 @@ app.use('/api/pacientes', require('./routes/pacientes.routes'));
 
 
 
-
 module.exports = app;
