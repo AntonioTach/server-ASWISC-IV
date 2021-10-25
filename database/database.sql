@@ -66,13 +66,13 @@ CREATE TABLE tareas(
     id_paciente INT(11) NOT NULL,
     titulo VARCHAR(20) NOT NULL,
     descripcion VARCHAR(150) NOT NULL,
-    documento VARCHAR(MAX) NOT NULL
-)
+    documento VARCHAR(200) NOT NULL
+);
 ALTER TABLE tareas
     ADD PRIMARY KEY (id_tarea);
 
 ALTER TABLE tareas
-    FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
+    ADD CONSTRAINT id_pacientefk FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
 
 ALTER TABLE tareas
     MODIFY id_tarea INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
@@ -107,7 +107,7 @@ CREATE TABLE articulos(
     descripcion VARCHAR (200) NOT NULL,
     fecha_publicacion DATE NOT NULL,
     id_especialista INT(12) NOT NULL
-)
+);
 
 ALTER TABLE articulos
     ADD PRIMARY KEY (id_articulo);
@@ -116,4 +116,4 @@ ALTER TABLE articulos
     MODIFY id_articulo INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 ALTER TABLE articulos
-    FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
+    ADD CONSTRAINT id_especialistafk FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
