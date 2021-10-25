@@ -33,7 +33,8 @@ CREATE TABLE pacientes(
     nacimiento DATE NOT NULL,
     telefono BIGINT NOT NULL,
     nombretutor VARCHAR(100) NULL,
-    telefonotutor BIGINT  NULL
+    telefonotutor BIGINT  NULL,
+    id_especialista int(12) NULL
 );
 ALTER TABLE pacientes
     ADD PRIMARY KEY (id_paciente);
@@ -41,22 +42,7 @@ ALTER TABLE pacientes
 ALTER TABLE pacientes
     MODIFY id_paciente INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
-CREATE TABLE pacientesdelespecialista(
-	id_especialista int(12) NOT NULL,
-	id_paciente INT(11) NOT NULL,
-	id_paciente_especialista INT(12) NOT NULL
-);
-
-ALTER TABLE pacientesdelespecialista
-	ADD PRIMARY KEY (id_paciente_especialista);
-
-ALTER TABLE pacientesdelespecialista
-	MODIFY id_paciente_especialista INT(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
-ALTER TABLE pacientesdelespecialista
-    FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
-
-ALTER TABLE pacientesdelespecialista
+ALTER TABLE pacientes
     FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
 
 CREATE TABLE pruebas(
