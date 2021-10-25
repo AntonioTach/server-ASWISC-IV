@@ -67,7 +67,7 @@ CREATE TABLE tareas(
     titulo VARCHAR(20) NOT NULL,
     descripcion VARCHAR(150) NOT NULL,
     documento VARCHAR(200) NOT NULL
-)
+);
 ALTER TABLE tareas
     ADD PRIMARY KEY (id_tarea);
 
@@ -107,7 +107,7 @@ CREATE TABLE articulos(
     descripcion VARCHAR (200) NOT NULL,
     fecha_publicacion DATE NOT NULL,
     id_especialista INT(12) NOT NULL
-)
+);
 
 ALTER TABLE articulos
     ADD PRIMARY KEY (id_articulo);
