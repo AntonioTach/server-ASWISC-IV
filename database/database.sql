@@ -126,8 +126,8 @@ CREATE TABLE articulos(
 ALTER TABLE articulos
     ADD PRIMARY KEY (id_articulo);
 
-ALTER TABLE expediente
+ALTER TABLE articulos
     MODIFY id_articulo INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
-ALTER TABLE expediente
+ALTER TABLE articulos
     FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
