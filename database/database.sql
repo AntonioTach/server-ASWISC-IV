@@ -72,7 +72,7 @@ ALTER TABLE tareas
     ADD PRIMARY KEY (id_tarea);
 
 ALTER TABLE tareas
-    ADD CONSTRAINT id_paciente FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
+    ADD CONSTRAINT id_pacientefk FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
 
 ALTER TABLE tareas
     MODIFY id_tarea INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
@@ -116,4 +116,4 @@ ALTER TABLE articulos
     MODIFY id_articulo INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 ALTER TABLE articulos
-    ADD CONSTRAINT id_especialista FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
+    ADD CONSTRAINT id_especialistafk FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
