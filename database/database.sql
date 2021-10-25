@@ -43,7 +43,7 @@ ALTER TABLE pacientes
     MODIFY id_paciente INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 ALTER TABLE pacientes
-     ADD CONSTRAINT id_especialista FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);FOREIGN KEY (`id_especialista`) REFERENCES `especialistas`(`id_especialista`);
+     ADD CONSTRAINT id_especialista FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
 
 CREATE TABLE pruebas(
 	id_pruebas INT(11) NOT NULL,
@@ -98,7 +98,7 @@ ALTER TABLE expediente
     MODIFY id_expedienteclinico INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 ALTER TABLE expediente
-    ADD CONSTRAINT id_pacientefke FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);FOREIGN KEY (`id_paciente`) REFERENCES `pacientes`(`id_paciente`);
+    ADD CONSTRAINT id_pacientefke FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
 
 CREATE TABLE articulos(
     id_articulo INT(11) NOT NULL,
