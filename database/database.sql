@@ -50,7 +50,7 @@ CREATE TABLE pruebas(
 	id_paciente INT(11) NOT NULL,
 	nombre_prueba VARCHAR(50) NOT NULL,
 	comentarios VARCHAR(200) NOT NULL,
-	documento VARCHAR(MAX) NOT NULL
+	documento VARCHAR(200) NOT NULL
 );
 ALTER TABLE pruebas
     ADD PRIMARY KEY (id_pruebas);
@@ -77,12 +77,12 @@ ALTER TABLE tareas
 ALTER TABLE tareas
     MODIFY id_tarea INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
-CREATE TABLE expediente(
+CREATE TABLE expedientes(
     id_expedienteclinico INT(11) NOT NULL,
     id_paciente INT(11) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     telefono BIGINT NOT NULL,
-    sexo VARCHAR NOT NULL,
+    sexo VARCHAR(11) NOT NULL,
     nacimiento DATE NOT NULL,
     usuario VARCHAR(20) NOT NULL,
     email VARCHAR(60) NOT NULL,
@@ -91,13 +91,13 @@ CREATE TABLE expediente(
     estudios VARCHAR(40) NOT NULL
 );
 
-ALTER TABLE expediente
+ALTER TABLE expedientes
     ADD PRIMARY KEY (id_expedienteclinico);
 
-ALTER TABLE expediente
+ALTER TABLE expedientes
     MODIFY id_expedienteclinico INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
-ALTER TABLE expediente
+ALTER TABLE expedientes
     ADD CONSTRAINT id_pacientefke FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
 
 CREATE TABLE articulos(
