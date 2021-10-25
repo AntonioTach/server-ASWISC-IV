@@ -112,7 +112,7 @@ ALTER TABLE expediente
     MODIFY id_expedienteclinico INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 ALTER TABLE expediente
-    FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
+    FOREIGN KEY (`id_paciente`) REFERENCES `pacientes`(`id_paciente`);
 
 CREATE TABLE articulos(
     id_articulo INT(11) NOT NULL,
