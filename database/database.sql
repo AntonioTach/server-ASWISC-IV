@@ -13,9 +13,9 @@ CREATE TABLE especialistas(
     nacimiento DATE NOT NULL,
     usuario VARCHAR(16) NOT NULL,
     contrasena VARCHAR(60) NOT NULL,
-    foto_profesional VARCHAR(MAX) NOT NULL,
-    curriculum VARCHAR(MAX) NOT NULL,
-    cedula VARCHAR(MAX) NOT NULL
+    foto_profesional VARCHAR(200) NOT NULL,
+    curriculum VARCHAR(200) NOT NULL,
+    cedula VARCHAR(200) NOT NULL
 );
 ALTER TABLE especialistas
     ADD PRIMARY KEY (id_especialista);
@@ -43,7 +43,7 @@ ALTER TABLE pacientes
     MODIFY id_paciente INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 ALTER TABLE pacientes
-    FOREIGN KEY (`id_especialista`) REFERENCES `especialistas`(`id_especialista`);
+     ADD CONSTRAINT id_especialista FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);FOREIGN KEY (`id_especialista`) REFERENCES `especialistas`(`id_especialista`);
 
 CREATE TABLE pruebas(
 	id_pruebas INT(11) NOT NULL,
@@ -59,7 +59,7 @@ ALTER TABLE pruebas
     MODIFY id_pruebas INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 ALTER TABLE pruebas
-    FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
+    ADD CONSTRAINT id_paciente FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
 
 CREATE TABLE tareas(
     id_tarea INT(11) NOT NULL,
@@ -98,7 +98,7 @@ ALTER TABLE expediente
     MODIFY id_expedienteclinico INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 ALTER TABLE expediente
-    FOREIGN KEY (`id_paciente`) REFERENCES `pacientes`(`id_paciente`);
+    ADD CONSTRAINT id_pacientefke FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);FOREIGN KEY (`id_paciente`) REFERENCES `pacientes`(`id_paciente`);
 
 CREATE TABLE articulos(
     id_articulo INT(11) NOT NULL,
