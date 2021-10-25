@@ -12,9 +12,9 @@ CREATE TABLE especialistas(
     estudios VARCHAR(20) NOT NULL,
     nacimiento DATE NOT NULL,
     usuario VARCHAR(16) NOT NULL,
-    contrasena VARCHAR(60) NOT NULL
-    foto_profesional VARCHAR(MAX) NOT NULL
-    curriculum VARCHAR(MAX) NOT NULL
+    contrasena VARCHAR(60) NOT NULL,
+    foto_profesional VARCHAR(MAX) NOT NULL,
+    curriculum VARCHAR(MAX) NOT NULL,
     cedula VARCHAR(MAX) NOT NULL
 );
 ALTER TABLE especialistas
