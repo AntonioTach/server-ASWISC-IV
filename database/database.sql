@@ -88,7 +88,7 @@ ALTER TABLE tareas
 ALTER TABLE tareas
     FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
 
-ALTER TABLE pruebas
+ALTER TABLE tareas
     MODIFY id_tarea INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 CREATE TABLE expediente(
