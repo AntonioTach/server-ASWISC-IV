@@ -43,7 +43,7 @@ ALTER TABLE pacientes
     MODIFY id_paciente INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 ALTER TABLE pacientes
-    FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
+    FOREIGN KEY (`id_especialista`) REFERENCES `especialistas`(`id_especialista`);
 
 CREATE TABLE pruebas(
 	id_pruebas INT(11) NOT NULL,
