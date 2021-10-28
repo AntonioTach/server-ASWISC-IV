@@ -2,6 +2,18 @@ CREATE DATABASE database_aswisc;
 
 USE DATABASE database_aswisc;
 
+CREATE TABLE usuarios(
+    id_usuarios INT(12) NOT NULL,
+    usuario VARCHAR(16) NOT NULL,
+    contrasena VARCHAR(40) NOT NULL,
+    id_tipo INT(12) NOT NULL
+);
+
+ALTER TABLE usuarios
+    ADD PRIMARY KEY (id_usuarios);
+
+
+
 CREATE TABLE especialistas(
     id_especialista INT(12) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
@@ -11,8 +23,6 @@ CREATE TABLE especialistas(
     telefono BIGINT NOT NULL,
     estudios VARCHAR(20) NOT NULL,
     nacimiento DATE NOT NULL,
-    usuario VARCHAR(16) NOT NULL,
-    contrasena VARCHAR(60) NOT NULL,
     foto_profesional VARCHAR(200) NOT NULL,
     curriculum VARCHAR(200) NOT NULL,
     cedula VARCHAR(200) NOT NULL
@@ -26,9 +36,7 @@ ALTER TABLE especialistas
 CREATE TABLE pacientes(
     id_paciente INT(11) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
-    usuario VARCHAR(60) NOT NULL,
     email VARCHAR(40) NOT NULL,
-    contrasena VARCHAR(50) NOT NULL,
     sexo VARCHAR(10)  NULL,
     nacimiento DATE NOT NULL,
     telefono BIGINT NOT NULL,
@@ -44,6 +52,7 @@ ALTER TABLE pacientes
 
 ALTER TABLE pacientes
      ADD CONSTRAINT id_especialista FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
+
 
 CREATE TABLE pruebas(
 	id_pruebas INT(11) NOT NULL,
@@ -117,3 +126,7 @@ ALTER TABLE articulos
 
 ALTER TABLE articulos
     ADD CONSTRAINT id_especialistafk FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
+
+-- FK de usuarios
+ALTER TABLE usuarios
+    ADD CONSTRAINT id_tipofk FOREIGN KEY (id_tipo) REFERENCES tipo_usuarios(id_tipo);
