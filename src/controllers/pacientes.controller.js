@@ -5,9 +5,16 @@ const pacientesCtrl = {};
 
 pacientesCtrl.createPaciente = async (req, res) => 
 {
-    console.log(req.body);
-    await pool.query('INSERT INTO pacientes set ?', [req.body]);
-    res.send({message: 'Paciente creado!'});
+    //console.log(req.body);
+    
+    //Tipo 2 = Paciente
+    const{usuario, contrasena, id_tipo=2} = req.body;
+    const{nombre, email, nacimiento, telefono} = req.body;
+    //insert en usuarios 
+    let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
+    await pool.query(sql);
+    let sqlPacientes = `INSERT INTO pacientes(id_usuario, nombre,  email, nacimiento, telefono) values (LAST_INSERT_ID(), '${nombre}', '${email}',  '${nacimiento}', '${telefono}')`;
+    await pool.query(sqlPacientes);
 }
 
 //Listar todos los Pacientes

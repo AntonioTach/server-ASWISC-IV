@@ -14,12 +14,17 @@ const Especialista = require('../models/especialista');
 especialistasCtrl.createEspecialista = async (req, res) => 
 {
     console.log(req.body);
-    await pool.query('INSERT INTO especialistas set ?', [req.body]);
+    //Tipo 1 = Especialista
+    const{usuario, contrasena, id_tipo=1} = req.body;
+    const{nombre, direccion, email, profesion, telefono, estudios, nacimiento} = req.body;
+    //insert en usuarios 
+    let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
+    await pool.query(sql);
+    let sqlEspecialistas = `INSERT INTO especialistas(id_usuario, nombre, direccion, email, profesion, telefono, estudios, nacimiento) values (LAST_INSERT_ID(), '${nombre}', '${direccion}', '${email}', '${profesion}', '${telefono}', '${estudios}', '${nacimiento}')`;
+    await pool.query(sqlEspecialistas);
+
+    //await pool.query('INSERT INTO especialistas set ?', [req.body]);
     res.send({message: 'Especialista creado!'});
-    //pool.query('DESCRIBE especialistas');
-    // res.json('Especialista table');
-    
-    //res.status(200).json({'estado': 'ok'})
 }
 
 //Listar todos los Especialistas
