@@ -3,24 +3,28 @@ CREATE DATABASE database_aswisc;
 USE DATABASE database_aswisc;
 
 CREATE TABLE usuarios(
-    id_usuarios INT(12) NOT NULL,
+    id_usuario INT(12) NOT NULL,
     usuario VARCHAR(16) NOT NULL,
     contrasena VARCHAR(40) NOT NULL,
     id_tipo INT(12) NOT NULL
 );
 
 ALTER TABLE usuarios
-    ADD PRIMARY KEY (id_usuarios);
+    ADD PRIMARY KEY (id_usuario);
 
+ALTER TABLE usuarios
+    MODIFY id_usuario INT(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 
 CREATE TABLE especialistas(
     id_especialista INT(12) NOT NULL,
+    id_usuario INT(12) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     direccion VARCHAR(40) NOT NULL,
     email VARCHAR(50) NOT NULL,
     profesion VARCHAR(30) NOT NULL,
     telefono BIGINT NOT NULL,
+    sexo varchar(20) NULL,  
     estudios VARCHAR(20) NOT NULL,
     nacimiento DATE NOT NULL,
     foto_profesional VARCHAR(200) NOT NULL,
@@ -34,15 +38,16 @@ ALTER TABLE especialistas
     MODIFY id_especialista INT(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 CREATE TABLE pacientes(
-    id_paciente INT(11) NOT NULL,
+    id_paciente INT(12) NOT NULL,
+    id_usuario int(12) NOT NULL,
+    id_especialista int(12) NULL,
     nombre VARCHAR(100) NOT NULL,
     email VARCHAR(40) NOT NULL,
-    sexo VARCHAR(10)  NULL,
+    sexo VARCHAR(10) NULL,
     nacimiento DATE NOT NULL,
     telefono BIGINT NOT NULL,
     nombretutor VARCHAR(100) NULL,
-    telefonotutor BIGINT  NULL,
-    id_especialista int(12) NULL
+    telefonotutor BIGINT NULL
 );
 ALTER TABLE pacientes
     ADD PRIMARY KEY (id_paciente);
@@ -127,6 +132,10 @@ ALTER TABLE articulos
 ALTER TABLE articulos
     ADD CONSTRAINT id_especialistafk FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
 
--- FK de usuarios
-ALTER TABLE usuarios
-    ADD CONSTRAINT id_tipofk FOREIGN KEY (id_tipo) REFERENCES tipo_usuarios(id_tipo);
+-- FK de Especialistas
+ALTER TABLE especialistas
+    ADD CONSTRAINT id_usuarioEspecialistafk FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
+
+ -- FK de Pacientes
+ALTER TABLE pacientes
+    ADD CONSTRAINT id_usuarioPacientefk FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
