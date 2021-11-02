@@ -21,7 +21,7 @@ router.put('/:id', especialistasCtrl.editEspecialista);
 //Eliminar usuario Especialista por su id [DELETE]
 router.delete('/:id', especialistasCtrl.deleteEspecialista);
 
-//Login [POST]
-router.post('', especialistasCtrl.signin);
+//Login Cualquier USUARIO [POST]
+router.post('/login', especialistasCtrl.signin);
 
 module.exports = router;

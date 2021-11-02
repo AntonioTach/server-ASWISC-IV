@@ -1,11 +1,11 @@
-//const express = require('express');
-
 
 const pool = require('../database');
+//const bcryptjs = require('bcryptjs');       //Encriptar 
 
 const especialistasCtrl = {};
 
-
+//const bcryptjs = require('bcryptjs');       //Encriptar 
+const jwt = require('jsonwebtoken');
 
 const Especialista = require('../models/especialista');
 
@@ -64,7 +64,30 @@ especialistasCtrl.deleteEspecialista = async (req, res) => {
 }   
 
 //Ingreso de sesion
-especialistasCtrl.signin = (req,res) => {}
+especialistasCtrl.signin = async (req,res) => {
+    const { usuario, contrasena, id_tipo } = req.body;  
+    //Obtener USUARIO Y ID_TIPO CUANDO EL NOMBRE DE USUARIO Y CONTRASENA COINCIDA
+    await pool.query('SELECT usuario, id_tipo FROM usuarios where usuario=? and contrasena=?',
+    [usuario, contrasena],
+    (err, rows, fields) => {
+        if(!err){
+            if(rows.length > 0){ //Comprobacion para verificar que existan los datos en la bd
+                let data = JSON.stringify(rows[0]); //Guardado de dato 
+                const token = jwt.sign(data, 'warzone');    //creacion del token
+                res.send({message: token});
+            }else{
+                res.send({message: 'Usuario o contrasena incorrectos'});
+            }
+        }else {
+            console.log(err);
+        }
+    }
+    );
+}
+
+function verifyToken(req, res, next){
+    
+}
 
 
 
