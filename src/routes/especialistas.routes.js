@@ -22,6 +22,10 @@ router.put('/:id', especialistasCtrl.editEspecialista);
 router.delete('/:id', especialistasCtrl.deleteEspecialista);
 
 //Login Cualquier USUARIO [POST]
-router.post('/login', especialistasCtrl.signin);
+router.post('/login',especialistasCtrl.signin);
+
+//token
+router.get('/token', especialistasCtrl.verifyToken);
+
 
 module.exports = router;

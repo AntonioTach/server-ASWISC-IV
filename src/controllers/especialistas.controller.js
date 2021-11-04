@@ -8,6 +8,7 @@ const especialistasCtrl = {};
 const jwt = require('jsonwebtoken');
 
 const Especialista = require('../models/especialista');
+const e = require('express');
 
 
 //Creacion Especialista
@@ -74,8 +75,10 @@ especialistasCtrl.signin = async (req,res) => {
             if(rows.length > 0){ //Comprobacion para verificar que existan los datos en la bd
                 let data = JSON.stringify(rows[0]); //Guardado de dato 
                 const token = jwt.sign(data, 'warzone');    //creacion del token
+
                 res.send({message: token});
             }else{
+                //Si el usuario o contrasena no coincide, error y no se genera el token
                 res.send({message: 'Usuario o contrasena incorrectos'});
             }
         }else {
@@ -85,9 +88,23 @@ especialistasCtrl.signin = async (req,res) => {
     );
 }
 
-function verifyToken(req, res, next){
-    
+
+especialistasCtrl.verifyToken = (req, res, next) => {   //Verificar el funcionamiento del token y autorizacion
+    if(!req.headers.authorization) return res.status(401).json('No Autorizado'); 
+
+    const token = req.headers.authorization.substr(7);
+    if(token!=''){
+        const content = jwt.verify(token, 'warzone');
+        req.data = content;
+        //console.log(content);
+        next();
+    }
+    else{
+        res.status(401).json('Token Vacio');
+    }
+
 }
+
 
 
 
