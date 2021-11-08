@@ -3,6 +3,7 @@ const usuariosCtrl = {};
 const pool = require('../database');
 const jwt = require('jsonwebtoken');
 const e = require('express');
+const { response } = require('express');
 
 
 //------------------------------Creacion Usuarios--------------------------------
@@ -103,53 +104,7 @@ usuariosCtrl.deleteEspecialista = async (req, res) => {
     await pool.query(sql);
 
     res.send({message: 'Especialista Eliminado'});
-    //Asi manda un RowDataPacket
-    // const idUsuario = await pool.query('SELECT id_usuario FROM especialistas WHERE id_especialista = ?', [id]);
-    // console.log(idUsuario);
 
-    //Asi manda el objeto en JSON 
-    // const idUsuario = await pool.query('SELECT id_usuario FROM especialistas WHERE id_especialista = ?', [id]);
-    // if (idUsuario.length > 0){
-    //     return res.json(idUsuario[0]); //Se obtiene el objeto si le quito el [0] se obtiene el arreglo
-    // }
-
-    //Asi masomenos deberia ser, pero no jala porque obtiene el dato como RowDataPacket
-    // qResult = await pool.query('SELECT id_usuario FROM especialistas WHERE id_especialista = ?', [id]);
-    // await pool.query(`DELETE FROM usuarios WHERE id_usuario = ${qResult}`), function (err){
-    //     if(err){
-    //         console.log(err);
-    //     }
-    // };
-    // await pool.query('DELETE FROM especialistas WHERE id_especialista = ?', [id]);
-
-    //Asi no jala tampoco
-    // qResult = await pool.query('SELECT id_usuario FROM especialistas WHERE id_especialista = ?', [id]);
-    // qResult = JSON.stringify(qResult, null, 1);
-    // qResult = JSON.parse(JSON.stringify)
-    // console.log(qResult);
-    
-    //Sentencia para eliminar el usuario en la tabla especialistas
-    // await pool.query('DELETE FROM especialistas WHERE id_especialista = ?', [id]);
-
-    //Mas de lo mismo
-    // const { id_usuario } = req.params;
-    // await pool.query('DELETE FROM usuarios WHERE id_usuario = ?', [id_usuario]);
-    //Primero obtenemos el ID_usuario para eliminarlo en la tabla de usuarios
-    //let id_usuario = await pool.query('SELECT id_usuario FROM especialistas WHERE id_especialista = ?', [id]);
-    //Despues se elimina en la tabla usuarios con el id_usuario
-    // await pool.query(`DELETE FROM usuarios WHERE id_usuario = ${id_usuario}`);
-
-    //await pool.query('DELETE FROM especialistas WHERE id_especialista = ?', [id]);
-
-
-    //let deleteUsuarios = `DELETE FROM usuarios WHERE id_usuarios = ${id_usuario}`;
-    //await pool.query('SELECT * FROM especialistas WHERE id_especialista = ?', [id]);
-    //await pool.query('DELETE FROM especialistas WHERE id_especialista = ?', [id]);
-
-
-    
-   
-    //res.send({message: 'Especialista Eliminado'});
 }   
 usuariosCtrl.deletePaciente = async (req, res) => {
     const { id } = req.params;
@@ -169,27 +124,78 @@ usuariosCtrl.deletePaciente = async (req, res) => {
 //-----------------------------Login y creacion TOKEN--------------------------------
 //Login
 usuariosCtrl.signin = async (req,res) => {
-    const { usuario, contrasena, id_tipo } = req.body;  
+    const { usuario, contrasena} = req.body;  
+    console.log(req.body);
     //Obtener USUARIO Y ID_TIPO CUANDO EL NOMBRE DE USUARIO Y CONTRASENA COINCIDA
-    await pool.query('SELECT usuario, id_tipo FROM usuarios where usuario=? and contrasena=?',
+    await pool.query(`SELECT usuario, id_tipo FROM usuarios WHERE usuario=? and contrasena=?`,
     [usuario, contrasena],
     (err, rows, fields) => {
-        if(!err){
-            if(rows.length > 0){ //Comprobacion para verificar que existan los datos en la bd
-                let data = JSON.stringify(rows[0]); //Guardado de dato 
-                const token = jwt.sign(data, 'warzone');    //creacion del token
 
-                res.send({message: token});
-            }else{
-                //Si el usuario o contrasena no coincide, error y no se genera el token
-                res.send({message: 'Usuario o contrasena incorrectos'});
-            }
-        }else {
+        if(err){
             console.log(err);
         }
+
+        if(rows.length > 0){
+            let data = JSON.stringify(rows[0]); //Guardado de dato 
+            const token = jwt.sign(data, 'warzone');    //creacion del token
+            res.send({message: token});
+            console.log('Sesion iniciada');
+        }
+        else{
+            res.send({message: 'Usuario o contrasena incorrectos'});
+        }
+        
+        // if(!err){
+            
+        //     if(rows.length > 0){ //Comprobacion para verificar que existan los datos en la bd
+        //         let data = JSON.stringify(rows[0]); //Guardado de dato 
+        //         const token = jwt.sign(data, 'warzone');    //creacion del token
+        //         res.send({message: token});
+        //         console.log('Sesion iniciada');
+                
+        //     }else{
+        //         //Si el usuario o contrasena no coincide, error y no se genera el token
+        //         res.send({message: 'Usuario o contrasena incorrectos'});
+        //         res.send({message: err});
+        //     }
+
+        //     // let data = JSON.stringify(rows[0]); //Guardado de dato 
+        //     // const token = jwt.sign(data, 'warzone');    //creacion del token
+        //     // res.send({message: token});
+        //     // console.log('Sesion iniciada');
+
+
+        // }else {
+        //     console.log(err);
+        //     // console.log('Sesion iniciada');
+        // }
     }
     );
 }
+
+// usuariosCtrl.signin = async(req, res) => {
+//     const { usuario, contrasena, id_tipo } = req.body;  
+//     console.log(usuario);
+
+//     if(usuario && contrasena){
+//         const holi = await pool.query('SELECT * FROM usuarios where usuario=? and contrasena=?', [usuario, contrasena], function(error, results, fields){
+//             console.log(holi);
+//             if (results.length > 0){
+//                 let data = JSON.stringify(rows[0]); //Guardado de dato
+//                 const token = jwt.sign(data, 'warzone');    //creacion del token
+//                 //res.send({message: token});
+//                 console.log('Sesion iniciada');
+
+//             }
+//             else{
+//                 response.send('Usuario o Contraseña incorrecto');
+//             }
+//             response.end();
+//         });
+//     }
+// }
+
+
 //Verify Token
 usuariosCtrl.verifyToken = (req, res, next) => {   //Verificar el funcionamiento del token y autorizacion
     if(!req.headers.authorization) return res.status(401).json('No Autorizado'); 
