@@ -144,56 +144,11 @@ usuariosCtrl.signin = async (req,res) => {
         else{
             res.send({message: 'Usuario o contrasena incorrectos'});
         }
-        
-        // if(!err){
-            
-        //     if(rows.length > 0){ //Comprobacion para verificar que existan los datos en la bd
-        //         let data = JSON.stringify(rows[0]); //Guardado de dato 
-        //         const token = jwt.sign(data, 'warzone');    //creacion del token
-        //         res.send({message: token});
-        //         console.log('Sesion iniciada');
-                
-        //     }else{
-        //         //Si el usuario o contrasena no coincide, error y no se genera el token
-        //         res.send({message: 'Usuario o contrasena incorrectos'});
-        //         res.send({message: err});
-        //     }
-
-        //     // let data = JSON.stringify(rows[0]); //Guardado de dato 
-        //     // const token = jwt.sign(data, 'warzone');    //creacion del token
-        //     // res.send({message: token});
-        //     // console.log('Sesion iniciada');
-
-
-        // }else {
-        //     console.log(err);
-        //     // console.log('Sesion iniciada');
-        // }
     }
     );
 }
 
-// usuariosCtrl.signin = async(req, res) => {
-//     const { usuario, contrasena, id_tipo } = req.body;  
-//     console.log(usuario);
 
-//     if(usuario && contrasena){
-//         const holi = await pool.query('SELECT * FROM usuarios where usuario=? and contrasena=?', [usuario, contrasena], function(error, results, fields){
-//             console.log(holi);
-//             if (results.length > 0){
-//                 let data = JSON.stringify(rows[0]); //Guardado de dato
-//                 const token = jwt.sign(data, 'warzone');    //creacion del token
-//                 //res.send({message: token});
-//                 console.log('Sesion iniciada');
-
-//             }
-//             else{
-//                 response.send('Usuario o Contraseña incorrecto');
-//             }
-//             response.end();
-//         });
-//     }
-// }
 
 
 //Verify Token
