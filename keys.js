@@ -6,6 +6,5 @@ module.exports = {
         password: '',
         database: 'database_aswisc',
         port: 4000,
-        //3310
     }
 }

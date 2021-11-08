@@ -9,7 +9,7 @@ const e = require('express');
 //Creacion Especialista
 usuariosCtrl.createEspecialista = async (req, res) => 
 {
-    //console.log(req.body);
+    console.log(req.body);
     //Tipo 1 = Especialista
     const{usuario, contrasena, id_tipo=1} = req.body;
     const{nombre, direccion, email, profesion, telefono, estudios, nacimiento} = req.body;
