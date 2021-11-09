@@ -138,7 +138,9 @@ usuariosCtrl.signin = async (req,res) => {
         if(rows.length > 0){
             let data = JSON.stringify(rows[0]); //Guardado de dato 
             const token = jwt.sign(data, 'warzone');    //creacion del token
-            res.send({message: token});
+            //res.send({message: token});
+            console.log(token)
+            return res.status(200).json({token})
             console.log('Sesion iniciada');
         }
         else{
@@ -146,6 +148,7 @@ usuariosCtrl.signin = async (req,res) => {
         }
     }
     );
+
 }
 
 
