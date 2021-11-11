@@ -125,6 +125,7 @@ usuariosCtrl.deletePaciente = async (req, res) => {
 //Login
 usuariosCtrl.signin = async (req,res) => {
     const { usuario, contrasena} = req.body;  
+    let tipo;
     console.log(req.body);
     //Obtener USUARIO Y ID_TIPO CUANDO EL NOMBRE DE USUARIO Y CONTRASENA COINCIDA
     await pool.query(`SELECT usuario, id_tipo FROM usuarios WHERE usuario=? and contrasena=?`,
@@ -139,9 +140,9 @@ usuariosCtrl.signin = async (req,res) => {
             let data = JSON.stringify(rows[0]); //Guardado de dato 
             const token = jwt.sign(data, 'warzone');    //creacion del token
             //res.send({message: token});
-            console.log(token)
-            return res.status(200).json({token})
-            console.log('Sesion iniciada');
+            // console.log(token)
+            // console.log('Sesion iniciada');
+            return res.status(200).json({token});
         }
         else{
             res.send({message: 'Usuario o contrasena incorrectos'});
