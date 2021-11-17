@@ -133,7 +133,7 @@ usuariosCtrl.signin = async (req,res) => {
     (err, rows, fields) => {
 
         if(err){
-            console.log(err);
+            res.send({message: 'Usuario o contrasena incorrectos'});
         }
 
         if(rows.length > 0){
