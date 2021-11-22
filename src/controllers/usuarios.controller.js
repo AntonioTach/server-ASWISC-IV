@@ -125,69 +125,31 @@ usuariosCtrl.deletePaciente = async (req, res) => {
 //Login
 usuariosCtrl.signin = async (req,res) => {
     const { usuario, contrasena} = req.body;  
-
-    //Identificar si existe el usuario en la bd
-    const Usuario = await pool.query('SELECT usuario FROM usuarios WHERE usuario = ?', [usuario]);
-
-    
-    if(Usuario.length > 0){
-        //Si existe el Usuario se realiza otro proceso para crear el token, hace query para identificar usuario y contrasena
-        await pool.query(`SELECT usuario, id_tipo FROM usuarios WHERE usuario=? and contrasena=?`,
-        [usuario, contrasena],
-        (err, rows, fields) => {
-            if(!err){
-                if(rows.length > 0){
-                    let data = JSON.stringify(rows[0]); //Guardado de dato 
-                    const token = jwt.sign(data, 'warzone');    //creacion del token
-                    return res.status(200).json({token});
-                }else{
-                    res.send({message: 'Usuario o contrasena incorrectos'});
-                }
-            }else{
-                console.log(err);
-            }
-        }
-        );
-    }
-    else{
-        console.log(`No exist el usuario ${Usuario}`);
-    }
-    
-    
-    //console.log(req.body);
+    let tipo;
+    console.log(req.body);
     //Obtener USUARIO Y ID_TIPO CUANDO EL NOMBRE DE USUARIO Y CONTRASENA COINCIDA
+    await pool.query(`SELECT usuario, id_tipo FROM usuarios WHERE usuario=? and contrasena=?`,
+    [usuario, contrasena],
+    (err, rows, fields) => {
 
+        if(err){
+            res.send({message: 'Usuario o contrasena incorrectos'});
+        }
 
-    // await pool.query(`SELECT usuario, id_tipo FROM usuarios WHERE usuario=? and contrasena=?`,
-    // [usuario, contrasena],
-    // (err, rows, fields) => {
+        if(rows.length > 0){
+            let data = JSON.stringify(rows[0]); //Guardado de dato 
+            const token = jwt.sign(data, 'warzone');    //creacion del token
+            //res.send({message: token});
+            // console.log(token)
+            // console.log('Sesion iniciada');
+            return res.status(200).json({token});
+        }
+        else{
+            res.send({message: 'Usuario o contrasena incorrectos'});
+        }
+    }
+    );
 
-        // if(!err){
-        //     if(rows.length > 0){
-        //         let data = JSON.stringify(rows[0]); //Guardado de dato 
-        //         const token = jwt.sign(data, 'warzone');    //creacion del token
-        //         return res.status(200).json({token});
-        //     }else{
-        //         res.send({message: 'Usuario o contrasena incorrectos'});
-        //     }
-        // }else{
-        //     console.log(err);
-        // }
-
-        // if(err){
-        //     res.send({message: 'Usuario o contrasena incorrectos'});
-        // }
-
-        // if(rows.length > 0){
-        //     let data = JSON.stringify(rows[0]); //Guardado de dato 
-        //     const token = jwt.sign(data, 'warzone');    //creacion del token
-        //     return res.status(200).json({token});    //Envio del token con su info
-        // }
-        // else{
-        //     res.send({message: 'Usuario o contrasena incorrectos'});
-    //     // }
-    // }
-    // );
 }
 
 
