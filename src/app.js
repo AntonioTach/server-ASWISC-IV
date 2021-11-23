@@ -16,8 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //Rutas
 app.use("", require('./routes/usuarios.routes'));
-// app.use("/api/especialistas", require('./routes/especialistas.routes'));
-// app.use('/api/pacientes', require('./routes/pacientes.routes'));
+
 
 
 module.exports = app;
