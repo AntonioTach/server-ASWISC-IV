@@ -10,14 +10,14 @@ const { response } = require('express');
 //Creacion Especialista
 usuariosCtrl.createEspecialista = async (req, res) => 
 {
-    console.log(req.body);
+    // console.log(req.body);
     //Tipo 1 = Especialista
     const{usuario, contrasena, id_tipo=1} = req.body;
-    const{nombre, direccion, email, profesion, telefono, estudios, nacimiento} = req.body;
+    const{nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento} = req.body;
     //insert en usuarios 
     let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
     await pool.query(sql);
-    let sqlEspecialistas = `INSERT INTO especialistas(id_usuario, nombre, direccion, email, profesion, telefono, estudios, nacimiento) values (LAST_INSERT_ID(), '${nombre}', '${direccion}', '${email}', '${profesion}', '${telefono}', '${estudios}', '${nacimiento}')`;
+    let sqlEspecialistas = `INSERT INTO especialistas(id_usuario, nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento) values (LAST_INSERT_ID(), '${nombre}', '${direccion}', '${email}', '${profesion}', '${telefono}', '${sexo}', '${estudios}', '${nacimiento}')`;
     await pool.query(sqlEspecialistas);
 
     //await pool.query('INSERT INTO especialistas set ?', [req.body]);
@@ -26,13 +26,14 @@ usuariosCtrl.createEspecialista = async (req, res) =>
 //Creacion Paciente
 usuariosCtrl.createPaciente = async (req, res) => 
 {    
+    console.log(req.body);
     //Tipo 2 = Paciente
     const{usuario, contrasena, id_tipo=2} = req.body;
-    const{nombre, email, nacimiento, telefono} = req.body;
+    const{nombre, sexo, email, nacimiento, telefono} = req.body;
     //insert en usuarios 
     let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
     await pool.query(sql);
-    let sqlPacientes = `INSERT INTO pacientes(id_usuario, nombre,  email, nacimiento, telefono) values (LAST_INSERT_ID(), '${nombre}', '${email}',  '${nacimiento}', '${telefono}')`;
+    let sqlPacientes = `INSERT INTO pacientes(id_usuario, nombre, sexo, email, nacimiento, telefono) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}')`;
     await pool.query(sqlPacientes);
 }
 
