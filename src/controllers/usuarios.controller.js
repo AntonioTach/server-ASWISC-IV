@@ -4,6 +4,7 @@ const pool = require('../database');
 const jwt = require('jsonwebtoken');
 const e = require('express');
 const { response } = require('express');
+const { query } = require('../database');
 
 
 //------------------------------Creacion Usuarios--------------------------------
@@ -171,5 +172,42 @@ usuariosCtrl.verifyToken = (req, res, next) => {   //Verificar el funcionamiento
         res.status(401).json('Token Vacio');
     }
 
+}
+
+//-----------------------------Buscar Correo Repetido--------------------------------
+//Buscar correo repetido en Registro Especialista
+usuariosCtrl.buscarCorreoRepetido = async (req, res) => {
+    const { email } = req.body;
+    const correo = await pool.query(`SELECT nombre FROM pacientes WHERE email=?`,
+    [email],
+    (err, rows, fields) => {    
+        if (err){console.log(err)}
+        if (rows.length > 0){
+            console.log('Existe un correo repetido');
+            res.send(true);
+        }else {
+            console.log('No existe un correo repetido');
+            res.send(false);
+            }
+        }
+    );
+}
+//Buscar correo repetido en Registro Paciente
+usuariosCtrl.buscarCorreoRepetidoEspecialista = async (req, res) => {
+    const { email } = req.body;
+    const correo = await pool.query(`SELECT nombre FROM especialistas WHERE email=?`,
+    [email],
+    (err, rows, fields) => {
+        if (err) {console.log(err)}
+        if (rows.length > 0){
+            console.log('Existe un correo repetido');
+            res.send(true);
+        }
+        else {
+            console.log('No existe un correo repetido');
+            res.send(false);
+        }
+    }
+    );
 }
 module.exports = usuariosCtrl;
