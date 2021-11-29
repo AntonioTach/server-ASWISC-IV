@@ -27,7 +27,7 @@ usuariosCtrl.createEspecialista = async (req, res) =>
 //Creacion Paciente
 usuariosCtrl.createPaciente = async (req, res) => 
 {    
-    console.log(req.body);
+    ///console.log(req.body);
     //Tipo 2 = Paciente
     const{usuario, contrasena, id_tipo=2} = req.body;
     const{nombre, sexo, email, nacimiento, telefono} = req.body;

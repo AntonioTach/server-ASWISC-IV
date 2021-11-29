@@ -23,4 +23,9 @@ await pool.query(sqlPacientes);
 
 };
 
+modulosEspecialistasCtrl.verPacientes = async (req, res) => {
+    const { id } = req.params;
+                        
+}
+
 module.exports = modulosEspecialistasCtrl;
