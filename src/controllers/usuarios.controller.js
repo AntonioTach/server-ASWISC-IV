@@ -130,7 +130,7 @@ usuariosCtrl.signin = async (req,res) => {
     let tipo;
     console.log(req.body);
     //Obtener USUARIO Y ID_TIPO CUANDO EL NOMBRE DE USUARIO Y CONTRASENA COINCIDA
-    await pool.query(`SELECT usuario, id_tipo FROM usuarios WHERE usuario=? and contrasena=?`,
+    await pool.query(`SELECT usuario, id_tipo, id_usuario FROM usuarios WHERE usuario=? and contrasena=?`,
     [usuario, contrasena],
     (err, rows, fields) => {
 
@@ -141,10 +141,14 @@ usuariosCtrl.signin = async (req,res) => {
         if(rows.length > 0){
             let data = JSON.stringify(rows[0]); //Guardado de dato 
             const token = jwt.sign(data, 'warzone');    //creacion del token
-            //res.send({message: token});
-            // console.log(token)
+            let usuario = JSON.stringify(rows[0].usuario);  //obtener usuario
+            let id_tipo = JSON.stringify(rows[0].id_tipo);  //obtener id tipo
+            let id_usuario = JSON.stringify(rows[0].id_usuario);
+            console.log(id_usuario);
+            //res.send({message: token});post
+            //console.log(token)
             // console.log('Sesion iniciada');
-            return res.status(200).json({token});
+            return res.status(200).json({token, usuario, id_tipo, id_usuario});
         }
         else{
             res.send({message: 'Usuario o contrasena incorrectos'});
