@@ -139,3 +139,38 @@ ALTER TABLE especialistas
  -- FK de Pacientes
 ALTER TABLE pacientes
     ADD CONSTRAINT id_usuarioPacientefk FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
+
+CREATE TABLE pagos(
+    precio DECIMAL(5,5) NOT NULL,
+    id_paciente INT(11) NOT NULL,
+    id_especialista INT(12) NOT NULL,
+    fecha DATE NOT NULL
+);
+
+ALTER TABLE pagos
+    ADD CONSTRAINT id_especialistafkpagos FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
+
+ALTER TABLE pagos
+    ADD CONSTRAINT id_pacientefkpagos FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
+
+ALTER TABLE pagos
+    ADD PRIMARY KEY (precio);
+
+CREATE TABLE horarios(
+    precio DECIMAL(5,5) NOT NULL,
+    id_paciente INT(11) NOT NULL,
+    id_especialista INT(12) NOT NULL,
+    fecha DATE NOT NULL,
+    hora VARCHAR(30) NOT NULL
+);
+
+ALTER TABLE horarios
+    ADD PRIMARY KEY (hora);
+
+ALTER TABLE horarios
+    ADD CONSTRAINT id_pacientefkhorarios FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
+
+
+ALTER TABLE horarios
+    ADD CONSTRAINT id_especialistafkhorarios FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
+
