@@ -29,7 +29,8 @@ CREATE TABLE especialistas(
     nacimiento DATE NOT NULL,
     foto_profesional VARCHAR(200) NOT NULL,
     curriculum VARCHAR(200) NOT NULL,
-    cedula VARCHAR(200) NOT NULL
+    cedula VARCHAR(200) NOT NULL,
+    precio_consulta_general int(12) NOT NULL
 );
 ALTER TABLE especialistas
     ADD PRIMARY KEY (id_especialista);
@@ -47,7 +48,8 @@ CREATE TABLE pacientes(
     nacimiento DATE NOT NULL,
     telefono BIGINT NOT NULL,
     nombretutor VARCHAR(100) NULL,
-    telefonotutor BIGINT NULL
+    telefonotutor BIGINT NULL,
+    precio_consulta_pacientes int(12) NOT NULL
 );
 ALTER TABLE pacientes
     ADD PRIMARY KEY (id_paciente);
@@ -174,3 +176,6 @@ ALTER TABLE horarios
 ALTER TABLE horarios
     ADD CONSTRAINT id_especialistafkhorarios FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
 
+CREATE TABLE pagos(
+
+);
