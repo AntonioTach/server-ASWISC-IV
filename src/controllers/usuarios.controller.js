@@ -143,7 +143,7 @@ usuariosCtrl.signin = async (req,res) => {
             const token = jwt.sign(data, 'warzone');    //creacion del token
             let usuario = JSON.stringify(rows[0].usuario);  //obtener usuario
             let id_tipo = JSON.stringify(rows[0].id_tipo);  //obtener id tipo
-            let id_usuario = JSON.stringify(rows[0].id_usuario);
+            let id_usuario = JSON.stringify(rows[0].id_usuario);//obtener id usuario
             console.log(id_usuario);
             //res.send({message: token});post
             //console.log(token)
@@ -213,5 +213,31 @@ usuariosCtrl.buscarCorreoRepetidoEspecialista = async (req, res) => {
         }
     }
     );
+}
+//Actualizar datos de un paciente
+usuariosCtrl.actualizarDatos= async (req,res) =>{
+
+    const{usuario, contrasena, id_tipo=2} = req.body;
+    const{nombre, sexo, email, nacimiento, telefono} = req.body;
+    await pool.query(`SELECT nombre FROM pacientes WHERE usuario=?`,
+    [usuario],
+    (err, rows, fields) => {    
+        if (err){console.log(err)}
+        if (rows.length > 0){
+            console.log('Existe un usuario con el mismo nombre');
+            res.send(true);
+        }else {
+            console.log('No existe un usuario repetido');
+            res.send(false);
+            }
+        }
+    );
+
+
+
+    let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
+    await pool.query(sql);
+    let sqlPacientes = `INSERT INTO pacientes(id_usuario, nombre, sexo, email, nacimiento, telefono) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}')`;
+    await pool.query(sqlPacientes);
 }
 module.exports = usuariosCtrl;
