@@ -146,7 +146,7 @@ CREATE TABLE pagos(
     precio DECIMAL(5,5) NOT NULL,
     id_paciente INT(11) NOT NULL,
     id_especialista INT(12) NOT NULL,
-    fecha DATE NOT NULL
+    fecha DATE NULL
 );
 
 ALTER TABLE pagos
@@ -162,8 +162,8 @@ CREATE TABLE horarios(
     precio DECIMAL(5,5) NOT NULL,
     id_paciente INT(11) NOT NULL,
     id_especialista INT(12) NOT NULL,
-    fecha DATE NOT NULL,
-    hora VARCHAR(30) NOT NULL
+    fecha DATE NULL,
+    hora VARCHAR(30) NULL
 );
 
 ALTER TABLE horarios
