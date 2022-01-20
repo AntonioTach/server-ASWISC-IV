@@ -22,7 +22,8 @@ pacientesCtrl.createPaciente = async (req, res) => {
 
 //Listar todos los Pacientes
 pacientesCtrl.listarPacientes = async (req, res) => {
-    const pacientes = await pool.query('SELECT * FROM Pacientes p INNER JOIN usuarios u ON p.id_usuario = u.id_usuario');
+    const { id } = req.params;
+    const pacientes = await pool.query('SELECT * FROM Pacientes p INNER JOIN usuarios u ON p.id_usuario = u.id_usuario WHERE p.id_especialista  =?', [id]);
     console.log(pacientes);
     res.send(pacientes)
 }

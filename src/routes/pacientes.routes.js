@@ -10,7 +10,7 @@ const pacienteCtrl = require('../controllers/pacientes.controller');
 router.post('/registro/', pacienteCtrl.createPaciente);
 
 //Listar todos los Pacientes [GET]
-router.get('/', pacienteCtrl.listarPacientes);
+router.get('/:id', pacienteCtrl.listarPacientes);
 
 //Buscar usuario Paciente por su id [GET]
 router.get('/:id', pacienteCtrl.getPaciente);
