@@ -9,4 +9,5 @@ router.post('/registrar-paciente/', modulosEspecialistasCtrl.registrarPaciente);
 //Ver Pacientes
 router.get('/ver-pacientes/:id', modulosEspecialistasCtrl.verPacientes);
 
+
 module.exports = router;

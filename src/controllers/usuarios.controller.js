@@ -94,31 +94,34 @@ usuariosCtrl.editPaciente = async(req, res) => {
 //Eliminar Especialista
 usuariosCtrl.deleteEspecialista = async (req, res) => {
     
-    const { id } = req.params;
-    //Identifica el id_usuario que se desea eliminar
-    const idUsuario = await pool.query('SELECT id_usuario FROM especialistas WHERE id_especialista = ?', [id]);
+    const { id } = req.params; //Este es el id_usuario
+    //Se actualiza el id_especialista a null de los pacientes inscritos con este especialista
+    //Para esto se requiere conocer id_especialista
+    const IdEspecialista = await pool.query('SELECT id_especialista FROM  especialistas WHERE id_usuario = ?', [id]);
     //convierte el RowDataPacket en un valor y lo guarda en Data
-    var data = JSON.stringify(idUsuario[0].id_usuario);
-    //Elimina primeramente la FK en la tabla especialistas con el id que se desea eliminar
-    await pool.query('DELETE FROM especialistas WHERE id_especialista = ?', [id]);
-    //Elimina despues la PK en la tabla usuarios con el id encontrado, guardado en data
-    let sql = `DELETE FROM usuarios WHERE id_usuario = ${data}`;
-    await pool.query(sql);
+    var data = JSON.stringify(IdEspecialista[0].id_especialista); //data = id_especialista
 
+    //Primero se necesita actualizar el id_especialista en pacientes inscritos en el a NULL
+    let UpdateToNull = `UPDATE pacientes SET id_especialista = NULL WHERE id_especialista = ${data}`;
+    await pool.query(UpdateToNull);
+
+    //Se elimina el FK, en tabla especialistas se elimina el id_usuario
+    await pool.query('DELETE FROM especialistas WHERE id_usuario = ?', [id]);
+    //Se elimina despues la PK en la tabla usuarios con el id encontrado, guardado en data
+    await pool.query('DELETE FROM usuarios WHERE id_usuario = ?', [id]);
     res.send({message: 'Especialista Eliminado'});
 
 }   
 usuariosCtrl.deletePaciente = async (req, res) => {
-    const { id } = req.params;
-    //Identifica el id_usuario que se desea eliminar
-    const idUsuario = await pool.query('SELECT id_usuario FROM pacientes WHERE id_paciente = ?', [id]);
-    //convierte el RowDataPacket en un valor y lo guarda en Data
-    var data = JSON.stringify(idUsuario[0].id_usuario);
-    //Elimina primeramente la FK en la tabla pacientes con el id que se desea eliminar
-    await pool.query('DELETE FROM pacientes WHERE id_paciente = ?', [id]);
-    //Elimina despues la PK en la tabla usuarios con el id encontrado, guardado en data
-    let sql = `DELETE FROM usuarios WHERE id_usuario = ${data}`;
-    await pool.query(sql);
+
+    const { id } = req.params;  //id_usuario
+
+    //Si esta registrado a un especialista, se cambia a null el id_especialista
+    await pool.query('UPDATE pacientes SET id_especialista = NULL WHERE id_usuario = ?', [id]);
+    //Elimina primeramente la FK en la tabla pacientes con el id_usuario
+    await pool.query('DELETE FROM pacientes WHERE id_usuario = ?', [id]);
+    //PK en usuarios
+    await pool.query('DELETE FROM usuarios WHERE id_usuario = ?', [id]);
     res.send({message: 'Paciente Eliminado'});
 }
 
