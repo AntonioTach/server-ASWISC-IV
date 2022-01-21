@@ -124,7 +124,7 @@ CREATE TABLE articulos(
     id_articulo INT(11) NOT NULL,
     estado_articulo INT(5) NOT NULL,
     titulo VARCHAR(50) NOT NULL,
-    descripcion VARCHAR (200) NOT NULL,
+    descripcion LONGTEXT (MAX) NOT NULL,
     fecha_publicacion DATE NOT NULL,
     id_especialista INT(12) NOT NULL
 );
