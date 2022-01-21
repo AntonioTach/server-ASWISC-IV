@@ -65,10 +65,11 @@ usuariosCtrl.buscarEspecialista = async (req, res) => {
 //Obtener el Paciente por su ID
 usuariosCtrl.buscarPaciente = async (req, res) => {
     const { id } = req.params;
-    const PacienteID = await pool.query('SELECT * FROM pacientes WHERE id_paciente = ?', [id]);
+    const PacienteID = await pool.query('SELECT * FROM pacientes p INNER JOIN usuarios u ON p.id_usuario = u.id_usuario WHERE p.id_usuario = ?', [id]);
 
     if (PacienteID.length > 0) {
-        return res.json(EspecialistaID[0]); //Se obtiene el objeto
+        console.log(PacienteID)
+        return res.json(PacienteID); //Se obtiene el objeto
     }
     res.status(404).json({ text: "El paciente no existe" });
 }

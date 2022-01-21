@@ -13,7 +13,7 @@ router.post('/registro/', pacienteCtrl.createPaciente);
 router.get('/:id', pacienteCtrl.listarPacientes);
 
 //Buscar usuario Paciente por su id [GET]
-router.get('/:id', pacienteCtrl.getPaciente);
+router.get('/paciente/:id', pacienteCtrl.getPaciente);
 
 //Editar usuario Paciente por su id [PUT]
 router.put('/:id', pacienteCtrl.editPaciente);
