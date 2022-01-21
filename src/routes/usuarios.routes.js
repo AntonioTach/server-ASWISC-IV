@@ -18,13 +18,15 @@ router.get('/buscar-Paciente/:id', usuariosCtrl.buscarPaciente);
 //Editar un usuario por su Tipo e ID [PUT]
 router.get('/editar-Especialista/:id', usuariosCtrl.editEspecialista);
 router.get('/editar-Paciente/:id', usuariosCtrl.editPaciente);
-
+//Dejar en null el campo del ID_ESPECIALISRA[PUT]
+router.get('/eli-paciente/:id', usuariosCtrl.deletePacienteFromEspecialista)
 //Eliminar un usuario por su Tipo e ID [DELETE]
 router.delete('/eliminar-Especialista/:id', usuariosCtrl.deleteEspecialista);
+//Eliminar el id del especialista en e
 router.delete('/eliminar-Paciente/:id', usuariosCtrl.deletePaciente);
 
 //Login Cualquier USUARIO [POST]
-router.post('/login',usuariosCtrl.signin);
+router.post('/login', usuariosCtrl.signin);
 //Verify Token
 router.get('/token', usuariosCtrl.verifyToken);
 

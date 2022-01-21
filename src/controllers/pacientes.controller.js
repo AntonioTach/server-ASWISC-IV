@@ -30,12 +30,12 @@ pacientesCtrl.listarPacientes = async (req, res) => {
 
 //Obtener Paciente por id
 pacientesCtrl.getPaciente = (req, res) => {
-
+    const { id } = req.params;
+    console.log(id);
 }
 
 //Editar Paciente por id
 pacientesCtrl.editPaciente = (req, res) => {
-    res.send({ message: 'Actualizando Paciente ' + req.params.id })
 }
 
 //Eliminar Paciente por id
