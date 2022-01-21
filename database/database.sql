@@ -30,7 +30,11 @@ CREATE TABLE especialistas(
     foto_profesional VARCHAR(200) NOT NULL,
     curriculum VARCHAR(200) NOT NULL,
     cedula VARCHAR(200) NOT NULL,
-    precio_consulta_general int(12) NOT NULL
+    precio_consulta_general int(12) NULL,
+    ocupacion VARCHAR(100) NULL,
+    origen VARCHAR(100) NULL,
+    estudios VARCHAR(100) NULL,
+    observaciones VARCHAR(500) NULL
 );
 ALTER TABLE especialistas
     ADD PRIMARY KEY (id_especialista);
@@ -81,8 +85,8 @@ CREATE TABLE tareas(
     id_tarea INT(11) NOT NULL,
     id_paciente INT(11) NOT NULL,
     titulo VARCHAR(20) NOT NULL,
-    descripcion VARCHAR(150) NOT NULL,
-    documento VARCHAR(200) NOT NULL
+    descripcion VARCHAR(300) NOT NULL,
+    documento VARCHAR(300) NOT NULL
 );
 ALTER TABLE tareas
     ADD PRIMARY KEY (id_tarea);
