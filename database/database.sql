@@ -25,7 +25,7 @@ CREATE TABLE especialistas(
     profesion VARCHAR(30) NOT NULL,
     telefono BIGINT NOT NULL,
     sexo varchar(20) NULL,  
-    estudios VARCHAR(20) NOT NULL,
+    -- estudios VARCHAR(20) NOT NULL, 
     nacimiento DATE NOT NULL,
     foto_profesional VARCHAR(200) NOT NULL,
     curriculum VARCHAR(200) NOT NULL,
@@ -124,7 +124,8 @@ CREATE TABLE articulos(
     id_articulo INT(11) NOT NULL,
     estado_articulo INT(5) NOT NULL,
     titulo VARCHAR(50) NOT NULL,
-    descripcion LONGTEXT (MAX) NOT NULL,
+    -- descripcion LONGTEXT(MAX) NOT NULL, 
+    descripcion LONGTEXT NOT NULL,
     fecha_publicacion DATE NOT NULL,
     id_especialista INT(12) NOT NULL
 );
@@ -180,6 +181,6 @@ ALTER TABLE horarios
 ALTER TABLE horarios
     ADD CONSTRAINT id_especialistafkhorarios FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
 
-CREATE TABLE pagos(
+-- CREATE TABLE pagos(
 
-);
+-- );

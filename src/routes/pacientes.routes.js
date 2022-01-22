@@ -12,8 +12,8 @@ router.post('/registro/', pacienteCtrl.createPaciente);
 //Listar todos los Pacientes [GET]
 router.get('/:id', pacienteCtrl.listarPacientes);
 
-//Buscar usuario Paciente por su id [GET]
-router.get('/paciente/:id', pacienteCtrl.getPaciente);
+//Buscar usuario Paciente por su id [GET] para mostrarlo en Nombre sus datos.
+router.get('/GetPaciente/:id', pacienteCtrl.getPaciente);
 
 //Editar usuario Paciente por su id [PUT]
 router.put('/:id', pacienteCtrl.editPaciente);

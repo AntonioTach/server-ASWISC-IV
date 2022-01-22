@@ -29,9 +29,11 @@ pacientesCtrl.listarPacientes = async (req, res) => {
 }
 
 //Obtener Paciente por id
-pacientesCtrl.getPaciente = (req, res) => {
-    const { id } = req.params;
-    console.log(id);
+pacientesCtrl.getPaciente = async (req, res) => {
+    const { id } = req.params; // id_usuario 
+    const paciente = await pool.query('SELECT * FROM Pacientes WHERE id_usuario = ?', [id]);
+    console.log(paciente);
+    res.send(paciente);
 }
 
 //Editar Paciente por id
