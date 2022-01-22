@@ -129,7 +129,7 @@ CREATE TABLE articulos(
     id_especialista INT(12) NOT NULL
 );
 
-ALTER TABLE articulos
+ALTER TABLE articulos 
     ADD PRIMARY KEY (id_articulo);
 
 ALTER TABLE articulos

@@ -17,7 +17,7 @@ router.get('/buscar-Paciente/:id', usuariosCtrl.buscarPaciente);
 
 //Editar un usuario por su Tipo e ID [PUT]
 router.get('/editar-Especialista/:id', usuariosCtrl.editEspecialista);
-router.get('/editar-Paciente/:id', usuariosCtrl.editPaciente);
+router.post('/editar-Paciente/:id', usuariosCtrl.editPaciente);
 //Dejar en null el campo del ID_ESPECIALISRA[PUT]
 router.get('/eli-paciente/:id', usuariosCtrl.deletePacienteFromEspecialista)
 //Eliminar un usuario por su Tipo e ID [DELETE]

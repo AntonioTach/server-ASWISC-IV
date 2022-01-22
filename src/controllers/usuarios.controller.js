@@ -84,7 +84,9 @@ usuariosCtrl.editEspecialista = async (req, res) => {
 //Editar Pacientes
 usuariosCtrl.editPaciente = async (req, res) => {
     const { id } = req.params;
-    await pool.query('UPDATE pacientes set ? WHERE id_paciente = ?', [req.body, id]);
+    const { observaciones, origen, ocupacion, estudios } = req.body;
+    await pool.query(`UPDATE pacientes set observaciones='${observaciones}',origen='${origen}',ocupacion='${ocupacion}',estudios='${estudios}' WHERE id_usuario = ${id}`);
+    res.json(req.body)
 }
 
 //-----------------------------Eliminar Usuarios por su tipo--------------------------------
@@ -140,7 +142,6 @@ usuariosCtrl.signin = async (req, res) => {
             if (err) {
                 res.send({ message: 'Usuario o contrasena incorrectos' });
             }
-
             if (rows.length > 0) {
                 let data = JSON.stringify(rows[0]); //Guardado de dato 
                 const token = jwt.sign(data, 'warzone');    //creacion del token
