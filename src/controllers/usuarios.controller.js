@@ -6,6 +6,7 @@ const e = require('express');
 const { response } = require('express');
 const { query } = require('../database');
 const { json } = require('express/lib/response');
+const res = require('express/lib/response');
 
 
 //------------------------------Creacion Usuarios--------------------------------
@@ -39,7 +40,7 @@ usuariosCtrl.createPaciente = async (req, res) => {
 //Registrar a un Paciente por medio del Especialista
 usuariosCtrl.registrarPaciente = async (req, res) => {
     // console.log(req.body);
-    const { usuario, contrasena, id_tipo = 2} = req.body; //Datos para tabla Usuarios
+    const { usuario, contrasena, id_tipo = 2 } = req.body; //Datos para tabla Usuarios
     const { id_usuario, nombre, sexo, email, nacimiento, telefono } = req.body;
     //el id_usuario es del Especialista que esta registrando a dicho Paciente
     //Se debe obtener el id_esepcialista del especialista registrando
@@ -51,7 +52,7 @@ usuariosCtrl.registrarPaciente = async (req, res) => {
     //insert en Usuarios
     let sqlUsuarios = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
     await pool.query(sqlUsuarios); //Sentencia en Usuarios
-    
+
     //insert en Pacientes
     let sqlPacientes = `INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${data}')`;
     await pool.query(sqlPacientes);
@@ -153,7 +154,18 @@ usuariosCtrl.agregarPacienteEspecialista = async (req, res) => {
     const { id } = req.params;
     const { id_especialista } = req.body;
     await pool.query(`UPDATE pacientes SET id_especialista= ${id_especialista},precio_consulta=${500} WHERE id_usuario=${id}`);
-    res.send({ message: 'esoooo tilin' });
+    res.send({ message: 'correcto' });
+}
+//mandara error pero si funciona
+usuariosCtrl.inscripcionCancelada = async (req, ers) => {
+    try {
+        const { id } = req.params;
+        await pool.query(`UPDATE pacientes SET id_especialista=NULL,precio_consulta=NULL WHERE id_usuario=${id}`);
+        res.send({ message: 'correcto' })
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
 //-----------------------------Login y creacion TOKEN--------------------------------

@@ -26,7 +26,8 @@ router.get('/eli-paciente/:id', usuariosCtrl.deletePacienteFromEspecialista)
 router.delete('/eliminar-Especialista/:id', usuariosCtrl.deleteEspecialista);
 //Eliminar el id del especialista en e
 router.delete('/eliminar-Paciente/:id', usuariosCtrl.deletePaciente);
-
+//quitar subscripcion del paciente
+router.get('/desuscribirme/:id', usuariosCtrl.inscripcionCancelada);
 //Login Cualquier USUARIO [POST]
 router.post('/login', usuariosCtrl.signin);
 //Verify Token
