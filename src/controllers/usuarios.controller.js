@@ -152,8 +152,8 @@ usuariosCtrl.deletePacienteFromEspecialista = async (req, res) => {
 
 usuariosCtrl.agregarPacienteEspecialista = async (req, res) => {
     const { id } = req.params;
-    const { id_especialista } = req.body;
-    await pool.query(`UPDATE pacientes SET id_especialista= ${id_especialista},precio_consulta=${500} WHERE id_usuario=${id}`);
+    const { id_especialista, precio_consulta_general } = req.body;
+    await pool.query(`UPDATE pacientes SET id_especialista= ${id_especialista},precio_consulta=${precio_consulta_general} WHERE id_usuario=${id}`);
     res.send({ message: 'correcto' });
 }
 //mandara error pero si funciona

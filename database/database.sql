@@ -25,10 +25,10 @@ CREATE TABLE especialistas(
     profesion VARCHAR(30) NOT NULL,
     telefono BIGINT NOT NULL,
     sexo varchar(20) NULL,  
-    -- estudios VARCHAR(20) NOT NULL, 
+    estudios VARCHAR(20) NOT NULL, 
     nacimiento DATE NOT NULL,
     foto_profesional VARCHAR(200) NOT NULL,
-    curriculum VARCHAR(200) NOT NULL,
+    curriculum VARCHAR(200) NOT NULL, 
     cedula VARCHAR(200) NOT NULL,
     precio_consulta_general int(12) NULL
 );
