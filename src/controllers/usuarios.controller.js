@@ -40,7 +40,7 @@ usuariosCtrl.createPaciente = async (req, res) => {
 //Listar Todos los Especialistas
 usuariosCtrl.listarEspecialistas = async (req, res) => {
     const Especialistas = await pool.query('SELECT * FROM especialistas'); //Se obtienen todos los datos
-    res.JSON(Especialistas);
+    res.json(Especialistas);
 }
 
 //Listar Todos los Pacientes
