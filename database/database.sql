@@ -30,11 +30,7 @@ CREATE TABLE especialistas(
     foto_profesional VARCHAR(200) NOT NULL,
     curriculum VARCHAR(200) NOT NULL,
     cedula VARCHAR(200) NOT NULL,
-    precio_consulta_general int(12) NULL,
-    ocupacion VARCHAR(100) NULL,
-    origen VARCHAR(100) NULL,
-    estudios VARCHAR(100) NULL,
-    observaciones VARCHAR(500) NULL
+    precio_consulta_general int(12) NULL
 );
 ALTER TABLE especialistas
     ADD PRIMARY KEY (id_especialista);
@@ -53,7 +49,11 @@ CREATE TABLE pacientes(
     telefono BIGINT NOT NULL,
     nombretutor VARCHAR(100) NULL,
     telefonotutor BIGINT NULL,
-    precio_consulta_pacientes int(12) NOT NULL
+    precio_consulta int(12) NOT NULL,
+    ocupacion VARCHAR(100) NULL,
+    origen VARCHAR(100) NULL,
+    estudios VARCHAR(100) NULL,
+    observaciones VARCHAR(500) NULL
 );
 ALTER TABLE pacientes
     ADD PRIMARY KEY (id_paciente);
@@ -96,29 +96,6 @@ ALTER TABLE tareas
 
 ALTER TABLE tareas
     MODIFY id_tarea INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
-
-CREATE TABLE expedientes(
-    id_expedienteclinico INT(11) NOT NULL,
-    id_paciente INT(11) NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    telefono BIGINT NOT NULL,
-    sexo VARCHAR(11) NOT NULL,
-    nacimiento DATE NOT NULL,
-    usuario VARCHAR(20) NOT NULL,
-    email VARCHAR(60) NOT NULL,
-    origen_procedencia VARCHAR(40) NOT NULL,
-    ocupacion VARCHAR(40) NOT NULL,
-    estudios VARCHAR(40) NOT NULL
-);
-
-ALTER TABLE expedientes
-    ADD PRIMARY KEY (id_expedienteclinico);
-
-ALTER TABLE expedientes
-    MODIFY id_expedienteclinico INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
-
-ALTER TABLE expedientes
-    ADD CONSTRAINT id_pacientefke FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
 
 CREATE TABLE articulos(
     id_articulo INT(11) NOT NULL,
