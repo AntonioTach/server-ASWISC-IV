@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const e = require('express');
 const { response } = require('express');
 const { query } = require('../database');
+const { json } = require('express/lib/response');
 
 
 //------------------------------Creacion Usuarios--------------------------------
@@ -35,7 +36,28 @@ usuariosCtrl.createPaciente = async (req, res) => {
     let sqlPacientes = `INSERT INTO pacientes(id_usuario, nombre, sexo, email, nacimiento, telefono) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}')`;
     await pool.query(sqlPacientes);
 }
+//Registrar a un Paciente por medio del Especialista
+usuariosCtrl.registrarPaciente = async (req, res) => {
+    // console.log(req.body);
+    const { usuario, contrasena, id_tipo = 2} = req.body; //Datos para tabla Usuarios
+    const { id_usuario, nombre, sexo, email, nacimiento, telefono } = req.body;
+    //el id_usuario es del Especialista que esta registrando a dicho Paciente
+    //Se debe obtener el id_esepcialista del especialista registrando
+    const id_especialista = await pool.query('SELECT id_especialista FROM especialistas WHERE id_usuario = ?', [id_usuario]);
+    ///console.log(id_especialista); // Este es el id_especialista
+    let data = JSON.stringify(id_especialista[0].id_especialista); //Convertimos el RowData a data, que es el id_especialista
+    //console.log(data);
 
+    //insert en Usuarios
+    let sqlUsuarios = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
+    await pool.query(sqlUsuarios); //Sentencia en Usuarios
+    
+    //insert en Pacientes
+    let sqlPacientes = `INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${data}')`;
+    await pool.query(sqlPacientes);
+
+
+}
 //------------------------------Listar Usuarios por su tipo--------------------------------
 //Listar Todos los Especialistas
 usuariosCtrl.listarEspecialistas = async (req, res) => {
