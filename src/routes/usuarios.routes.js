@@ -29,9 +29,11 @@ router.delete('/eliminar-Paciente/:id', usuariosCtrl.deletePaciente);
 router.post('/login', usuariosCtrl.signin);
 //Verify Token
 router.get('/token', usuariosCtrl.verifyToken);
-
-//Buscar Correo Repetido
+//agragar un paciente con el especialista
+router.put('/nuevo-cliente/:id', usuariosCtrl.agregarPacienteEspecialista);
+//Buscar Correo Repetido 
 router.get('/correo-repetido', usuariosCtrl.buscarCorreoRepetido);
 router.get('/correo-repetido-especialista', usuariosCtrl.buscarCorreoRepetidoEspecialista);
+
 
 module.exports = router;

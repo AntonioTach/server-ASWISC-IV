@@ -127,6 +127,12 @@ usuariosCtrl.deletePacienteFromEspecialista = async (req, res) => {
     res.json({ message: 'Paciente Eliminado' })
 }
 
+usuariosCtrl.agregarPacienteEspecialista = async (req, res) => {
+    const { id } = req.params;
+    const { id_especialista } = req.body;
+    await pool.query(`UPDATE pacientes SET id_especialista= ${id_especialista},precio_consulta=${500} WHERE id_usuario=${id}`);
+    res.send({ message: 'esoooo tilin' });
+}
 
 //-----------------------------Login y creacion TOKEN--------------------------------
 //Login
