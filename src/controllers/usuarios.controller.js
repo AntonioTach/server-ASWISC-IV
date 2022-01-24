@@ -176,13 +176,18 @@ usuariosCtrl.guardarArticulo = async (req, res) => {
     res.send({ message: 'correcto' })
 }
 //publicar articulo
-usuariosCtrl.publicarArticulo = async (res, req) => {
-    const { id_especialista, titulo, descripcion, fecha_publicacion } = req.params;
-    const estado_articulo = 2;
-    await pool.query(`INSERT INTO articulos(id_especialista,titulo,descripcion,estado_articulo,fecha_publicacion) values(${id_especialista},'${titulo}','${descripcion}',${estado_articulo},${fecha_publicacion})`);
-    res.send({ message: 'correcto' })
+usuariosCtrl.publicarArticulo = async (req, res) => {
+    try {
+        const { id_especialista, titulo, descripcion } = req.body;
+        const estado_articulo = 2;
+        await pool.query(`INSERT INTO articulos(id_especialista,titulo,descripcion,estado_articulo) values(${id_especialista},'${titulo}','${descripcion}',${estado_articulo})`)
+        res.send({ message: 'correcto' })
+    } catch (error) {
+        console.log(error);
+    }
 
 }
+
 //-----------------------------Login y creacion TOKEN--------------------------------
 //Login
 usuariosCtrl.signin = async (req, res) => {
