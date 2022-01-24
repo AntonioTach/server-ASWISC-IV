@@ -7,7 +7,7 @@ const usuariosCtrl = require('../controllers/usuarios.controller');
 router.post('/registro-especialista/', usuariosCtrl.createEspecialista);
 router.post('/registro-paciente/', usuariosCtrl.createPaciente);
 //Creacion de usuario paciente por medio de Especialista
-router.post('/registrar-paciente', usuariosCtrl.registrarPaciente);
+router.post('/registrar-paciente/', usuariosCtrl.registrarPaciente);
 
 //Obtener Todos los usuarios por su tipo (especialistas y pacientes) [GET]
 router.get('/buscar-Especialistas/', usuariosCtrl.listarEspecialistas);
@@ -16,6 +16,7 @@ router.get('/buscar-Pacientes/', usuariosCtrl.listarPacientes);
 //Obtener Un Usuario por su TIPO e ID (especialistas y pacientes) [GET]
 router.get('/buscar-Especialista/:id', usuariosCtrl.buscarEspecialista);
 router.get('/buscar-Paciente/:id', usuariosCtrl.buscarPaciente);
+router.get('/buscar-PacienteNombre/:id', usuariosCtrl.buscarPacienteNombre);
 
 //Editar un usuario por su Tipo e ID [PUT]
 router.get('/editar-Especialista/:id', usuariosCtrl.editEspecialista);
