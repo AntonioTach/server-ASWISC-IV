@@ -44,9 +44,9 @@ usuariosCtrl.registrarPaciente = async (req, res) => {
     const { id_usuario, nombre, sexo, email, nacimiento, telefono } = req.body;
     //el id_usuario es del Especialista que esta registrando a dicho Paciente
     //Se debe obtener el id_esepcialista del especialista registrando
-    //const id_especialista = await pool.query('SELECT id_especialista FROM especialistas WHERE id_usuario = ?', [id_usuario]);
+    const id_especialista = await pool.query('SELECT id_especialista FROM especialistas WHERE id_usuario = ?', [id_usuario]);
     ///console.log(id_especialista); // Este es el id_especialista
-    //let data = JSON.stringify(id_especialista[0].id_especialista); //Convertimos el RowData a data, que es el id_especialista
+    let data = JSON.stringify(id_especialista[0].id_especialista); //Convertimos el RowData a data, que es el id_especialista
     //console.log(data);
 
     //insert en Usuarios
@@ -54,7 +54,7 @@ usuariosCtrl.registrarPaciente = async (req, res) => {
     await pool.query(sqlUsuarios); //Sentencia en Usuarios
 
     //insert en Pacientes
-    let sqlPacientes = `INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${id_usuario}')`;
+    let sqlPacientes = `INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista,precio_consulta) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${data.id_especialista}',${data.precio_consulta_general})`;
     await pool.query(sqlPacientes);
 
 
