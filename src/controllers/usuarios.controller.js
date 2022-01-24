@@ -96,7 +96,14 @@ usuariosCtrl.buscarPaciente = async (req, res) => {
     }
     res.status(404).json({ text: "El paciente no existe" });
 }
-
+//Obtener Paciente Nombre
+usuariosCtrl.buscarPacienteNombre = async (req, res) => {
+    const { id } = req.params;
+    const paciente = await pool.query('SELECT * FROM Pacientes WHERE id_usuario = ?', [id]);
+    const usuario = await pool.query('SELECT * FROM usuarios WHERE id_usuario = ?', [id]);
+    return res.json(paciente);
+    // return res.json({ paciente, usuario});
+}
 //-----------------------------Editar Usuarios por su tipo--------------------------------
 //Editar Especialista
 usuariosCtrl.editEspecialista = async (req, res) => {
