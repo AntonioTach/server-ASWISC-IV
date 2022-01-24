@@ -38,6 +38,10 @@ router.put('/nuevo-cliente/:id', usuariosCtrl.agregarPacienteEspecialista);
 router.post('/guardar-articulo', usuariosCtrl.guardarArticulo);
 //publicar articulo
 router.post('/publicar-articulo', usuariosCtrl.publicarArticulo);
+//articulos
+router.get('/articulos', usuariosCtrl.articulosLista);
+//articulos personales
+router.get('/mis-articulos/:id', usuariosCtrl.articulosPersonales);
 //Buscar Correo Repetido 
 router.get('/correo-repetido', usuariosCtrl.buscarCorreoRepetido);
 router.get('/correo-repetido-especialista', usuariosCtrl.buscarCorreoRepetidoEspecialista);

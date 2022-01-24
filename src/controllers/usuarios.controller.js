@@ -188,6 +188,18 @@ usuariosCtrl.publicarArticulo = async (req, res) => {
 
 }
 
+//tomar todos los articulos
+usuariosCtrl.articulosLista = async (req, res) => {
+    const articulos = await pool.query(`SELECT * FROM articulos a INNER JOIN especialistas e ON a.id_especialista=e.id_especialista WHERE estado_articulo=2`)
+    res.json(articulos)
+}
+//solo articulos personales
+usuariosCtrl.articulosPersonales = async (req, res) => {
+    const { id } = req.params;
+    const articulos = await pool.query(`SELECT * FROM articulos a INNER JOIN especialistas e ON a.id_especialista=e.id_especialista WHERE estado_articulo=2 AND e.id_especialista=${id}`)
+    res.json(articulos)
+}
+
 //-----------------------------Login y creacion TOKEN--------------------------------
 //Login
 usuariosCtrl.signin = async (req, res) => {
