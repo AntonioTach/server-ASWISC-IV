@@ -203,8 +203,34 @@ usuariosCtrl.articulosLista = async (req, res) => {
 //solo articulos personales
 usuariosCtrl.articulosPersonales = async (req, res) => {
     const { id } = req.params;
-    const articulos = await pool.query(`SELECT * FROM articulos a INNER JOIN especialistas e ON a.id_especialista=e.id_especialista WHERE estado_articulo=2 AND e.id_especialista=${id}`)
+    const articulos = await pool.query(`SELECT * FROM articulos a INNER JOIN especialistas e ON a.id_especialista=e.id_especialista WHERE e.id_especialista=${id}`)
     res.json(articulos)
+}
+//tomar un solo articulo
+usuariosCtrl.tomarArticulo = async (req, res) => {
+    const { id } = req.params;
+    const articulo = await pool.query(`SELECT * FROM articulos WHERE id_articulo=${id}`);
+    res.json(articulo);
+}
+//actuarlicar articulo al guardar
+usuariosCtrl.modificarguardarArticulo = async (req, res) => {
+    const { id } = req.params;
+    const { id_especialista, titulo, descripcion } = req.body;
+    await pool.query(`UPDATE articulos SET id_especialista=${id_especialista},titulo='${titulo}',descripcion='${descripcion}' WHERE id_articulo=${id}`)
+    res.send({ message: 'correcto' })
+}
+//publicar articulo
+usuariosCtrl.modificarpublicarArticulo = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { id_especialista, titulo, descripcion } = req.body;
+        const estado_articulo = 2;
+        await pool.query(`UPDATE articulos SET id_especialista=${id_especialista},titulo='${titulo}',descripcion='${descripcion}',estado_articulo=${estado_articulo} WHERE id_articulo=${id}`)
+        res.send({ message: 'correcto' })
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
 //-----------------------------Login y creacion TOKEN--------------------------------

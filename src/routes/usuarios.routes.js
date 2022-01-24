@@ -43,6 +43,12 @@ router.post('/publicar-articulo', usuariosCtrl.publicarArticulo);
 router.get('/articulos', usuariosCtrl.articulosLista);
 //articulos personales
 router.get('/mis-articulos/:id', usuariosCtrl.articulosPersonales);
+//tomar un articulo
+router.get('/articulo/:id', usuariosCtrl.tomarArticulo)
+//guardar un articulo
+router.put('/guardar-articulo/:id', usuariosCtrl.modificarguardarArticulo);
+//publicar articulo
+router.put('/publicar-articulo/:id', usuariosCtrl.modificarpublicarArticulo);
 //Buscar Correo Repetido 
 router.get('/correo-repetido', usuariosCtrl.buscarCorreoRepetido);
 router.get('/correo-repetido-especialista', usuariosCtrl.buscarCorreoRepetidoEspecialista);
