@@ -76,9 +76,9 @@ usuariosCtrl.listarPacientes = async (req, res) => {
 //Obtener el Especialista por su ID
 usuariosCtrl.buscarEspecialista = async (req, res) => {
     const { id } = req.params;                      //Se obtiene una parte de un objeto, en este caso el ID
-    const EspecialistaID = await pool.query('SELECT * FROM especialistas WHERE id_especialista = ?', [id]);    //Se devuelve el arreglo con los datos que coincida con el id requerido
+    const EspecialistaID = await pool.query('SELECT * FROM especialistas WHERE id_usuario = ?', [id]);    //Se devuelve el arreglo con los datos que coincida con el id requerido
 
-    // console.log(EspecialistaID); //asi se obtiene el arreglo por lo que no es lo mejor
+    console.log(EspecialistaID, id); //asi se obtiene el arreglo por lo que no es lo mejor
 
     if (EspecialistaID.length > 0) {
         return res.json(EspecialistaID[0]); //Se obtiene el objeto
@@ -151,12 +151,13 @@ usuariosCtrl.deletePaciente = async (req, res) => {
     await pool.query('DELETE FROM usuarios WHERE id_usuario = ?', [id]);
     res.send({ message: 'Paciente Eliminado' });
 }
+//eliminar subscreipciuon con el especialista
 usuariosCtrl.deletePacienteFromEspecialista = async (req, res) => {
     const { id } = req.params;
     await pool.query('UPDATE pacientes SET id_especialista= NULL WHERE id_paciente=?', [id]);
     res.json({ message: 'Paciente Eliminado' })
 }
-
+//inscripcion del paciente con el especialista
 usuariosCtrl.agregarPacienteEspecialista = async (req, res) => {
     const { id } = req.params;
     const { id_especialista, precio_consulta_general } = req.body;
@@ -168,6 +169,25 @@ usuariosCtrl.inscripcionCancelada = async (req, ers) => {
     try {
         const { id } = req.params;
         await pool.query(`UPDATE pacientes SET id_especialista=NULL,precio_consulta=NULL WHERE id_usuario=${id}`);
+        res.send({ message: 'correcto' })
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+//guarda articulo
+usuariosCtrl.guardarArticulo = async (req, res) => {
+    const { id_especialista, titulo, descripcion } = req.body;
+    const estado_articulo = 1;
+    await pool.query(`INSERT INTO articulos(id_especialista,titulo,descripcion,estado_articulo) values(${id_especialista},'${titulo}','${descripcion}',${estado_articulo})`)
+    res.send({ message: 'correcto' })
+}
+//publicar articulo
+usuariosCtrl.publicarArticulo = async (req, res) => {
+    try {
+        const { id_especialista, titulo, descripcion } = req.body;
+        const estado_articulo = 2;
+        await pool.query(`INSERT INTO articulos(id_especialista,titulo,descripcion,estado_articulo) values(${id_especialista},'${titulo}','${descripcion}',${estado_articulo})`)
         res.send({ message: 'correcto' })
     } catch (error) {
         console.log(error);

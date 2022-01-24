@@ -103,7 +103,7 @@ CREATE TABLE articulos(
     titulo VARCHAR(50) NOT NULL,
     -- descripcion LONGTEXT(MAX) NOT NULL, 
     descripcion LONGTEXT NOT NULL,
-    fecha_publicacion DATE NOT NULL,
+    fecha_publicacion TIMESTAMP NOT NULL,
     id_especialista INT(12) NOT NULL
 );
 

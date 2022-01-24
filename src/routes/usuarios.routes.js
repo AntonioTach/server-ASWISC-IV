@@ -35,6 +35,10 @@ router.post('/login', usuariosCtrl.signin);
 router.get('/token', usuariosCtrl.verifyToken);
 //agragar un paciente con el especialista
 router.put('/nuevo-cliente/:id', usuariosCtrl.agregarPacienteEspecialista);
+//guardar un articulo
+router.post('/guardar-articulo', usuariosCtrl.guardarArticulo);
+//publicar articulo
+router.post('/publicar-articulo', usuariosCtrl.publicarArticulo);
 //Buscar Correo Repetido 
 router.get('/correo-repetido', usuariosCtrl.buscarCorreoRepetido);
 router.get('/correo-repetido-especialista', usuariosCtrl.buscarCorreoRepetidoEspecialista);
