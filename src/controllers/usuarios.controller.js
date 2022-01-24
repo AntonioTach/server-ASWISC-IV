@@ -15,7 +15,7 @@ usuariosCtrl.createEspecialista = async (req, res) => {
     // console.log(req.body);
     //Tipo 1 = Especialista
     const { usuario, contrasena, id_tipo = 1 } = req.body;
-    const { nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento, foto_profesional, cedula, curriculum, precio_consulta_general } = req.body;
+    const { nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento, foto_profesional, cedula, curriculum, precio } = req.body;
     //insert en usuarios 
     let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
     await pool.query(sql);
