@@ -118,6 +118,17 @@ usuariosCtrl.editPaciente = async (req, res) => {
     await pool.query(`UPDATE pacientes set observaciones='${observaciones}',origen='${origen}',ocupacion='${ocupacion}',estudios='${estudios}' WHERE id_usuario = ${id}`);
     res.json(req.body)
 }
+//Editar Paciente en Nombre Paciente
+usuariosCtrl.editPacienteNombre = async (req, res) => {
+    const { id } = req.params; 
+    console.log(id);
+    const { nombre, email, telefono, usuario, contrasena } = req.body;
+    //Update tabla paciente
+    await pool.query(`UPDATE pacientes set nombre='${nombre}', email='${email}', telefono='${telefono}' WHERE id_usuario = ${id}`);
+    //Update tabla usuarios
+    await pool.query(`UPDATE usuarios set usuario='${usuario}', contrasena = '${contrasena}' WHERE id_usuario = ${id}`);
+    res.json(req.body);
+}
 
 //-----------------------------Eliminar Usuarios por su tipo--------------------------------
 //Eliminar Especialista
