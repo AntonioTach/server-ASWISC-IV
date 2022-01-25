@@ -225,11 +225,22 @@ usuariosCtrl.subirTarea = async (req, res) => {
     await pool.query(`INSERT into tareas(id_paciente, titulo, descripcion, documento) values(${id_paciente}, '${titulo}', '${descripcion}', '${documento}' )`);
     res.send({ message: 'Tarea asignada Correctamente' });
 }
-
+//tomar una prueba
 usuariosCtrl.getPrueba = async (req, res) => {
     const { id } = req.params;
     const prueba = await pool.query(`SELECT * FROM pruebas WHERE id_pruebas=${id}`);
     res.json(prueba);
+}
+//ver todas las tareas del los pacientes
+usuariosCtrl.getTareasEspecialista = async (req, res) => {
+    const { id } = req.params;
+    const tareas = await pool.query(`SELECT * FROM tareas t INNER JOIN pacientes p ON t.id_paciente=p.id_paciente WHERE p.id_especialista=${id}`);
+    res.json(tareas);
+}
+usuariosCtrl.verTarea = async (req, res) => {
+    const { id } = req.params;
+    const tarea = await pool.query(`SELECT * FROM tareas WHERE id_tarea=${id}`);
+    res.json(tarea);
 }
 //tomar todos los articulos
 usuariosCtrl.articulosLista = async (req, res) => {

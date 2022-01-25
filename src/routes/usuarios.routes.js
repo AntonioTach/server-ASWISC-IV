@@ -56,8 +56,12 @@ router.post('/prueba', usuariosCtrl.subirPrueba);
 router.get('/pruebas-paciente/:id', usuariosCtrl.verPruebaPaciente);
 //ver una prueba
 router.get('/prueba/:id', usuariosCtrl.getPrueba);
+//ver las tareas desde especialista
+router.get('/tareas/:id', usuariosCtrl.getTareasEspecialista);
 //Subir Tarea
 router.post('/tarea', usuariosCtrl.subirTarea);
+//ver una tarea
+router.get('/tarea/:id', usuariosCtrl.verTarea);
 //Buscar Correo Repetido 
 router.get('/correo-repetido', usuariosCtrl.buscarCorreoRepetido);
 router.get('/correo-repetido-especialista', usuariosCtrl.buscarCorreoRepetidoEspecialista);
