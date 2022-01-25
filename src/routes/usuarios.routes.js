@@ -54,6 +54,8 @@ router.put('/publicar-articulo/:id', usuariosCtrl.modificarpublicarArticulo);
 router.post('/prueba', usuariosCtrl.subirPrueba);
 //ver todas las pruebas del paciente
 router.get('/pruebas-paciente/:id', usuariosCtrl.verPruebaPaciente);
+//ver una prueba
+router.get('/prueba/:id', usuariosCtrl.getPrueba);
 //Subir Tarea
 router.post('/tarea', usuariosCtrl.subirTarea);
 //Buscar Correo Repetido 

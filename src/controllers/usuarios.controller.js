@@ -226,7 +226,11 @@ usuariosCtrl.subirTarea = async (req, res) => {
     res.send({ message: 'Tarea asignada Correctamente' });
 }
 
-
+usuariosCtrl.getPrueba = async (req, res) => {
+    const { id } = req.params;
+    const prueba = await pool.query(`SELECT * FROM pruebas WHERE id_pruebas=${id}`);
+    res.json(prueba);
+}
 //tomar todos los articulos
 usuariosCtrl.articulosLista = async (req, res) => {
     const articulos = await pool.query(`SELECT * FROM articulos a INNER JOIN especialistas e ON a.id_especialista=e.id_especialista WHERE estado_articulo=2`)
