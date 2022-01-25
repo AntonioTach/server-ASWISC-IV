@@ -52,6 +52,8 @@ router.put('/guardar-articulo/:id', usuariosCtrl.modificarguardarArticulo);
 router.put('/publicar-articulo/:id', usuariosCtrl.modificarpublicarArticulo);
 //subir prueba
 router.post('/prueba', usuariosCtrl.subirPrueba);
+//Subir Tarea
+router.post('/tarea', usuariosCtrl.subirTarea);
 //Buscar Correo Repetido 
 router.get('/correo-repetido', usuariosCtrl.buscarCorreoRepetido);
 router.get('/correo-repetido-especialista', usuariosCtrl.buscarCorreoRepetidoEspecialista);

@@ -213,6 +213,14 @@ usuariosCtrl.subirPrueba = async (req, res) => {
     res.send({ message: 'correcto' })
 }
 
+//Subir Tarea
+usuariosCtrl.subirTarea = async (req, res) => {
+    const { titulo, id_paciente, descripcion, documento } = req.body;
+    await pool.query(`INSERT into tareas(id_paciente, titulo, descripcion, documento) values(${id_paciente}, '${titulo}', '${descripcion}', '${documento}' )`);
+    res.send({ message: 'Tarea asignada Correctamente' });
+}
+
+
 //tomar todos los articulos
 usuariosCtrl.articulosLista = async (req, res) => {
     const articulos = await pool.query(`SELECT * FROM articulos a INNER JOIN especialistas e ON a.id_especialista=e.id_especialista WHERE estado_articulo=2`)

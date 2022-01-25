@@ -2,6 +2,8 @@ CREATE DATABASE database_aswisc;
 
 USE DATABASE database_aswisc;
 
+-- Cotejamiento: utf8mb4_general_ci
+
 CREATE TABLE usuarios(
     id_usuario INT(12) NOT NULL,
     usuario VARCHAR(16) NOT NULL,
