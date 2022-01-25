@@ -212,7 +212,13 @@ usuariosCtrl.subirPrueba = async (req, res) => {
     await pool.query(`INSERT INTO pruebas(nombre_prueba,id_paciente,comentarios,documento) values('${nombre_prueba}',${id_paciente},'${comentarios}','${documento}')`)
     res.send({ message: 'correcto' })
 }
-
+//ver pruebas pacientes
+usuariosCtrl.verPruebaPaciente = async (req, res) => {
+    const { id } = req.params;
+    const pruebas = await pool.query(`SELECT * FROM pruebas p INNER JOIN pacientes u ON p.id_paciente=u.id_paciente WHERE u.id_usuario=${id} `)
+    //console.log(pruebas);
+    return res.json(pruebas);
+}
 //Subir Tarea
 usuariosCtrl.subirTarea = async (req, res) => {
     const { titulo, id_paciente, descripcion, documento } = req.body;
@@ -258,7 +264,7 @@ usuariosCtrl.modificarpublicarArticulo = async (req, res) => {
     }
 
 }
-
+usuariosCtrl.ver
 //-----------------------------Login y creacion TOKEN--------------------------------
 //Login
 usuariosCtrl.signin = async (req, res) => {
