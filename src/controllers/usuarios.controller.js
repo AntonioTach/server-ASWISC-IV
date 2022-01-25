@@ -120,7 +120,7 @@ usuariosCtrl.editPaciente = async (req, res) => {
 }
 //Editar Paciente en Nombre Paciente
 usuariosCtrl.editPacienteNombre = async (req, res) => {
-    const { id } = req.params; 
+    const { id } = req.params;
     console.log(id);
     const { nombre, email, telefono, usuario, contrasena } = req.body;
     //Update tabla paciente
@@ -212,7 +212,12 @@ usuariosCtrl.subirPrueba = async (req, res) => {
     await pool.query(`INSERT INTO pruebas(nombre_prueba,id_paciente,comentarios,documento) values('${nombre_prueba}',${id_paciente},'${comentarios}','${documento}')`)
     res.send({ message: 'correcto' })
 }
-
+//ver pruebas especialista
+usuariosCtrl.verPruebaEspecialista = async (req, res) => {
+    const { id } = req.params;
+    const pruebas = await pool.query(`SELECT * FROM pruebas p INNER JOIN pacientes u ON p.id_paciente=u.id_paciente WHERE u.id_especialista=${id} `)
+    return res.json(pruebas);
+}
 //tomar todos los articulos
 usuariosCtrl.articulosLista = async (req, res) => {
     const articulos = await pool.query(`SELECT * FROM articulos a INNER JOIN especialistas e ON a.id_especialista=e.id_especialista WHERE estado_articulo=2`)
