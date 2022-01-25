@@ -120,7 +120,7 @@ usuariosCtrl.editPaciente = async (req, res) => {
 }
 //Editar Paciente en Nombre Paciente
 usuariosCtrl.editPacienteNombre = async (req, res) => {
-    const { id } = req.params; 
+    const { id } = req.params;
     console.log(id);
     const { nombre, email, telefono, usuario, contrasena } = req.body;
     //Update tabla paciente
