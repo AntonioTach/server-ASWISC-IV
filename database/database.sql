@@ -70,7 +70,7 @@ CREATE TABLE pruebas(
 	id_paciente INT(11) NOT NULL,
 	nombre_prueba VARCHAR(50) NOT NULL,
 	comentarios VARCHAR(200) NOT NULL,
-	documento VARCHAR(200) NOT NULL
+	documento LONGTEXT NOT NULL,
 );
 ALTER TABLE pruebas
     ADD PRIMARY KEY (id_pruebas);
