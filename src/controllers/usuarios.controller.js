@@ -195,6 +195,13 @@ usuariosCtrl.publicarArticulo = async (req, res) => {
 
 }
 
+//subir prueba
+usuariosCtrl.subirPrueba = async (req, res) => {
+    const { nombre_prueba, id_paciente, comentarios, documento } = req.body;
+    await pool.query(`INSERT INTO pruebas(nombre_prueba,id_paciente,comentarios,documento) values('${nombre_prueba}',${id_paciente},'${comentarios}','${documento}')`)
+    res.send({ message: 'correcto' })
+}
+
 //tomar todos los articulos
 usuariosCtrl.articulosLista = async (req, res) => {
     const articulos = await pool.query(`SELECT * FROM articulos a INNER JOIN especialistas e ON a.id_especialista=e.id_especialista WHERE estado_articulo=2`)

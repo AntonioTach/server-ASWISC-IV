@@ -49,6 +49,8 @@ router.get('/articulo/:id', usuariosCtrl.tomarArticulo)
 router.put('/guardar-articulo/:id', usuariosCtrl.modificarguardarArticulo);
 //publicar articulo
 router.put('/publicar-articulo/:id', usuariosCtrl.modificarpublicarArticulo);
+//subir prueba
+router.post('/prueba', usuariosCtrl.subirPrueba);
 //Buscar Correo Repetido 
 router.get('/correo-repetido', usuariosCtrl.buscarCorreoRepetido);
 router.get('/correo-repetido-especialista', usuariosCtrl.buscarCorreoRepetidoEspecialista);
