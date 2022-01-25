@@ -218,6 +218,12 @@ usuariosCtrl.verPruebaEspecialista = async (req, res) => {
     const pruebas = await pool.query(`SELECT * FROM pruebas p INNER JOIN pacientes u ON p.id_paciente=u.id_paciente WHERE u.id_especialista=${id} `)
     return res.json(pruebas);
 }
+//ver pruebas pacientes
+usuariosCtrl.verPruebaPaciente = async (req, res) => {
+    const { id } = req.params;
+    const pruebas = await pool.query(`SELECT * FROM pruebas WHERE id_paciente=${id} `)
+    return res.json(pruebas);
+}
 //tomar todos los articulos
 usuariosCtrl.articulosLista = async (req, res) => {
     const articulos = await pool.query(`SELECT * FROM articulos a INNER JOIN especialistas e ON a.id_especialista=e.id_especialista WHERE estado_articulo=2`)
