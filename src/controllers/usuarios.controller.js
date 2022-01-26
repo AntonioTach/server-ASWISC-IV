@@ -296,6 +296,7 @@ usuariosCtrl.getTareasPaciente = async (req, res) => {
 usuariosCtrl.modificarPrecio = async (req, res) => {
     const { id } = req.params;
     const { precio_consulta_general } = req.body;
+    console.log(precio_consulta_general);
     await pool.query(`UPDATE especialistas SET precio_consulta_general=${precio_consulta_general} WHERE id_especialista=${id}`);
     res.send({ message: 'correcto 1' })
 }
@@ -303,9 +304,10 @@ usuariosCtrl.modifcarPrecioPaciente = async (req, res) => {
     const { id } = req.params;
     const { precio_consulta } = req.body;
     console.log(precio_consulta, id);
-    await pool.query(`UPDATE pacientes SET precio_consulta=${precio_consulta} WHERE id_paciente=${id}`)
+    await pool.query(`UPDATE pacientes SET precio_consulta=${precio_consulta} WHERE id_usuario=${id}`)
     res.send({ message: 'correcto 2' })
 }
+//usuariosCtrl.articulos() = as
 usuariosCtrl.ver
 //-----------------------------Login y creacion TOKEN--------------------------------
 //Login
