@@ -89,7 +89,7 @@ usuariosCtrl.buscarEspecialista = async (req, res) => {
 usuariosCtrl.buscarEspecialistaAll = async (req, res) => {
     const { id } = req.params;
     const EspecialistaID = await pool.query('SELECT * FROM especialistas p INNER JOIN usuarios u ON p.id_usuario = u.id_usuario WHERE p.id_usuario = ?', [id]);
-    if (EspecialistaID.length > 0){
+    if (EspecialistaID.length > 0) {
         return res.json(EspecialistaID);
     }
     res.status(404).json({ text: "El Especialista no existe" });
@@ -287,6 +287,24 @@ usuariosCtrl.modificarpublicarArticulo = async (req, res) => {
         console.log(error);
     }
 
+}
+usuariosCtrl.getTareasPaciente = async (req, res) => {
+    const { id } = req.params;
+    const tareas = await pool.query(`SELECT * FROM tareas t INNER JOIN pacientes p ON p.id_paciente=t.id_paciente WHERE p.id_usuario=${id}`);
+    res.json(tareas);
+}
+usuariosCtrl.modificarPrecio = async (req, res) => {
+    const { id } = req.params;
+    const { precio_consulta_general } = req.body;
+    await pool.query(`UPDATE especialistas SET precio_consulta_general=${precio_consulta_general} WHERE id_especialista=${id}`);
+    res.send({ message: 'correcto 1' })
+}
+usuariosCtrl.modifcarPrecioPaciente = async (req, res) => {
+    const { id } = req.params;
+    const { precio_consulta } = req.body;
+    console.log(precio_consulta, id);
+    await pool.query(`UPDATE pacientes SET precio_consulta=${precio_consulta} WHERE id_paciente=${id}`)
+    res.send({ message: 'correcto 2' })
 }
 usuariosCtrl.ver
 //-----------------------------Login y creacion TOKEN--------------------------------

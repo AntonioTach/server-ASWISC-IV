@@ -63,6 +63,12 @@ router.get('/tareas/:id', usuariosCtrl.getTareasEspecialista);
 router.post('/tarea', usuariosCtrl.subirTarea);
 //ver una tarea
 router.get('/tarea/:id', usuariosCtrl.verTarea);
+//ver las tareas del paciente
+router.get('/tareas-paciente/:id', usuariosCtrl.getTareasPaciente);
+//modificar precio del especialista
+router.put('/precio-consulta-general/:id', usuariosCtrl.modificarPrecio);
+//modficar precio paciente
+router.put('/precio-paciente/:id', usuariosCtrl.modifcarPrecioPaciente);
 //Buscar Correo Repetido 
 router.get('/correo-repetido', usuariosCtrl.buscarCorreoRepetido);
 router.get('/correo-repetido-especialista', usuariosCtrl.buscarCorreoRepetidoEspecialista);
