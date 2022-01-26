@@ -127,7 +127,8 @@ ALTER TABLE pacientes
     ADD CONSTRAINT id_usuarioPacientefk FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario);
 
 CREATE TABLE pagos(
-    precio DECIMAL(5,5) NOT NULL,
+    id_pago INT(11) NOT NULL,
+    precio doble() NOT NULL,
     id_paciente INT(11) NOT NULL,
     id_especialista INT(12) NOT NULL,
     fecha DATE NULL
@@ -140,7 +141,7 @@ ALTER TABLE pagos
     ADD CONSTRAINT id_pacientefkpagos FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
 
 ALTER TABLE pagos
-    ADD PRIMARY KEY (precio);
+    ADD PRIMARY KEY (id_pago);
 
 CREATE TABLE horarios(
     precio DECIMAL(5,5) NOT NULL,
