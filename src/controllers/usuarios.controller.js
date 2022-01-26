@@ -85,6 +85,15 @@ usuariosCtrl.buscarEspecialista = async (req, res) => {
     }
     res.status(404).json({ text: "El especialista no existe" }); //Si no existe el ID que se esta buscando tira error 404 y mensaje
 }
+//Obtener el Especialista por su ID
+usuariosCtrl.buscarEspecialistaAll = async (req, res) => {
+    const { id } = req.params;
+    const EspecialistaID = await pool.query('SELECT * FROM especialistas p INNER JOIN usuarios u ON p.id_usuario = u.id_usuario WHERE p.id_usuario = ?', [id]);
+    if (EspecialistaID.length > 0){
+        return res.json(EspecialistaID);
+    }
+    res.status(404).json({ text: "El Especialista no existe" });
+}
 //Obtener el Paciente por su ID
 usuariosCtrl.buscarPaciente = async (req, res) => {
     const { id } = req.params;
