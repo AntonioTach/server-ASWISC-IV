@@ -47,6 +47,8 @@ router.get('/articulos', usuariosCtrl.articulosLista);
 router.get('/mis-articulos/:id', usuariosCtrl.articulosPersonales);
 //tomar un articulo
 router.get('/articulo/:id', usuariosCtrl.tomarArticulo)
+//delete articulo
+router.delete('/delete-articulo/:id', usuariosCtrl.deleteArticulo);
 //guardar un articulo
 router.put('/guardar-articulo/:id', usuariosCtrl.modificarguardarArticulo);
 //publicar articulo

@@ -176,7 +176,13 @@ usuariosCtrl.deletePaciente = async (req, res) => {
     await pool.query('DELETE FROM usuarios WHERE id_usuario = ?', [id]);
     res.send({ message: 'Paciente Eliminado' });
 }
-//eliminar subscreipciuon con el especialista
+//eliminar Articulo 
+usuariosCtrl.deleteArticulo = async (req, res) => {
+    const { id } = req.params;
+    await pool.query('DELETE FROM articulos WHERE id_articulo = ?', [id]);
+    res.send({message: 'Articulo Eliminado '});
+}
+//eliminar subscripcion con el especialista
 usuariosCtrl.deletePacienteFromEspecialista = async (req, res) => {
     const { id } = req.params;
     await pool.query('UPDATE pacientes SET id_especialista= NULL WHERE id_paciente=?', [id]);
