@@ -72,6 +72,7 @@ router.put('/precio-consulta-general/:id', usuariosCtrl.modificarPrecio);
 //carrito
 router.get('/carrito/:id', usuariosCtrl.verCarrito);
 router.get('/carrito2/:id', usuariosCtrl.verCarrito2);
+router.get('/carrito3/:id', usuariosCtrl.verCarrito3);
 //modficar precio paciente
 router.put('/precio-paciente/:id', usuariosCtrl.modifcarPrecioPaciente);
 //pagar carrito
