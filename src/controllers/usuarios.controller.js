@@ -118,8 +118,10 @@ usuariosCtrl.buscarPacienteNombre = async (req, res) => {
 //-----------------------------Editar Usuarios por su tipo--------------------------------
 //Editar Especialista
 usuariosCtrl.editEspecialista = async (req, res) => {
+    debugger
     const { id } = req.params;
-    const { nombre, direccion, email, profesion, telefono, tiempo_consulta, contrasena, usuario } = req.params;
+    const { nombre, direccion, email, profesion, telefono, tiempo_consulta, contrasena, usuario } = req.body;
+    debugger
     //Update tabla paciente
     await pool.query(`UPDATE especialistas set nombre='${nombre}', direccion='${direccion}', email='${email}', profesion = '${profesion}', telefono = '${telefono}', tiempo_consulta = '${tiempo_consulta}' WHERE id_usuario = ${id}`);
     await pool.query(`UPDATE usuarios set usuario='${usuario}', contrasena = '${contrasena}' WHERE id_usuario = ${id}`);
@@ -135,7 +137,6 @@ usuariosCtrl.editPaciente = async (req, res) => {
 //Editar Paciente en Nombre Paciente
 usuariosCtrl.editPacienteNombre = async (req, res) => {
     const { id } = req.params;
-    console.log(id);
     const { nombre, email, telefono, usuario, contrasena } = req.body;
     //Update tabla paciente
     await pool.query(`UPDATE pacientes set nombre='${nombre}', email='${email}', telefono='${telefono}' WHERE id_usuario = ${id}`);
