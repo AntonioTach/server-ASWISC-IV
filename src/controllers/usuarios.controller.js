@@ -323,11 +323,12 @@ usuariosCtrl.pagarCarrito = async (req, res) => {
 
 usuariosCtrl.verCarrito2 = async (req, res) => {
     const { id } = req.params;
-    const carrito = await pool.query(`SELECT * FROM pagos WHERE id_especialista=${id} AND  estatus=2`)
+    const carrito = await pool.query(`SELECT * FROM pagos WHERE id_especialista = '${id}' AND estatus = 2`);
+    // const carrito = await pool.query(`SELECT * FROM pagos WHERE id_especialista=${id} AND  estatus=2`)
     return res.json(carrito);
 }
 //usuariosCtrl.articulos() = as
-usuariosCtrl.ver
+// usuariosCtrl.ver
 //-----------------------------Login y creacion TOKEN--------------------------------
 //Login
 usuariosCtrl.signin = async (req, res) => {
