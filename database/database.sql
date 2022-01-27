@@ -32,7 +32,8 @@ CREATE TABLE especialistas(
     foto_profesional VARCHAR(200) NOT NULL,
     curriculum VARCHAR(200) NOT NULL, 
     cedula VARCHAR(200) NOT NULL,
-    precio_consulta_general int(12) NULL
+    precio_consulta_general int(12) NULL,
+    tiempo_consulta int(12) NULL
 );
 ALTER TABLE especialistas
     ADD PRIMARY KEY (id_especialista);
