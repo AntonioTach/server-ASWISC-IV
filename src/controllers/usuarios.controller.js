@@ -8,6 +8,9 @@ const { query } = require('../database');
 const { json } = require('express/lib/response');
 const res = require('express/lib/response');
 
+require("dotenv").config();
+const sgMail = require("@sendgrid/mail");
+const apiKey = `${process.env.SENDGRID_API_KEY}`;
 
 //------------------------------Creacion Usuarios--------------------------------
 //Creacion Especialista
@@ -321,7 +324,7 @@ usuariosCtrl.signin = async (req, res) => {
         (err, rows, fields) => {
 
             if (err) {
-                res.send({ message: 'Usuario o contrasena incorrectos' });
+                console.log(err);
             }
             if (rows.length > 0) {
                 let data = JSON.stringify(rows[0]); //Guardado de dato 
@@ -336,7 +339,8 @@ usuariosCtrl.signin = async (req, res) => {
                 return res.status(200).json({ token, usuario, id_tipo, id_usuario });
             }
             else {
-                res.send({ message: 'Usuario o contrasena incorrectos' });
+                res.send(false);
+                
             }
         }
     );
@@ -358,7 +362,7 @@ usuariosCtrl.verifyToken = (req, res, next) => {   //Verificar el funcionamiento
         next();
     }
     else {
-        res.status(401).json('Token Vacio');
+        res.status(404).json('Token Vacio');
     }
 
 }
@@ -399,6 +403,83 @@ usuariosCtrl.buscarCorreoRepetidoEspecialista = async (req, res) => {
         }
     );
 }
+//Identificar Email
+usuariosCtrl.identificarEmail = async (req, res) => {
+    const { email } = req.body;
+    console.log(email);
+    await pool.query(`SELECT email FROM especialistas WHERE email=?`, [email],
+    (err, rows) => {
+        if(err) {console.log(err)}
+        if(rows.length > 0){
+            //Existe en Especialistas
+            // console.log('Existe en Especialistas');
+            res.send(true);
+        }
+        else{
+            // console.log('No Existe en Especialistas');
+            res.send(false)
+            
+        }
+    });
+
+}
+//Identificar si existe email paciente
+usuariosCtrl.identificarEmailPaciente = async (req, res) => {
+    const { email } = req.body;
+    // console.log(email);
+    await pool.query(`SELECT email FROM pacientes WHERE email=?`, [email],
+    (err, rows) => {
+        if(err) {console.log(err)}
+        if(rows.length > 0){
+            //Existe en Pacientes
+            // console.log('Existe en Pacientes');
+            res.send(true);
+        }
+        else{
+            // console.log('No Existe en Pacientes');
+            res.send(false);
+        }
+    });
+}
+//Mandar email 
+usuariosCtrl.mandarEmail = async (req, res) => {
+    const {email, token} = req.body;
+   
+    const msg = {
+        to: email, 
+        from: "aswisc@gmail.com", 
+        subject: "TOKEN ASWSIC-IV",
+        text: token
+    }
+
+    sgMail
+        .send(msg)
+        .then((response) => {
+            console.log(response[0].statusCode)
+            console.log(response[0].headers)
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+
+}
+//Update Contrasena Especialista
+usuariosCtrl.updateContrasenaEspecialista = async (req, res) => {
+    const { contrasena, email } = req.body;
+    const id_usuario = await pool.query(`SELECT id_usuario FROM especialistas WHERE email = ?`, [email]);
+    let data = JSON.stringify(id_usuario[0].id_usuario); //id_ usuario
+    await pool.query(`UPDATE usuarios SET contrasena = '${contrasena}' WHERE id_usuario= ${data}`);
+    res.send(true);
+}
+//Update Contrasena Pacieente
+usuariosCtrl.updateContrasenaPaciente = async (req, res) => {
+    const { contrasena, email } = req.body;
+    const id_usuario = await pool.query(`SELECT id_usuario FROM pacientes WHERE email = ?`, [email]);
+    let data = JSON.stringify(id_usuario[0].id_usuario); //id_ usuario
+    await pool.query(`UPDATE usuarios SET contrasena = '${contrasena}' WHERE id_usuario= ${data}`);
+    res.send(true);
+}
+
 //Actualizar datos de un paciente
 usuariosCtrl.actualizarDatos = async (req, res) => {
 

@@ -72,6 +72,15 @@ router.put('/precio-paciente/:id', usuariosCtrl.modifcarPrecioPaciente);
 //Buscar Correo Repetido 
 router.get('/correo-repetido', usuariosCtrl.buscarCorreoRepetido);
 router.get('/correo-repetido-especialista', usuariosCtrl.buscarCorreoRepetidoEspecialista);
+//Olvidar contrasena
+router.post('/olvido-contrasena', usuariosCtrl.identificarEmail);
+router.post('/olvido-contrasenaPaciente', usuariosCtrl.identificarEmailPaciente);
+//Update contrasena
+router.put('/updateContrasena-Especialista', usuariosCtrl.updateContrasenaEspecialista);
+router.put('/updateContrasena-Paciente', usuariosCtrl.updateContrasenaPaciente);
+
+//Mandar Correo para contrasena
+router.post('/mandarEmail', usuariosCtrl.mandarEmail);
 
 
 module.exports = router;
