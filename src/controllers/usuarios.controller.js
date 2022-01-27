@@ -307,8 +307,19 @@ usuariosCtrl.modifcarPrecioPaciente = async (req, res) => {
     const { id } = req.params;
     const { precio_consulta } = req.body;
     console.log(precio_consulta, id);
-    await pool.query(`UPDATE pacientes SET precio_consulta=${precio_consulta} WHERE id_usuario=${id}`)
+    await pool.query(`UPDATE pacientes SET precio_consulta=${precio_consulta} WHERE id_usuario=${id} AND estatus=1`)
     res.send({ message: 'correcto 2' })
+}
+usuariosCtrl.verCarrito = async (req, res) => {
+    const { id } = req.params;
+    const carrito = await pool.query(`SELECT * FROM pagos p INNER JOIN pacientes u ON p.id_paciente=u.id_paciente WHERE id_usuario=${id} AND  estatus=1`)
+    return res.json(carrito);
+}
+usuariosCtrl.pagarCarrito = async (req, res) => {
+    const { id } = req.params;
+    const { estatus } = req.body;
+    await pool.query(`UPDATE pagos SET estatus=${estatus} WHERE id_paciente=${id}`);
+    res.send({ message: 'correcto' })
 }
 //usuariosCtrl.articulos() = as
 usuariosCtrl.ver
