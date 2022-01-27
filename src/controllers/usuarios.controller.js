@@ -320,6 +320,12 @@ usuariosCtrl.pagarCarrito = async (req, res) => {
     await pool.query(`UPDATE pagos SET estatus=${estatus} WHERE id_paciente=${id}`);
     res.send({ message: 'correcto' })
 }
+
+usuariosCtrl.verCarrito2 = async (req, res) => {
+    const { id } = req.params;
+    const carrito = await pool.query(`SELECT * FROM pagos WHERE id_especialista=${id} AND  estatus=2`)
+    return res.json(carrito);
+}
 //usuariosCtrl.articulos() = as
 usuariosCtrl.ver
 //-----------------------------Login y creacion TOKEN--------------------------------
