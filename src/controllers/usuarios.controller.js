@@ -339,9 +339,12 @@ usuariosCtrl.verCarrito2 = async (req, res) => {
 }
 
 usuariosCtrl.verCarrito3 = async (req, res) => {
-    const { id } = req.params;
-    const carrito = await pool.query(`SELECT * FROM pagos WHERE id_paciente = '${id}' AND estatus = 2`);
-    return res.json(carrito);
+    const { id } = req.params; //id usuario
+
+    const id_paciente = await pool.query(`SELECT id_paciente FROM pacientes WHERE id_usuario = ${id_usuario}`);
+    let data = JSON.stringify(id_especialista); //Convertimos el RowData a data, que es el id_paciente
+    const carrito = await pool.query(`SELECT * FROM pagos WHERE id_paciente = '${data}' AND estatus = 2`);
+    return res.json(carrito)
 }
 //usuariosCtrl.articulos() = as
 // usuariosCtrl.ver
