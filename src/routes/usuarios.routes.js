@@ -67,6 +67,8 @@ router.get('/tarea/:id', usuariosCtrl.verTarea);
 router.get('/tareas-paciente/:id', usuariosCtrl.getTareasPaciente);
 //modificar precio del especialista
 router.put('/precio-consulta-general/:id', usuariosCtrl.modificarPrecio);
+//pagos,especialistas
+router.get('/carrito/:id', usuariosCtrl.verCarrito2);
 //carrito
 router.get('/carrito/:id', usuariosCtrl.verCarrito);
 //modficar precio paciente
