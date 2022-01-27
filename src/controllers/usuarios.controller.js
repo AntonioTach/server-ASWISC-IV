@@ -8,9 +8,8 @@ const { query } = require('../database');
 const { json } = require('express/lib/response');
 const res = require('express/lib/response');
 
-require("dotenv").config();
-const sgMail = require("@sendgrid/mail");
-const apiKey = `${process.env.SENDGRID_API_KEY}`;
+
+
 
 //------------------------------Creacion Usuarios--------------------------------
 //Creacion Especialista
@@ -57,7 +56,7 @@ usuariosCtrl.registrarPaciente = async (req, res) => {
     await pool.query(sqlUsuarios); //Sentencia en Usuarios
 
     //insert en Pacientes
-    let sqlPacientes = `INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista,precio_consulta) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', ${id_usuario},${precio_consulta})`;
+    let sqlPacientes = `INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista,precio_consulta) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${id_usuario}', '${precio_consulta}')`;
     await pool.query(sqlPacientes);
 
 
@@ -381,6 +380,7 @@ usuariosCtrl.verifyToken = (req, res, next) => {   //Verificar el funcionamiento
 //-----------------------------Buscar Correo Repetido--------------------------------
 //Buscar correo repetido en Registro Especialista
 usuariosCtrl.buscarCorreoRepetido = async (req, res) => {
+    
     const { email } = req.body;
     const correo = await pool.query(`SELECT nombre FROM pacientes WHERE email=?`,
         [email],
@@ -455,12 +455,15 @@ usuariosCtrl.identificarEmailPaciente = async (req, res) => {
 //Mandar email 
 usuariosCtrl.mandarEmail = async (req, res) => {
     const {email, token} = req.body;
+    const sgMail = require("@sendgrid/mail");
+    require("dotenv").config();
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
    
     const msg = {
         to: email, 
-        from: "aswisc@gmail.com", 
-        subject: "TOKEN ASWSIC-IV",
-        text: token
+        from: 'aswisc@gmail.com', 
+        subject: 'TOKEN ASWSIC-IV',
+        text: token,
     }
 
     sgMail
@@ -468,6 +471,7 @@ usuariosCtrl.mandarEmail = async (req, res) => {
         .then((response) => {
             console.log(response[0].statusCode)
             console.log(response[0].headers)
+            console.log('Email enviado');
           })
           .catch((error) => {
             console.error(error)
