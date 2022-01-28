@@ -3744,7 +3744,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "192,195":{
+        "192,195":{ //16:0-16:3
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -3867,7 +3867,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "196,199":{
+        "196,199":{ //16:4-16:7
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -3990,7 +3990,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "200,204":{ 
+        "200,204":{  //16:8-16:11
             'Cubos':{
                 'rangos':[
                     range(0,68)
