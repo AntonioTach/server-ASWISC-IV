@@ -65,11 +65,22 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
       },
       Semejanzas: {
         rangos: [range(0, 44)],
-        valores: [[2, 3, 4, 5, 6, 7, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11]],
+        valores: [
+          [
+            2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15,
+            16, 16, 17, 17, 18, 18, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19,
+            19, 19, 19, 19, 19, 19, 19, 19, 19,
+          ],
+        ],
       },
       Digitos: {
         rangos: [range(0, 32)],
-        valores: [[]],
+        valores: [
+          [
+            1, 1, 1, 2, 3, 5, 6, 7, 8, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 19,
+            19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19,
+          ],
+        ],
       },
       Conceptos: {
         rangos: [range(0, 28)],
@@ -2281,12 +2292,8 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
       [55, , , ""],
       [56, , , ""],
       [57, , , ""],
-      
     ],
-    razonamientoPerceptual: [
-        [], [], [], []
-    
-    ],
+    razonamientoPerceptual: [[], [], [], []],
   };
 
   for (let llaveEscalar of Object.keys(secondData)) {
