@@ -3993,7 +3993,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
         "200,204":{ 
             'Cubos':{
                 'rangos':[
-                    range(0,32)
+                    range(0,68)
                 ],
                 'valores':[
                     []
@@ -4105,7 +4105,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
             'Pistas': {
                 'rangos': [
-                    range(0,68),
+                    range(0,24),
                 ],
                 'valores': [
                     [ ],
