@@ -68,7 +68,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
                     range(0,44)
                 ],
                 'valores': [
-                    [2, 3, 4, 5, ]
+                    [2, 3, 4, 5,6,7,7,8,8,8,9,9,10,10,11,11, ]
                 ]
             },
             ''
