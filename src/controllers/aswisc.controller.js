@@ -65,13 +65,15 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
             'Semejanzas': {
                 'rangos': [
-                    range(0,44)
+                    range(0,44),
                 ],
                 'valores': [
-                    [2, 3, 4, 5,6,7,7,8,8,8,9,9,10,10,11,11, ]
-                ]
+                    [
+                        2, 3, 4, 5,6,7,7,8,8,8,9,9,10,10,11,11, 
+                    
+                    ],
+                ],
             },
-            ''
         },
         "76,78": {
             'Cubos': {
