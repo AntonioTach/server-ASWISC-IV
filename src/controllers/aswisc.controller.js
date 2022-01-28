@@ -70,7 +70,8 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
                 'valores': [
                     [2, 3, 4, 5, ]
                 ]
-            }
+            },
+            ''
         },
         "76,78": {
             'Cubos': {
@@ -78,6 +79,16 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
                     range(0,68)
                 ],
                 'valores': [
+                    []
+                ],
+            }
+        },
+        "79,81":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
                     []
                 ],
             }
