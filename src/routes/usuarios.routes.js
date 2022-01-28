@@ -16,6 +16,7 @@ router.get('/buscar-Pacientes/', usuariosCtrl.listarPacientes);
 //Obtener Un Usuario por su TIPO e ID (especialistas y pacientes) [GET]
 router.get('/buscar-EspecialistaAll/:id', usuariosCtrl.buscarEspecialistaAll);
 router.get('/buscar-Especialista/:id', usuariosCtrl.buscarEspecialista);
+router.get('/buscar-Especialista2/:id',usuariosCtrl.buscarEspecialistaid_especialista)
 router.get('/buscar-Paciente/:id', usuariosCtrl.buscarPaciente);
 router.get('/buscar-PacienteNombre/:id', usuariosCtrl.buscarPacienteNombre);
 
@@ -26,7 +27,7 @@ router.post('/editar-PacienteNombre/:id', usuariosCtrl.editPacienteNombre);
 //Dejar en null el campo del ID_ESPECIALISRA[PUT]
 router.get('/eli-paciente/:id', usuariosCtrl.deletePacienteFromEspecialista)
 //Eliminar un usuario por su Tipo e ID [DELETE]
-router.delete('/eliminar-Especialista/:id', usuariosCtrl.deleteEspecialista);
+router.put('/eliminar-Especialista/:id', usuariosCtrl.deleteEspecialista);
 //Eliminar el id del especialista en e
 router.delete('/eliminar-Paciente/:id', usuariosCtrl.deletePaciente);
 //quitar subscripcion del paciente
