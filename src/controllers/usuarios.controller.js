@@ -25,13 +25,13 @@ usuariosCtrl.createEspecialista = async (req, res) => {
     //insert en usuarios 
     let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
     await pool.query(sql);
-    let sqlEspecialistas = `INSERT INTO especialistas(id_usuario, nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento,foto_profesional,curriculum,cedula,precio_consulta_general) values (LAST_INSERT_ID(), '${nombre}', '${direccion}', '${email}', '${profesion}', '${telefono}', '${sexo}', '${estudios}', '${nacimiento}','${foto_profesional.toString()}','${curriculum.toString()}','${cedula.toString()}',${precio})`;
+    let sqlEspecialistas = `INSERT INTO especialistas(id_usuario, nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento,foto_profesional,curriculum,cedula,precio_consulta_general,tiempo_consulta) values (LAST_INSERT_ID(), '${nombre}', '${direccion}', '${email}', '${profesion}', '${telefono}', '${sexo}', '${estudios}', '${nacimiento}','${foto_profesional.toString()}','${curriculum.toString()}','${cedula.toString()}',${precio}, 1)`;
     await pool.query(sqlEspecialistas);
 
     //await pool.query('INSERT INTO especialistas set ?', [req.body]);
     res.send({ message: 'Especialista creado!' });
     } catch (error) {
-        console.log(error)
+        console.log(error) 
     }
 }
 //Creacion Paciente
@@ -169,22 +169,27 @@ usuariosCtrl.editPacienteNombre = async (req, res) => {
 usuariosCtrl.deleteEspecialista = async (req, res) => {
 
     const { id } = req.params; //Este es el id_usuario
+    const {id_especialista} = req.body;  
     //Se actualiza el id_especialista a null de los pacientes inscritos con este especialista
     //Para esto se requiere conocer id_especialista
-    const IdEspecialista = await pool.query('SELECT id_especialista FROM  especialistas WHERE id_usuario = ?', [id]);
+    //const IdEspecialista = await pool.query('SELECT id_especialista FROM  especialistas WHERE id_usuario = ?', [id]);
     //convierte el RowDataPacket en un valor y lo guarda en Data
-    var data = JSON.stringify(IdEspecialista[0].id_especialista); //data = id_especialista
-
+    //var data = JSON.stringify(IdEspecialista[0].id_especialista); //data = id_especialista
+    await pool.query(`UPDATE pagos SET id_especialista =  NULL WHERE id_especialista = ${id_especialista}`)
     //Primero se necesita actualizar el id_especialista en pacientes inscritos en el a NULL
-    let UpdateToNull = `UPDATE pacientes SET id_especialista = NULL WHERE id_especialista = ${data}`;
+    let UpdateToNull = `UPDATE pacientes SET id_especialista = NULL WHERE id_especialista = ${id_especialista}`;
     await pool.query(UpdateToNull);
-
-    //Se elimina el FK, en tabla especialistas se elimina el id_usuario
+    await pool.query(`DELETE FROM articulos WHERE id_especialista=${id_especialista}`)
+     
     await pool.query('DELETE FROM especialistas WHERE id_usuario = ?', [id]);
-    //Se elimina despues la PK en la tabla usuarios con el id encontrado, guardado en data
+    //Se elimina el FK, en tabla especialistas se elimina el id_usuario
     await pool.query('DELETE FROM usuarios WHERE id_usuario = ?', [id]);
-    res.send({ message: 'Especialista Eliminado' });
 
+    
+    //Se elimina despues la PK en la tabla usuarios con el id encontrado, guardado en data
+    
+    res.send({ message: 'Especialista Eliminado' });
+  
 }
 usuariosCtrl.deletePaciente = async (req, res) => {
     const { id } = req.params;  //id_usuario
