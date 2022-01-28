@@ -48,7 +48,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
     //     });
     debugger
     let data = {
-        "72,75": {
+        "72,75": { //Edades 6:0-6:3
             'Cubos': {
                 'rangos': [
                     range(0, 68), // [0,1,2,3,4,5,...,68]
@@ -179,7 +179,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
                 ],
             },
         },
-        "76,79": {
+        "76,79": { // 6:4-6:7
             'Cubos': {
                 'rangos': [
                     range(0,68)
@@ -301,7 +301,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
                 ],
             },
         },
-        "80,83":{
+        "80,83":{ // 6:8-6:11
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -423,130 +423,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
                 ],
             },
         },
-        "84,87":{
-            'Cubos':{
-                'rangos':[
-                    range(0,32)
-                ],
-                'valores':[
-                    []
-                ],
-            },
-            'Semejanzas': {
-                'rangos': [
-                    range(0,44),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'Digitos': {
-                'rangos': [
-                    range(0,32),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'Conceptos': {
-                'rangos': [
-                    range(0,28),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'Claves': {
-                'rangos': [
-                    range(0,119),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'Vocabulario': {
-                'rangos': [
-                    range(0,68),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'LetrasNumeros': {
-                'rangos': [
-                    range(0,30),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'Matrices': {
-                'rangos': [
-                    range(0,35),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'Comprension': {
-                'rangos': [
-                    range(0,42),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'BusquedaSimbolos': {
-                'rangos': [
-                    range(0,60),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'FigurasIncompletas': {
-                'rangos': [
-                    range(0,38),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'Registros': {
-                'rangos': [
-                    range(0,136),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'Informacion': {
-                'rangos': [
-                    range(0,33),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'Aritmetica': {
-                'rangos': [
-                    range(0,34),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-            'Pistas': {
-                'rangos': [
-                    range(0,68),
-                ],
-                'valores': [
-                    [ ],
-                ],
-            },
-
-        },
-        "88,91":{
+        "84,87":{ //7:0-7:3
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -669,7 +546,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "92,95":{
+        "88,91":{ // 7:4-7:7
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -792,7 +669,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "96:99":{
+        "92,95":{ //7:8-7:11
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -915,7 +792,130 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "100:103":{
+        "96:99":{ //8:0-8:3
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "100:103":{ //8:4-8:7
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -1038,7 +1038,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         }, 
-        "104,107":{
+        "104,107":{ //8:8-8:11
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -1161,7 +1161,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "108,111":{
+        "108,111":{ //9:0-9:3
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -1284,7 +1284,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "112,115":{
+        "112,115":{ //9:4-9:7
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -1407,7 +1407,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "116,119":{
+        "116,119":{ //9:8-9:11
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -1530,7 +1530,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "120,123":{
+        "120,123":{ //10:0-10:3
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -1653,7 +1653,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "124,127":{
+        "124,127":{ //10:4-10:7
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -1776,7 +1776,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "128,131":{
+        "128,131":{ //10:8-10:11
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -1899,7 +1899,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "132,135":{
+        "132,135":{ //11:0-11:3
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -2022,7 +2022,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "136,139":{
+        "136,139":{ //11:4-11:7
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -2145,7 +2145,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "140,143":{
+        "140,143":{ //11:8-11:11
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -2268,7 +2268,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "144,147":{
+        "144,147":{ //12:0-12:3
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -2391,7 +2391,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "148,151":{
+        "148,151":{ //12:4-12:7
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -2514,7 +2514,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "152,155":{
+        "152,155":{ //12:8-12:11
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -2637,7 +2637,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "156,159":{
+        "156,159":{ //13:0-13:3
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -2760,7 +2760,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "160,163":{
+        "160,163":{ //13:4-13:7
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -2883,7 +2883,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "164,167":{
+        "164,167":{ //13:8-13:11
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -3006,7 +3006,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "168,171":{
+        "168,171":{ //14:0-14:3
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -3129,7 +3129,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "172,175":{
+        "172,175":{ //14:4-14:7
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -3252,7 +3252,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "176,179":{
+        "176,179":{ //14:8-14:11
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -3375,7 +3375,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "180,183":{
+        "180,183":{ //15:0-15:3
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -3498,7 +3498,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "184,187":{
+        "184,187":{ //15:4-15:7 
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -3621,7 +3621,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
             },
 
         },
-        "188,191":{
+        "188,191":{ //15:8-15:11
             'Cubos':{
                 'rangos':[
                     range(0,32)
