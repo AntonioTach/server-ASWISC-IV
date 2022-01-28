@@ -13,9 +13,13 @@ const res = require('express/lib/response');
 
 //------------------------------Creacion Usuarios--------------------------------
 //Creacion Especialista
+
 usuariosCtrl.createEspecialista = async (req, res) => {
     // console.log(req.body);
     //Tipo 1 = Especialista
+    try {
+        
+    
     const { usuario, contrasena, id_tipo = 1 } = req.body;
     const { nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento, foto_profesional, cedula, curriculum, precio } = req.body;
     //insert en usuarios 
@@ -26,6 +30,9 @@ usuariosCtrl.createEspecialista = async (req, res) => {
 
     //await pool.query('INSERT INTO especialistas set ?', [req.body]);
     res.send({ message: 'Especialista creado!' });
+    } catch (error) {
+        console.log(error)
+    }
 }
 //Creacion Paciente
 usuariosCtrl.createPaciente = async (req, res) => {
@@ -76,9 +83,21 @@ usuariosCtrl.listarPacientes = async (req, res) => {
 
 //------------------------------Listar Usuarios por su tipo--------------------------------
 //Obtener el Especialista por su ID
-usuariosCtrl.buscarEspecialista = async (req, res) => {
+usuariosCtrl.buscarEspecialista = async (req, res) => {  
     const { id } = req.params;                      //Se obtiene una parte de un objeto, en este caso el ID
     const EspecialistaID = await pool.query('SELECT * FROM especialistas WHERE id_usuario = ?', [id]);    //Se devuelve el arreglo con los datos que coincida con el id requerido
+
+    console.log(EspecialistaID, id); //asi se obtiene el arreglo por lo que no es lo mejor
+
+    if (EspecialistaID.length > 0) {
+        return res.json(EspecialistaID[0]); //Se obtiene el objeto
+    }
+    res.status(404).json({ text: "El especialista no existe" }); //Si no existe el ID que se esta buscando tira error 404 y mensaje
+}
+
+usuariosCtrl.buscarEspecialistaid_especialista = async (req, res) => {  
+    const { id } = req.params;                      //Se obtiene una parte de un objeto, en este caso el ID
+    const EspecialistaID = await pool.query('SELECT * FROM especialistas WHERE id_especialista= ?', [id]);    //Se devuelve el arreglo con los datos que coincida con el id requerido
 
     console.log(EspecialistaID, id); //asi se obtiene el arreglo por lo que no es lo mejor
 
@@ -97,7 +116,7 @@ usuariosCtrl.buscarEspecialistaAll = async (req, res) => {
     res.status(404).json({ text: "El Especialista no existe" });
 }
 //Obtener el Paciente por su ID
-usuariosCtrl.buscarPaciente = async (req, res) => {
+usuariosCtrl.buscarPaciente = async (req, res) => {  
     const { id } = req.params;
     const PacienteID = await pool.query('SELECT * FROM pacientes p INNER JOIN usuarios u ON p.id_usuario = u.id_usuario WHERE p.id_usuario = ?', [id]);
 

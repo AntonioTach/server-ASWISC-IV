@@ -16,6 +16,7 @@ router.get('/buscar-Pacientes/', usuariosCtrl.listarPacientes);
 //Obtener Un Usuario por su TIPO e ID (especialistas y pacientes) [GET]
 router.get('/buscar-EspecialistaAll/:id', usuariosCtrl.buscarEspecialistaAll);
 router.get('/buscar-Especialista/:id', usuariosCtrl.buscarEspecialista);
+router.get('/buscar-Especialista2/:id',usuariosCtrl.buscarEspecialistaid_especialista)
 router.get('/buscar-Paciente/:id', usuariosCtrl.buscarPaciente);
 router.get('/buscar-PacienteNombre/:id', usuariosCtrl.buscarPacienteNombre);
 
