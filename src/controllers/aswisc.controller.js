@@ -74,8 +74,112 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
                     ],
                 ],
             },
+            'Digitos': {
+                'rangos': [
+                    range(0, 32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
         },
-        "76,78": {
+        "76,79": {
             'Cubos': {
                 'rangos': [
                     range(0,68)
@@ -83,9 +187,121 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
                 'valores': [
                     []
                 ],
-            }
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
         },
-        "79,81":{
+        "80,83":{
             'Cubos':{
                 'rangos':[
                     range(0,32)
@@ -93,35 +309,3809 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
                 'valores':[
                     []
                 ],
-            }
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
         },
-        "82,84":{
+        "84,87":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
 
         },
-        "85,87":{
+        "88,91":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
 
         },
-        "88,90":{
+        "92,95":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
 
         },
-        "91:93":{
+        "96:99":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
 
         },
-        "94:96":{
+        "100:103":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
 
         }, 
-        "97,99":{
+        "104,107":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
 
         },
-        "100,102":{
+        "108,111":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
 
         },
-        "103,105":{
+        "112,115":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
 
         },
-        "106,108":{
+        "116,119":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
 
         },
+        "120,123":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "124,127":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "128,131":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "132,135":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "136,139":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "140,143":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "144,147":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "148,151":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "152,155":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "156,159":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "160,163":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "164,167":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "168,171":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "172,175":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "176,179":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "180,183":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "184,187":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "188,191":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "192,195":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "196,199":{
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+
+        },
+        "200,204":{ 
+            'Cubos':{
+                'rangos':[
+                    range(0,32)
+                ],
+                'valores':[
+                    []
+                ],
+            },
+            'Semejanzas': {
+                'rangos': [
+                    range(0,44),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Digitos': {
+                'rangos': [
+                    range(0,32),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Conceptos': {
+                'rangos': [
+                    range(0,28),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Claves': {
+                'rangos': [
+                    range(0,119),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Vocabulario': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'LetrasNumeros': {
+                'rangos': [
+                    range(0,30),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Matrices': {
+                'rangos': [
+                    range(0,35),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Comprension': {
+                'rangos': [
+                    range(0,42),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'BusquedaSimbolos': {
+                'rangos': [
+                    range(0,60),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'FigurasIncompletas': {
+                'rangos': [
+                    range(0,38),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Registros': {
+                'rangos': [
+                    range(0,136),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Informacion': {
+                'rangos': [
+                    range(0,33),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Aritmetica': {
+                'rangos': [
+                    range(0,34),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+            'Pistas': {
+                'rangos': [
+                    range(0,68),
+                ],
+                'valores': [
+                    [ ],
+                ],
+            },
+        }
     };
 
     for (let rangoMeses of Object.keys(data)) {
