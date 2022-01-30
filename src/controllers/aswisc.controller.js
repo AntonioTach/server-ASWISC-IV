@@ -496,63 +496,123 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
       //7:0-7:3
       Cubos: {
         rangos: [range(0, 32)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       Semejanzas: {
         rangos: [range(0, 44)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       Digitos: {
         rangos: [range(0, 32)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       Conceptos: {
         rangos: [range(0, 28)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       Claves: {
         rangos: [range(0, 119)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       Vocabulario: {
         rangos: [range(0, 68)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       LetrasNumeros: {
         rangos: [range(0, 30)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       Matrices: {
         rangos: [range(0, 35)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       Comprension: {
         rangos: [range(0, 42)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       BusquedaSimbolos: {
         rangos: [range(0, 60)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       FigurasIncompletas: {
         rangos: [range(0, 38)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       Registros: {
         rangos: [range(0, 136)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       Informacion: {
         rangos: [range(0, 33)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       Aritmetica: {
         rangos: [range(0, 34)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
       Pistas: {
         rangos: [range(0, 68)],
-        valores: [[]],
+        valores: [
+          [
+
+          ],
+        ],
       },
     },
     "88,91": {
