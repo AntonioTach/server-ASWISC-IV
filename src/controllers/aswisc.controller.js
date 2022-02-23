@@ -47,6 +47,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   //         data: response,
   //     });
   debugger;
+  console.log(diff);
   let data = {
     "72,75": {
       //Edades 6:0-6:3
