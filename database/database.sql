@@ -129,7 +129,7 @@ ALTER TABLE pacientes
 
 CREATE TABLE pagos(
     id_pago INT(11) NOT NULL,
-    precio doble() NOT NULL,
+    precio_doble INT(11) NOT NULL,
     estatus INT(11) NOT NULL,
     id_paciente INT(11) NOT NULL,
     id_especialista INT(12) NOT NULL,

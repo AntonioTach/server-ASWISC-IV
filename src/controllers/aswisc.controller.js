@@ -5214,7 +5214,8 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   response["escalaTotal"] = escalaTotal;
   response["puntuacionMediaSubprueba"] = (escalaTotal / 10).toFixed(0);
   response["razonamientoPerceptual"] = razonamientoPerceptual;
-  response["puntuacionMediaComprensionVerbal"] = (
+  //Puse 2 porque hay otra que se llama igual ?
+  response["puntuacionMediaComprensionVerbal2"] = ( 
     razonamientoPerceptual / 3
   ).toFixed(0);
   response["velociedadDeProcesamiento"] = velociedadDeProcesamiento;
