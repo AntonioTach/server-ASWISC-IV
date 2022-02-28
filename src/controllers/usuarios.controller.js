@@ -7,6 +7,7 @@ const { response } = require('express');
 const { query } = require('../database');
 const { json } = require('express/lib/response');
 const res = require('express/lib/response');
+const { Connection } = require('promise-mysql');
 
 
 
@@ -51,6 +52,9 @@ usuariosCtrl.registrarPaciente = async (req, res) => {
     // console.log(req.body);
     const { usuario, contrasena, id_tipo = 2 } = req.body; //Datos para tabla Usuarios
     const { id_usuario, nombre, sexo, email, nacimiento, telefono, precio_consulta } = req.body;
+    //console.log(req.body);
+    // const id_especialista = id_usuario;
+    // console.log(id_especialista);
     //el id_usuario es del Especialista que esta registrando a dicho Paciente
     //Se debe obtener el id_esepcialista del especialista registrando
     //const id_especialista = await pool.query(`SELECT id_especialista FROM especialistas WHERE id_usuario = ${id_usuario}`);
@@ -59,14 +63,18 @@ usuariosCtrl.registrarPaciente = async (req, res) => {
     //console.log(data);
     //console.log(id_especialista);
     //insert en Usuarios
-    let sqlUsuarios = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
-    await pool.query(sqlUsuarios); //Sentencia en Usuarios
 
-    //insert en Pacientes
-    let sqlPacientes = `INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista,precio_consulta) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${id_usuario}', '${precio_consulta}')`;
-    await pool.query(sqlPacientes);
+    //ASI JALA TACH, pero hay veces que no la ptm
+    let sqlUsuarios = await pool.query(`INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`);
+    let sqlPacientes = await pool.query(`INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista, precio_consulta) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${id_usuario}', '${precio_consulta}')`);
+    
+    //ASI JALA LEO CREO
+    // let sqlUsuarios = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`
+    // await pool.query(sqlUsuarios);
+    // let sqlPacientes = `INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista, precio_consulta) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${id_usuario}', '${precio_consulta}')`;
+    // await pool.query(sqlPacientes);
 
-
+    
 }
 //------------------------------Listar Usuarios por su tipo--------------------------------
 //Listar Todos los Especialistas
@@ -267,7 +275,8 @@ usuariosCtrl.verPruebaPaciente = async (req, res) => {
 //Subir Tarea
 usuariosCtrl.subirTarea = async (req, res) => {
     const { titulo, id_paciente, descripcion, documento } = req.body;
-    await pool.query(`INSERT into tareas(id_paciente, titulo, descripcion, documento) values(${id_paciente}, '${titulo}', '${descripcion}', '${documento}' )`);
+    console.log(req.body);
+    await pool.query(`INSERT INTO tareas(id_paciente, titulo, descripcion, documento) values('${id_paciente}', '${titulo}', '${descripcion}', '${documento}')`);
     res.send({ message: 'Tarea asignada Correctamente' });
 }
 //tomar una prueba
@@ -328,6 +337,11 @@ usuariosCtrl.getTareasPaciente = async (req, res) => {
     const { id } = req.params;
     const tareas = await pool.query(`SELECT * FROM tareas t INNER JOIN pacientes p ON p.id_paciente=t.id_paciente WHERE p.id_usuario=${id}`);
     res.json(tareas);
+}
+usuariosCtrl.deleteTarea = async (req, res) => {
+    const { id } = req.params;
+    await pool.query('DELETE FROM tareas WHERE id_tarea = ?', [id]);
+    res.send({message: 'Tarea Eliminada '});
 }
 usuariosCtrl.modificarPrecio = async (req, res) => {
     const { id } = req.params;
