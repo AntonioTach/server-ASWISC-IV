@@ -3,6 +3,7 @@ const aswiscCtrl = {};
 const e = require("express");
 const pool = require("../database");
 const res = require("express/lib/response");
+
 //----------------------Solucion Automatizada WISC-IV "ASWISC-IV"----------------------------
 aswiscCtrl.automatizarPrueba = async (req, res) => {
   debugger;
@@ -24,6 +25,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
     Semejanzas = 0,
     Vocabulario = 0,
     id_usuario,
+    id_especialista,
   } = req.body;
   let range = (start, end) => {
     return Array(end - start + 1)
@@ -34,7 +36,13 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   let fechaEscogida = new Date(Fecha);
   let sql = ` SELECT nacimiento FROM pacientes where id_usuario = ${id_usuario}`;
   let paciente = (await pool.query(sql))[0];
+  let sql2 = ` SELECT nombre FROM pacientes where id_usuario = ${id_usuario}`;
+  let nombrePac = (await pool.query(sql2))[0];
+  let namePaciente = new String(nombrePac.nombre);
   let fechaNacimiento = new Date(paciente.nacimiento);
+  let sql3 = ` SELECT nombre FROM especialistas where id_especialista = ${id_especialista}`;
+  let nombreEsp = (await pool.query(sql3))[0];
+  let nameEspecialista = new String(nombreEsp.nombre);
   let diff =
     fechaEscogida.getMonth() -
     fechaNacimiento.getMonth() +
@@ -5206,6 +5214,8 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   }, 0);
 
   response["nacimiento"] = fechaNacimiento;
+  response["nombrePaciente"] = namePaciente;
+  response["nombreEspecialista"] = nameEspecialista;
   response["fechaEvaluacion"] = fechaEscogida;
   response["comprensionVerbal"] = comprensionVerbal;
   response["puntuacionMediaCompresionVerbal"] = (comprensionVerbal / 3).toFixed(
@@ -5220,6 +5230,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   ).toFixed(0);
   response["velociedadDeProcesamiento"] = velociedadDeProcesamiento;
   response["memoriaDeTrabajo"] = memoriaDeTrabajo;
+  
 
   let rangos = range(45, 155);
 
