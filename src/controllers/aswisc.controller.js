@@ -36,13 +36,13 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   let fechaEscogida = new Date(Fecha);
   let sql = ` SELECT nacimiento FROM pacientes where id_usuario = ${id_usuario}`;
   let paciente = (await pool.query(sql))[0];
-  let sql2 = ` SELECT nombre FROM pacientes where id_usuario = ${id_usuario}`;
-  let nombrePac = (await pool.query(sql2))[0];
-  let namePaciente = new String(nombrePac.nombre);
+  //let sql2 = ` SELECT nombre FROM pacientes where id_usuario = ${id_usuario}`;
+  //let nombrePac = (await pool.query(sql2))[0];
+  //let namePaciente = new String(nombrePac.nombre);
   let fechaNacimiento = new Date(paciente.nacimiento);
-  let sql3 = ` SELECT nombre FROM especialistas where id_especialista = ${id_especialista}`;
-  let nombreEsp = (await pool.query(sql3))[0];
-  let nameEspecialista = new String(nombreEsp.nombre);
+  //let sql3 = ` SELECT nombre FROM especialistas where id_especialista = ${id_especialista}`;
+  //let nombreEsp = (await pool.query(sql3))[0];
+  //let nameEspecialista = new String(nombreEsp.nombre);
   let diff =
     fechaEscogida.getMonth() -
     fechaNacimiento.getMonth() +
@@ -5214,8 +5214,8 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   }, 0);
 
   response["nacimiento"] = fechaNacimiento;
-  response["nombrePaciente"] = namePaciente;
-  response["nombreEspecialista"] = nameEspecialista;
+  //response["nombrePaciente"] = namePaciente;
+  //response["nombreEspecialista"] = nameEspecialista;
   response["fechaEvaluacion"] = fechaEscogida;
   response["comprensionVerbal"] = comprensionVerbal;
   response["puntuacionMediaCompresionVerbal"] = (comprensionVerbal / 3).toFixed(
