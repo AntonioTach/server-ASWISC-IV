@@ -8,6 +8,7 @@ const { query } = require('../database');
 const { json } = require('express/lib/response');
 const res = require('express/lib/response');
 const { Connection } = require('promise-mysql');
+const bcryptjs = require('bcryptjs');
 
 
 
@@ -23,8 +24,11 @@ usuariosCtrl.createEspecialista = async (req, res) => {
     
     const { usuario, contrasena, id_tipo = 1 } = req.body;
     const { nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento, foto_profesional, cedula, curriculum, precio } = req.body;
+
+    let contrasenaEncriptada = usuariosCtrl.encriptar(contrasena)
+    console.log(contrasenaEncriptada)
     //insert en usuarios 
-    let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
+    let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasenaEncriptada}', '${id_tipo}')`;
     await pool.query(sql);
     let sqlEspecialistas = `INSERT INTO especialistas(id_usuario, nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento,foto_profesional,curriculum,cedula,precio_consulta_general,tiempo_consulta) values (LAST_INSERT_ID(), '${nombre}', '${direccion}', '${email}', '${profesion}', '${telefono}', '${sexo}', '${estudios}', '${nacimiento}','${foto_profesional.toString()}','${curriculum.toString()}','${cedula.toString()}',${precio}, 1)`;
     await pool.query(sqlEspecialistas);
@@ -35,14 +39,18 @@ usuariosCtrl.createEspecialista = async (req, res) => {
         console.log(error) 
     }
 }
+
 //Creacion Paciente
 usuariosCtrl.createPaciente = async (req, res) => {
     ///console.log(req.body);
     //Tipo 2 = Paciente
     const { usuario, contrasena, id_tipo = 2 } = req.body;
     const { nombre, sexo, email, nacimiento, telefono } = req.body;
+
+    let contrasenaEncriptada = usuariosCtrl.encriptar(contrasena)
+    console.log(contrasenaEncriptada)
     //insert en usuarios 
-    let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`;
+    let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasenaEncriptada}', '${id_tipo}')`;
     await pool.query(sql);
     let sqlPacientes = `INSERT INTO pacientes(id_usuario, nombre, sexo, email, nacimiento, telefono) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}')`;
     await pool.query(sqlPacientes);
@@ -421,7 +429,71 @@ usuariosCtrl.signin = async (req, res) => {
     );
 
 }
+/*
+usuariosCtrl.signin = async (req, res) => {
+    const { usuario, contrasena } = req.body;
+    let tipo;
+    console.log(req.body);
+    // let encriptarContraseña = usuariosCtrl.encriptar(contrasena)
+    // console.log(encriptarContraseña)
 
+    //Obtener USUARIO Y ID_TIPO CUANDO EL NOMBRE DE USUARIO Y CONTRASENA COINCIDA
+    await pool.query(`SELECT usuario, contrasena, id_tipo, id_usuario FROM usuarios WHERE usuario=?`,
+        [usuario],
+        async (err, rows, fields) => {
+            // console.log(rows)
+            // console.log(fields)
+            if (err) {
+                console.log(err);
+            }
+            if (rows.length > 0) {
+                console.log("  contraseña encriptada  ", rows[0].contrasena)
+                console.log("  contraseña plana  ", contrasena)
+
+                // const verified = bcrypt.compareSync(contrasena, rows[0].contrasena);
+                // console.log(verified, "#################");
+
+                // let aux = await bcryptjs.compare(contrasena, rows[0].contrasena)
+                // console.log("iguales:  ", aux)
+
+                
+                bcryptjs.compare(contrasena, rows[0].contrasena).then(function (err, result) 
+                {
+                    if(err){
+                        console.log("error al comparar la contraseña")
+                        return res.status(401).send("error al comparar la contraseña");
+                    }
+                    console.log(result)
+                    if(result == true){
+                        console.log(result)
+
+                        let data = JSON.stringify(rows[0]); //Guardado de dato 
+                        const token = jwt.sign(data, 'warzone');    //creacion del token
+                        let usuario = JSON.stringify(rows[0].usuario);  //obtener usuario
+                        let id_tipo = JSON.stringify(rows[0].id_tipo);  //obtener id tipo
+                        let id_usuario = JSON.stringify(rows[0].id_usuario);//obtener id usuario
+                        console.log(id_usuario);
+                        //res.send({message: token});post
+                        //console.log(token)
+                        // console.log('Sesion iniciada');
+                        return res.status(200).json({ token, usuario, id_tipo, id_usuario });
+                    }else{
+                        console.log("El usuario no existe")
+                        return res.status(401).send("El usuario no existe");
+                    }
+                })
+               
+
+            }
+            else {
+                res.send(false);
+                
+            }
+        }
+    );
+
+}
+ */
 
 
 
@@ -586,4 +658,25 @@ usuariosCtrl.actualizarDatos = async (req, res) => {
     let sqlPacientes = `INSERT INTO pacientes(id_usuario, nombre, sexo, email, nacimiento, telefono) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}')`;
     await pool.query(sqlPacientes);
 }
+
+
+// Encriptar y desencriptar
+usuariosCtrl.encriptar = (contrasena) => {
+    //se encripta la contraseña que le pasan como parametro con un salto de 8 y despues la retorna
+    return bcryptjs.hashSync(contrasena, 8);
+};
+
+usuariosCtrl.desencriptar = (contrasenaEnviada, contraseña) => {
+    // contraseñas de prueba
+    let contraseñaPasada = contrasenaEnviada,
+        contraseñaGuardadaEnLaBD = contraseña;
+
+    // compara la contraseña que le pasaron y la del usuario que se encuentra almacenada
+    // entonces se encripta la contraseña que le pasaron y la compara con la encriptada guardada en la bd
+    // esto por motivos de seguridad, para no desencriptar una y compararala asi
+    return bcryptjs.compare(contraseñaPasada, contraseñaGuardadaEnLaBD);
+};
+
+
+
 module.exports = usuariosCtrl;
