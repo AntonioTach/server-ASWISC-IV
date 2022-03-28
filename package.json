@@ -10,7 +10,7 @@
   "author": "Antonio y Leonardo",
   "license": "ISC",
   "dependencies": {
-    "@sendgrid/mail": "^7.6.0",
+    "@sendgrid/mail": "^7.6.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

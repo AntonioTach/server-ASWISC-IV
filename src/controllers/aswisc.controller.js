@@ -53,13 +53,10 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
     fechaEscogida.getMonth() -
     fechaNacimiento.getMonth() +
     12 * (fechaEscogida.getFullYear() - fechaNacimiento.getFullYear());
-  // if (diff < 72 || diff > 204)
-  //     return res.json({
-  //         success: false,
-  //         message:
-  //             "La prueba no se puede automatizar. Por favor ingresa una fecha válida.",
-  //         data: response,
-  //     });
+    if (diff < 72 || diff > 204){
+      res.send(false);
+    }
+      
   debugger;
   console.log(diff);
   let data = {
@@ -5166,6 +5163,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   }
   //debugger;
   // { 'Cubos': 12, 'Semejanzas': 2 }
+
   let comprensionVerbal = Object.keys(response).reduce((acc, prueba) => {
     let indices = [
       "Semejanzas",

@@ -10,7 +10,8 @@ const res = require('express/lib/response');
 const { Connection } = require('promise-mysql');
 const bcryptjs = require('bcryptjs');
 
-
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey('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');
 
 
 //------------------------------Creacion Usuarios--------------------------------
@@ -46,13 +47,14 @@ usuariosCtrl.createPaciente = async (req, res) => {
     //Tipo 2 = Paciente
     const { usuario, contrasena, id_tipo = 2 } = req.body;
     const { nombre, sexo, email, nacimiento, telefono } = req.body;
+    const {nombretutor, telefonotutor } = req.body;
 
     let contrasenaEncriptada = usuariosCtrl.encriptar(contrasena)
     console.log(contrasenaEncriptada)
     //insert en usuarios 
     let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasenaEncriptada}', '${id_tipo}')`;
     await pool.query(sql);
-    let sqlPacientes = `INSERT INTO pacientes(id_usuario, nombre, sexo, email, nacimiento, telefono) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}')`;
+    let sqlPacientes = `INSERT INTO pacientes(id_usuario, nombre, sexo, email, nacimiento, telefono, nombretutor, telefonotutor) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}', '${nacimiento}', '${telefono}', '${nombretutor}', '${telefonotutor}')`;
     await pool.query(sqlPacientes);
 }
 //Registrar a un Paciente por medio del Especialista
@@ -592,27 +594,29 @@ usuariosCtrl.identificarEmailPaciente = async (req, res) => {
 //Mandar email 
 usuariosCtrl.mandarEmail = async (req, res) => {
     const {email, token} = req.body;
-    const sgMail = require("@sendgrid/mail");
-    require("dotenv").config();
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-   
+    // const sgMail = require("@sendgrid/mail");
+    // require("dotenv").config();
+    // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    let to = email;
+    let from = 'aswisctliv@gmail.com';
+    let subject = 'TOKEN ASWSIC-IV';
+    let text = token;
     const msg = {
-        to: email, 
-        from: 'aswisc@gmail.com', 
-        subject: 'TOKEN ASWSIC-IV',
-        text: token,
+        to,
+        from,
+        subject,
+        text
     }
 
-    sgMail
-        .send(msg)
-        .then((response) => {
-            console.log(response[0].statusCode)
-            console.log(response[0].headers)
+    sgMail.send(msg, function(err, info) {
+        if(err){
+            console.log('Email no enviado');
+            console.log(err);
+        }
+        else {
             console.log('Email enviado');
-          })
-          .catch((error) => {
-            console.error(error)
-          })
+        }
+    })
 
 }
 //Update Contrasena Especialista
