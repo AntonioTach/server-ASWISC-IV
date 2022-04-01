@@ -302,9 +302,31 @@ usuariosCtrl.getTareasEspecialista = async (req, res) => {
     res.json(tareas);
 }
 usuariosCtrl.verTarea = async (req, res) => {
-    const { id } = req.params;
-    const tarea = await pool.query(`SELECT * FROM tareas WHERE id_tarea=${id}`);
-    res.json(tarea);
+    try{
+        const { id } = req.params;
+        // const tarea = await pool.query(`SELECT * FROM tareas WHERE id_tarea=${id}`);
+        // let tareaJSON = JSON.stringify(tarea);
+        // let tareaJSON2 = JSON.parse(tareaJSON);
+        // let idPaciente = tareaJSON2[0].id_paciente;
+        // const paciente = await pool.query(`SELECT nombre FROM pacientes WHERE id_paciente=${idPaciente}`);
+        // let pacienteJSON = JSON.stringify(paciente);
+        // let pacienteJSON2 = JSON.parse(pacienteJSON);
+
+        const tareaInner = await pool.query(`
+            SELECT id_tarea, titulo, descripcion, documento, nombre FROM tareas 
+            INNER JOIN pacientes ON tareas.id_paciente = pacientes.id_paciente 
+            WHERE id_tarea=${id}`); 
+
+        // tareaJSON2.push({"name": pacienteJSON });
+        // console.log(tareaJSON2);
+        // tareaJson = JSON.stringify(tareaInner);
+        // console.log(tareaJson);
+        res.json(tareaInner);
+    }
+    catch(err){
+        console.log(err);
+    }
+    
 }
 //tomar todos los articulos
 usuariosCtrl.articulosLista = async (req, res) => {
