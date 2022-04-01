@@ -289,6 +289,26 @@ usuariosCtrl.subirTarea = async (req, res) => {
     await pool.query(`INSERT INTO tareas(id_paciente, titulo, descripcion, documento) values('${id_paciente}', '${titulo}', '${descripcion}', '${documento}')`);
     res.send({ message: 'Tarea asignada Correctamente' });
 }
+//Actualizar tarea
+usuariosCtrl.updateTarea = async (req, res) => {
+    try {
+        const { titulo, id_paciente, descripcion, documento } = req.body;
+        console.log(req.body.titulo);
+        console.log(req.body.id_paciente);
+        console.log(req.body);
+        console.log(req.body);
+        console.log(req.params.id);
+        console.log("entro a actualizar tarea")
+        await pool.query(`INSERT INTO tareas(id_paciente, titulo, descripcion, documento) values('${id_paciente}', '${titulo}', '${descripcion}', '${documento}')`);
+        res.send({ message: 'Tarea actualizada Correctamente' });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({message: "No se pudo modificar la tarea"})
+    }
+
+}
+
 //tomar una prueba
 usuariosCtrl.getPrueba = async (req, res) => {
     const { id } = req.params;

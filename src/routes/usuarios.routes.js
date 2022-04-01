@@ -64,6 +64,8 @@ router.get('/prueba/:id', usuariosCtrl.getPrueba);
 router.get('/tareas/:id', usuariosCtrl.getTareasEspecialista);
 //Subir Tarea
 router.post('/tarea', usuariosCtrl.subirTarea);
+//Actualizar tarea
+router.put('/actualizar-tarea/:id', usuariosCtrl.updateTarea);
 //Eliminar Tarea
 router.delete('/delete-tarea/:id', usuariosCtrl.deleteTarea);
 //ver una tarea
