@@ -289,17 +289,15 @@ usuariosCtrl.subirTarea = async (req, res) => {
     await pool.query(`INSERT INTO tareas(id_paciente, titulo, descripcion, documento) values('${id_paciente}', '${titulo}', '${descripcion}', '${documento}')`);
     res.send({ message: 'Tarea asignada Correctamente' });
 }
+
 //Actualizar tarea
 usuariosCtrl.updateTarea = async (req, res) => {
     try {
-        const { titulo, id_paciente, descripcion, documento } = req.body;
-        console.log(req.body.titulo);
-        console.log(req.body.id_paciente);
-        console.log(req.body);
-        console.log(req.body);
-        console.log(req.params.id);
-        console.log("entro a actualizar tarea")
-        await pool.query(`INSERT INTO tareas(id_paciente, titulo, descripcion, documento) values('${id_paciente}', '${titulo}', '${descripcion}', '${documento}')`);
+        const id_tarea = req.params.id
+        const { titulo, descripcion, documento } = req.body;
+
+        await pool.query(`UPDATE tareas SET titulo='${titulo}', descripcion='${descripcion}', documento='${documento}' WHERE id_tarea='${id_tarea}'`);
+        // await pool.query(`UPDATE tareas SET id_paciente='${id_paciente}', titulo='${titulo}', descripcion='${descripcion}', documento='${documento}' WHERE id_tarea='${id_tarea}'`);
         res.send({ message: 'Tarea actualizada Correctamente' });
 
     } catch (error) {
@@ -333,7 +331,7 @@ usuariosCtrl.verTarea = async (req, res) => {
         // let pacienteJSON2 = JSON.parse(pacienteJSON);
 
         const tareaInner = await pool.query(`
-            SELECT id_tarea, titulo, descripcion, documento, nombre FROM tareas 
+            SELECT * FROM tareas 
             INNER JOIN pacientes ON tareas.id_paciente = pacientes.id_paciente 
             WHERE id_tarea=${id}`); 
 
