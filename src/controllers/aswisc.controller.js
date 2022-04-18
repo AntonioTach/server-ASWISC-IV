@@ -36,18 +36,39 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   let fechaEscogida = new Date(Fecha);
   let sql = ` SELECT nacimiento FROM pacientes where id_usuario = ${id_usuario}`;
   let paciente = (await pool.query(sql))[0];
-  // id_usuario identificar bien cual es??
-  //MEJORAR SENTENCIA OBTENER EL NOMBRE DEL PACIENTE
-  //let sql2 = ` SELECT nombre FROM pacientes where id_usuario = ${id_usuario}`;
-  //let nombrePac = (await pool.query(sql2))[0];
-  //let namePaciente = new String(nombrePac.nombre);
+  // id_usuario es el del paciente al que se le hizo la prueba
+  //SENTENCIA PARA NOMBRE DEL PACIENTE
+  try{
+    let sql_name = await pool.query(`SELECT nombre FROM pacientes WHERE id_usuario = '${id_usuario}'`);
+    let name_usuarioJSON = JSON.stringify(sql_name);
+    let nameJSON2 = JSON.parse(name_usuarioJSON);
+    let nombrePaciente = nameJSON2[0].nombre;
+    response["namePaciente"] = nombrePaciente;
+  }catch(err){
+    console.log(err);
+  }
+  
 
   let fechaNacimiento = new Date(paciente.nacimiento);
 
   //MEJORAR SENTENCIA OBTENER EL NOMBRE DEL ESPECIALISTA
-  //let sql3 = ` SELECT nombre FROM especialistas where id_especialista = ${id_especialista}`;
-  //let nombreEsp = (await pool.query(sql3))[0];
-  //let nameEspecialista = new String(nombreEsp.nombre);
+  try{
+    let sql_id_especialista = await pool.query(`SELECT id_especialista FROM pacientes WHERE id_usuario = '${id_usuario}'`);
+    let usuario_especialistaJSON = JSON.stringify(sql_id_especialista);
+    let usuario_especialistaJSON2 = JSON.parse(usuario_especialistaJSON);
+    let id_usuario_pos2 = usuario_especialistaJSON2[0].id_especialista;
+    try {
+      let sql_nombreEspecialista = await pool.query(`SELECT nombre FROM especialistas WHERE id_especialista = '${id_usuario_pos2}'`);
+      let nombreEspecialistaJSON = JSON.stringify(sql_nombreEspecialista);
+      let nameJSON2Especialista = JSON.parse(nombreEspecialistaJSON);
+      let nombreEspecialista = nameJSON2Especialista[0].nombre;
+      response["nameEspecialista"] = nombreEspecialista;
+      }catch(err){
+      console.log(err);
+    }
+  }catch(err){
+    console.log(err);
+  }
 
   let diff =
     fechaEscogida.getMonth() -
@@ -58,7 +79,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
     }
       
   debugger;
-  console.log(diff);
+  console.log('diff meses: ', diff);
   let data = {
     "72,75": {
       //Edades 6:0-6:3
@@ -5218,7 +5239,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   }, 0);
 
   response["nacimiento"] = fechaNacimiento;
-  //response["nombrePaciente"] = namePaciente;
+ 
   //response["nombreEspecialista"] = nameEspecialista;
   response["fechaEvaluacion"] = fechaEscogida;
   response["comprensionVerbal"] = comprensionVerbal;
