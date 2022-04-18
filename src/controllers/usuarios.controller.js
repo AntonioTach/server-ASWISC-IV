@@ -59,24 +59,32 @@ usuariosCtrl.createPaciente = async (req, res) => {
 }
 //Registrar a un Paciente por medio del Especialista
 usuariosCtrl.registrarPaciente = async (req, res) => {
+    // console.log(req.body);
     const { usuario, contrasena, id_tipo = 2 } = req.body; //Datos para tabla Usuarios
     const { id_usuario, nombre, sexo, email, nacimiento, telefono, precio_consulta } = req.body;
+    //console.log(req.body);
+    // const id_especialista = id_usuario;
+    // console.log(id_especialista);
+    //el id_usuario es del Especialista que esta registrando a dicho Paciente
+    //Se debe obtener el id_esepcialista del especialista registrando
+    //const id_especialista = await pool.query(`SELECT id_especialista FROM especialistas WHERE id_usuario = ${id_usuario}`);
+    ///console.log(id_especialista); // Este es el id_especialista
+    //let data = JSON.stringify(id_especialista); //Convertimos el RowData a data, que es el id_especialista
+    //console.log(data);
+    //console.log(id_especialista);
+    //insert en Usuarios
 
-    try{
-        let sqlUsuarios = await pool.query(`INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`);
-        let id_usuario_especialista = await pool.query(`SELECT id_usuario FROM usuarios WHERE usuario = '${usuario}'`);
-        //Desconversion de ROW data package a JSON en [0].id_usuario
-        let id_usuario_especialistaJSON = JSON.stringify(id_usuario_especialista);
-        let id_usuario_especialistaJSON2 = JSON.parse(id_usuario_especialistaJSON);
-        let id_usuario_pos = id_usuario_especialistaJSON2[0].id_usuario;
-        try{
-            let sqlPacientes = await pool.query(`INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista, precio_consulta) values ('${id_usuario_pos}', '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${id_usuario}', '${precio_consulta}')`);
-        }catch(err){
-            console.log(err);
-        }
-    }catch(err){
-        console.log(err);
-    }
+    //ASI JALA TACH, pero hay veces que no la ptm
+    let sqlUsuarios = await pool.query(`INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`);
+    let sqlPacientes = await pool.query(`INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista, precio_consulta) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${id_usuario}', '${precio_consulta}')`);
+    
+    //ASI JALA LEO CREO
+    // let sqlUsuarios = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`
+    // await pool.query(sqlUsuarios);
+    // let sqlPacientes = `INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista, precio_consulta) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${id_usuario}', '${precio_consulta}')`;
+    // await pool.query(sqlPacientes);
+
+    
 }
 //------------------------------Listar Usuarios por su tipo--------------------------------
 //Listar Todos los Especialistas
