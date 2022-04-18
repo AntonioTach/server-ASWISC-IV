@@ -11,7 +11,7 @@ const { Connection } = require('promise-mysql');
 const bcryptjs = require('bcryptjs');
 
 const sgMail = require('@sendgrid/mail');
-
+sgMail.setApiKey('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');
 
 
 //------------------------------Creacion Usuarios--------------------------------
@@ -105,7 +105,7 @@ usuariosCtrl.buscarEspecialista = async (req, res) => {
     const { id } = req.params;                      //Se obtiene una parte de un objeto, en este caso el ID
     const EspecialistaID = await pool.query('SELECT * FROM especialistas WHERE id_usuario = ?', [id]);    //Se devuelve el arreglo con los datos que coincida con el id requerido
 
-    //console.log(EspecialistaID, id); //asi se obtiene el arreglo por lo que no es lo mejor
+    console.log(EspecialistaID, id); //asi se obtiene el arreglo por lo que no es lo mejor
 
     if (EspecialistaID.length > 0) {
         return res.json(EspecialistaID[0]); //Se obtiene el objeto
@@ -117,7 +117,7 @@ usuariosCtrl.buscarEspecialistaid_especialista = async (req, res) => {
     const { id } = req.params;                      //Se obtiene una parte de un objeto, en este caso el ID
     const EspecialistaID = await pool.query('SELECT * FROM especialistas WHERE id_especialista= ?', [id]);    //Se devuelve el arreglo con los datos que coincida con el id requerido
 
-    //console.log(EspecialistaID, id); //asi se obtiene el arreglo por lo que no es lo mejor
+    console.log(EspecialistaID, id); //asi se obtiene el arreglo por lo que no es lo mejor
 
     if (EspecialistaID.length > 0) {
         return res.json(EspecialistaID[0]); //Se obtiene el objeto
@@ -139,7 +139,7 @@ usuariosCtrl.buscarPaciente = async (req, res) => {
     const PacienteID = await pool.query('SELECT * FROM pacientes p INNER JOIN usuarios u ON p.id_usuario = u.id_usuario WHERE p.id_usuario = ?', [id]);
 
     if (PacienteID.length > 0) {
-        //console.log(PacienteID)
+        console.log(PacienteID)
         return res.json(PacienteID); //Se obtiene el objeto
     }
     res.status(404).json({ text: "El paciente no existe" });
@@ -148,7 +148,7 @@ usuariosCtrl.buscarPaciente = async (req, res) => {
 usuariosCtrl.buscarPacienteNombre = async (req, res) => {
     const { id } = req.params;
     const paciente = await pool.query('SELECT pacientes.nombre, pacientes.sexo, pacientes.nacimiento, pacientes.email, pacientes.telefono, usuarios.usuario, usuarios.contrasena FROM pacientes INNER JOIN usuarios ON pacientes.id_usuario = usuarios.id_usuario WHERE usuarios.id_usuario = ?', [id]);
-    //console.log(paciente);
+    console.log(paciente);
     return res.json(paciente);
     // return res.json({ paciente, usuario});
 }
@@ -285,7 +285,7 @@ usuariosCtrl.verPruebaPaciente = async (req, res) => {
 //Subir Tarea
 usuariosCtrl.subirTarea = async (req, res) => {
     const { titulo, id_paciente, descripcion, documento } = req.body;
-    //console.log(req.body);
+    console.log(req.body);
     await pool.query(`INSERT INTO tareas(id_paciente, titulo, descripcion, documento) values('${id_paciente}', '${titulo}', '${descripcion}', '${documento}')`);
     res.send({ message: 'Tarea asignada Correctamente' });
 }
@@ -396,7 +396,7 @@ usuariosCtrl.deleteTarea = async (req, res) => {
 usuariosCtrl.modificarPrecio = async (req, res) => {
     const { id } = req.params;
     const { precio_consulta_general } = req.body;
-    //console.log(precio_consulta_general);
+    console.log(precio_consulta_general);
     await pool.query(`UPDATE especialistas SET precio_consulta_general=${precio_consulta_general} WHERE id_especialista=${id}`);
 
     res.send({ message: 'correcto 1' })
@@ -404,7 +404,7 @@ usuariosCtrl.modificarPrecio = async (req, res) => {
 usuariosCtrl.modifcarPrecioPaciente = async (req, res) => {
     const { id } = req.params;
     const { precio_consulta } = req.body;
-    //console.log(precio_consulta, id);
+    console.log(precio_consulta, id);
     // await pool.query(`UPDATE pacientes SET precio_consulta=${precio_consulta} WHERE id_usuario=${id} AND estatus=1`)
     await pool.query(`UPDATE pacientes SET precio_consulta=${precio_consulta} WHERE id_usuario=${id}`)
     res.send({ message: 'correcto 2' })
@@ -442,7 +442,7 @@ usuariosCtrl.verCarrito3 = async (req, res) => {
 usuariosCtrl.signin = async (req, res) => {
     const { usuario, contrasena } = req.body;
     let tipo;
-    //console.log(req.body);
+    console.log(req.body);
     //Obtener USUARIO Y ID_TIPO CUANDO EL NOMBRE DE USUARIO Y CONTRASENA COINCIDA
     await pool.query(`SELECT usuario, id_tipo, id_usuario FROM usuarios WHERE usuario=? and contrasena=?`,
         [usuario, contrasena],
@@ -457,7 +457,7 @@ usuariosCtrl.signin = async (req, res) => {
                 let usuario = JSON.stringify(rows[0].usuario);  //obtener usuario
                 let id_tipo = JSON.stringify(rows[0].id_tipo);  //obtener id tipo
                 let id_usuario = JSON.stringify(rows[0].id_usuario);//obtener id usuario
-                //console.log(id_usuario);
+                console.log(id_usuario);
                 //res.send({message: token});post
                 //console.log(token)
                 // console.log('Sesion iniciada');
