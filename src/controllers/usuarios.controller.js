@@ -11,7 +11,7 @@ const { Connection } = require('promise-mysql');
 const bcryptjs = require('bcryptjs');
 
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
+
 
 
 //------------------------------Creacion Usuarios--------------------------------
