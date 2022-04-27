@@ -439,6 +439,7 @@ usuariosCtrl.verCarrito3 = async (req, res) => {
 // usuariosCtrl.ver
 //-----------------------------Login y creacion TOKEN--------------------------------
 //Login
+// /*
 usuariosCtrl.signin = async (req, res) => {
     const { usuario, contrasena } = req.body;
     let tipo;
@@ -452,6 +453,10 @@ usuariosCtrl.signin = async (req, res) => {
                 console.log(err);
             }
             if (rows.length > 0) {
+
+                
+
+
                 let data = JSON.stringify(rows[0]); //Guardado de dato 
                 const token = jwt.sign(data, 'warzone');    //creacion del token
                 let usuario = JSON.stringify(rows[0].usuario);  //obtener usuario
@@ -471,42 +476,33 @@ usuariosCtrl.signin = async (req, res) => {
     );
 
 }
+// */
+
 /*
 usuariosCtrl.signin = async (req, res) => {
     const { usuario, contrasena } = req.body;
     let tipo;
     console.log(req.body);
-    // let encriptarContraseña = usuariosCtrl.encriptar(contrasena)
-    // console.log(encriptarContraseña)
 
     //Obtener USUARIO Y ID_TIPO CUANDO EL NOMBRE DE USUARIO Y CONTRASENA COINCIDA
     await pool.query(`SELECT usuario, contrasena, id_tipo, id_usuario FROM usuarios WHERE usuario=?`,
         [usuario],
         async (err, rows, fields) => {
-            // console.log(rows)
-            // console.log(fields)
             if (err) {
                 console.log(err);
             }
             if (rows.length > 0) {
-                console.log("  contraseña encriptada  ", rows[0].contrasena)
-                console.log("  contraseña plana  ", contrasena)
+                let datosUsr = rows
+                let contrasenaPlana = contrasena
+                let contraseñaEncriptada = rows[0].contrasena
 
-                // const verified = bcrypt.compareSync(contrasena, rows[0].contrasena);
-                // console.log(verified, "#################");
-
-                // let aux = await bcryptjs.compare(contrasena, rows[0].contrasena)
-                // console.log("iguales:  ", aux)
-
-                
-                bcryptjs.compare(contrasena, rows[0].contrasena).then(function (err, result) 
-                {
+                bcryptjs.compare(contrasenaPlana, contraseñaEncriptada, function (err, result) {
                     if(err){
                         console.log("error al comparar la contraseña")
                         return res.status(401).send("error al comparar la contraseña");
                     }
-                    console.log(result)
-                    if(result == true){
+                    console.log("resultado", result)
+                    if(result){
                         console.log(result)
 
                         let data = JSON.stringify(rows[0]); //Guardado de dato 
@@ -515,13 +511,10 @@ usuariosCtrl.signin = async (req, res) => {
                         let id_tipo = JSON.stringify(rows[0].id_tipo);  //obtener id tipo
                         let id_usuario = JSON.stringify(rows[0].id_usuario);//obtener id usuario
                         console.log(id_usuario);
-                        //res.send({message: token});post
-                        //console.log(token)
-                        // console.log('Sesion iniciada');
                         return res.status(200).json({ token, usuario, id_tipo, id_usuario });
                     }else{
-                        console.log("El usuario no existe")
-                        return res.status(401).send("El usuario no existe");
+                        console.log("El no coincide con la contraseña")
+                        return res.status(401).send("El no coincide con la contraseña");
                     }
                 })
                
