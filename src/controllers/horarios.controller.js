@@ -12,7 +12,7 @@ const oAuth2Client = new OAuth2('57432841693-mijbi1j1o5fmo3vm7t2jpuudjrdqkcov.ap
 
 oAuth2Client.setCredentials({
     refresh_token: 
-    '1//046DzW408YyPZCgYIARAAGAQSNgF-L9IrREZKofmb9BbVXRuWaKK-cyg1kM0ibowQv310kGogtEXZAfVkE7NfN77xSXLxfbpxcw',
+    '1//04u_b6qPr-glACgYIARAAGAQSNgF-L9IrS1-TjE4Dc_08YZXwPK5c3bHjN139SaV-ZGfRs6_6PgTxTf85-dciZ_DCKSFxKsnTPg',
 });
 
 const calendar = google.calendar({ version: 'v3', auth: oAuth2Client })
@@ -20,31 +20,31 @@ const calendar = google.calendar({ version: 'v3', auth: oAuth2Client })
 horariosCtrl.generarVideollamada = async (req, res) => {    
 
     const eventStartTime = new Date();
-    eventStartTime.setDate(eventStartTime.getDate() + 2); //Tomorrow 
+    eventStartTime.setDate(eventStartTime.getDay() + 2); //Tomorrow 
 
     const eventEndTime = new Date();
-    eventEndTime.setDate(eventStartTime.getDate() + 2); 
-    eventEndTime.setDate(eventEndTime.getDate()); //60 minutes later
+    eventEndTime.setDate(eventEndTime.getDay() + 2); 
+    eventEndTime.setMinutes(eventEndTime.getMinutes() + 60) //una hora
 
-    // console.log('Start date: ', eventStartTime);
-    // console.log('End date: ', eventEndTime);
+    console.log('Start date: ', eventStartTime);
+    console.log('End date: ', eventEndTime);
 
     //Configuration 
     const event = {
         summary : 'Segunda prueba Tach', 
-        description: 'Test with Google Meet Gio and Tach love for all people',
+        description: 'Test with Google Meet Izcali and Tach love for all people',
         start : {
-            dateTime : '2022-04-26T09:00:00-09:00',
+            dateTime : eventStartTime,
             timeZone: 'America/Mexico_City',
         },
         end : {
-            dateTime: '2022-04-26T09:00:00-10:00',
+            dateTime: eventEndTime,
             timeZone: 'America/Mexico_City',
         },
         colorId: 1,
         attendees: [
             {'email': 'antach.vihe@gmail.com'}, //Email Especialista
-            {'email': 'giovannienriquezp13@gmail.com'}  //Email Paciente
+            {'email': 'saulizcali@gmail.com'}  //Email Paciente
         ],
         conferenceData: { 
           createRequest: { 
@@ -65,8 +65,8 @@ horariosCtrl.generarVideollamada = async (req, res) => {
 
     calendar.freebusy.query({
         resource: {
-            timeMin: '2022-04-26T09:00:00-09:00',
-            timeMax: '2022-04-26T09:00:00-10:00',
+            timeMin: eventStartTime,
+            timeMax: eventEndTime,
             timeZone: 'America/Mexico_City',
             items: [{ id: 'primary' }],
         }
