@@ -5,5 +5,7 @@ const router = Router();
 //Generacion de Llamada [POST]
 router.post('/horarios/', horariosCtrl.generarVideollamada);
 
+router.post('/addSession/:id', horariosCtrl.addSession);
+
 
 module.exports = router;

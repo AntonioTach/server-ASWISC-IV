@@ -1,3 +1,5 @@
+const pool = require('../database');
+
 const horariosCtrl = {};
 
 const { google } = require('googleapis');
@@ -126,14 +128,35 @@ horariosCtrl.generarVideollamada2 = async(req, res) => {
         appendPre('Event created: ' + event.htmlLink);
       });
         
+    }
+    
+
+
+horariosCtrl.addSession = async(req, res) => {
+  try {
+    // console.log(req.params.id)
+    // console.log(req.body)
+
+    let { eventName, startTime, endTime, idPaciente, precio, descripcion} = req.body;
+    let idEspecilista = req.params.id
+
+    if(descripcion == undefined) descripcion = ".";
+
+    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${descripcion}', '${precio}');`;
+    await pool.query(sql);
+
+    return res.status(200).send({ message: "it works"})
+  } catch (error) {
+    console.error("Error happened\n", error)
+    return res.status(500).send({error: "couldnt add sesion to the calendar"})
+  }
 }
-
-
-// const attendeesEmails = [ { 'email': 'user1@example.com' }, { 'email': 'user2@example.com' } ]; 
-// const event = { 
-//   summary: 'Coding class', 
-//   location: 'Virtual / Google Meet', 
-//   description: 'Learn how to code with Javascript', 
+    
+    // const attendeesEmails = [ { 'email': 'user1@example.com' }, { 'email': 'user2@example.com' } ]; 
+    // const event = { 
+      //   summary: 'Coding class', 
+      //   location: 'Virtual / Google Meet', 
+      //   description: 'Learn how to code with Javascript', 
 //   start: { dateTime: '2022-01-18T09:00:00-07:00', timeZone: 'America/Los_Angeles', }, 
 //   end: { dateTime: '2022-01-18T09:30:00-07:00', timeZone: 'America/Los_Angeles', }, 
 //   attendees: attendeesEmails, 
@@ -142,7 +165,7 @@ horariosCtrl.generarVideollamada2 = async(req, res) => {
 //     { method: 'popup', 'minutes': 10 }, ], }, 
 //     conferenceData: { 
 //       createRequest: { 
-//         conferenceSolutionKey: {
+  //         conferenceSolutionKey: {
 //            type: 'hangoutsMeet' }, 
 //            requestId: 'coding-calendar-demo' } 
 //           }, 
@@ -153,7 +176,7 @@ horariosCtrl.generarVideollamada2 = async(req, res) => {
 //       calendarId: 'primary', 
 //       resource: event, 
 //       conferenceDataVersion: 1 }); 
-      
+
 //     const { config: { data: { summary, location, start, end, attendees } }, 
 //     data: { conferenceData } } = response; // Get the Google Meet conference URL in order to join the call const { uri } = conferenceData.entryPoints[0]; console.log(`📅 Calendar event created: ${summary} at ${location}, from ${start.dateTime} to ${end.dateTime}, attendees:\n${attendees.map(person => `🧍 ${person.email}`).join('\n')} \n 💻 Join conference call link: ${uri}`); });
 
