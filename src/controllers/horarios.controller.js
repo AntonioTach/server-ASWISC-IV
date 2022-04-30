@@ -151,6 +151,32 @@ horariosCtrl.addSession = async(req, res) => {
     return res.status(500).send({error: "couldnt add sesion to the calendar"})
   }
 }
+
+
+horariosCtrl.getCitasEspecialista = async(req, res) => {
+  try {
+    let IdEspecialista = req.params.id
+    await pool.query(`SELECT * FROM horarios WHERE id_especialista=?`,[IdEspecialista],
+    (err, rows, fields) => {
+        if (err) {
+            console.log(err);
+        }
+        if (rows.length > 0) {
+            console.log(rows)
+            return res.status(200).send(rows);
+        }
+        else {
+            res.send(false);
+            
+        }
+    });
+
+    return res.status(200).send({ message: "it works"})
+  } catch (error) {
+    console.error("Error happened\n", error)
+    return res.status(500).send({error: "couldnt add sesion to the calendar"})
+  }
+}
     
     // const attendeesEmails = [ { 'email': 'user1@example.com' }, { 'email': 'user2@example.com' } ]; 
     // const event = { 
