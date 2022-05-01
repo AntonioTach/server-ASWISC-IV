@@ -7,5 +7,7 @@ router.post('/horarios/', horariosCtrl.generarVideollamada);
 
 router.post('/addSession/:id', horariosCtrl.addSession);
 
+router.get('/get-citas-especialista/:id', horariosCtrl.getCitasEspecialista);
+
 
 module.exports = router;
