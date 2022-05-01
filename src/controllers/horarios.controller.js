@@ -136,16 +136,93 @@ horariosCtrl.addSession = async(req, res) => {
   try {
     // console.log(req.params.id)
     // console.log(req.body)
-
     let { eventName, startTime, endTime, idPaciente, precio, descripcion} = req.body;
     let idEspecilista = req.params.id
-
+    // console.log("id Paciente: ", idPaciente);
+    // console.log("id Especialista: ", idEspecilista);
     if(descripcion == undefined) descripcion = ".";
 
+    let correoQueryEspecialista = await pool.query(`SELECT email from especialistas where id_especialista = '${idEspecilista}'`);
+    let correoJSON = JSON.parse(JSON.stringify(correoQueryEspecialista));
+    let correoEspecialista = correoJSON[0].email;
+
+    let correoQueryPaciente = await pool.query(`SELECT email from pacientes where id_paciente = '${idPaciente}'`);
+    let correoPacienteJSON = JSON.parse(JSON.stringify(correoQueryPaciente));
+    let correoPaciente = correoPacienteJSON[0].email;
+    console.log('Correo Especialista: ', correoEspecialista);
+    console.log('Correo Paciente: ', correoPaciente);
+
+    //Insert el objeto del bloque 
     let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${descripcion}', '${precio}');`;
+    // let sql = "SELECT * FROM horarios";
     await pool.query(sql);
 
+
+    if(res.status(200)){
+      //Si se inserta correctamente genera la videollamada
+      //GENERATE MEET 
+    
+      const startTime2 = new Date(startTime);
+      const endTime2 = new Date(endTime);
+      //Conversion a Horario MX StartTime
+      let numberOfMlSeconds = startTime2.getTime();
+      let MlSeconds = (5 * 60) * 60000;
+      let timeStartMX = new Date(numberOfMlSeconds - MlSeconds);
+      console.log('Star time Mex ',timeStartMX);
+
+      //Conversion a Horario MX StartTime
+      let numberOfMlSeconds2 = endTime2.getTime();
+      let MlSeconds2 = (5 * 60) * 60000;
+      let timeEndMX = new Date(numberOfMlSeconds2 - MlSeconds2);
+      console.log('End Time MEX ',timeEndMX);
+
+
+      const event = {
+        summary : eventName, 
+        description: descripcion,
+        start : {
+            dateTime : startTime2,
+            timeZone: 'America/Mexico_City',
+        },
+        end : {
+            dateTime: endTime2,
+            timeZone: 'America/Mexico_City',
+        },
+        colorId: 1,
+        attendees: [
+            {'email': correoEspecialista},
+            {'email': correoPaciente}
+        ],
+        conferenceData: { 
+          createRequest: { 
+            conferenceSolutionKey: { 
+              type: 'hangoutsMeet' }, 
+              requestId: 'coding-calendar-demo' } 
+          },
+        
+        reminders: {
+          useDefault: false,
+            overrides: [
+              {'method': 'email', 'minutes': 24 * 60},
+              {'method': 'popup', 'minutes': 10}
+            ]
+          }
+      };
+
+      const response = await calendar.events.insert({ 
+        calendarId: 'primary', 
+        resource: event, 
+        conferenceDataVersion: 1 }); 
+
+        const { config: { data: { summary, location, start, end, attendees } }, data: { conferenceData } } = response;
+
+        // Get the Google Meet conference URL in order to join the call
+        const { uri } = conferenceData.entryPoints[0];
+        console.log(`link: ${uri}`);
+    }
+
     return res.status(200).send({ message: "it works"})
+
   } catch (error) {
     console.error("Error happened\n", error)
     return res.status(500).send({error: "couldnt add sesion to the calendar"})
@@ -172,12 +249,12 @@ horariosCtrl.addSession = async(req, res) => {
 //         }; 
         
         
-//     const response = await calendar.events.insert({ 
-//       calendarId: 'primary', 
-//       resource: event, 
-//       conferenceDataVersion: 1 }); 
+    // const response = await calendar.events.insert({ 
+    //   calendarId: 'primary', 
+    //   resource: event, 
+    //   conferenceDataVersion: 1 }); 
 
-//     const { config: { data: { summary, location, start, end, attendees } }, 
-//     data: { conferenceData } } = response; // Get the Google Meet conference URL in order to join the call const { uri } = conferenceData.entryPoints[0]; console.log(`📅 Calendar event created: ${summary} at ${location}, from ${start.dateTime} to ${end.dateTime}, attendees:\n${attendees.map(person => `🧍 ${person.email}`).join('\n')} \n 💻 Join conference call link: ${uri}`); });
+    // const { config: { data: { summary, location, start, end, attendees } }, 
+    // data: { conferenceData } } = response; // Get the Google Meet conference URL in order to join the call const { uri } = conferenceData.entryPoints[0]; console.log(`📅 Calendar event created: ${summary} at ${location}, from ${start.dateTime} to ${end.dateTime}, attendees:\n${attendees.map(person => `🧍 ${person.email}`).join('\n')} \n 💻 Join conference call link: ${uri}`); });
 
 module.exports = horariosCtrl;
