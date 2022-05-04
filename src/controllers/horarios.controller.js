@@ -146,14 +146,17 @@ horariosCtrl.addSession = async(req, res) => {
     let correoJSON = JSON.parse(JSON.stringify(correoQueryEspecialista));
     let correoEspecialista = correoJSON[0].email;
 
-    let correoQueryPaciente = await pool.query(`SELECT email from pacientes where id_paciente = '${idPaciente}'`);
+    let correoQueryPaciente = await pool.query(`SELECT email, precio_consulta from pacientes where id_paciente = '${idPaciente}'`);
     let correoPacienteJSON = JSON.parse(JSON.stringify(correoQueryPaciente));
     let correoPaciente = correoPacienteJSON[0].email;
+    let precio_consulta = correoPacienteJSON[0].precio_consulta;
+
     console.log('Correo Especialista: ', correoEspecialista);
     console.log('Correo Paciente: ', correoPaciente);
 
+
     //Insert el objeto del bloque 
-    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${descripcion}', '${precio}');`;
+    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${descripcion}', '${precio_consulta}');`;
     // let sql = "SELECT * FROM horarios";
     await pool.query(sql);
 
@@ -209,16 +212,22 @@ horariosCtrl.addSession = async(req, res) => {
           }
       };
 
-      const response = await calendar.events.insert({ 
-        calendarId: 'primary', 
-        resource: event, 
-        conferenceDataVersion: 1 }); 
+      try{
+        const response = await calendar.events.insert({ 
+          calendarId: 'primary', 
+          resource: event, 
+          conferenceDataVersion: 1 }); 
+  
+          const { config: { data: { summary, location, start, end, attendees } }, data: { conferenceData } } = response;
+  
+          // Get the Google Meet conference URL in order to join the call
+          const { uri } = conferenceData.entryPoints[0];
+          console.log(`link: ${uri}`);
+      }catch(err){
+        console.log(err);
+      }
 
-        const { config: { data: { summary, location, start, end, attendees } }, data: { conferenceData } } = response;
-
-        // Get the Google Meet conference URL in order to join the call
-        const { uri } = conferenceData.entryPoints[0];
-        console.log(`link: ${uri}`);
+      
     }
 
     return res.status(200).send({ message: "it works"})
@@ -254,7 +263,12 @@ horariosCtrl.getCitasEspecialista = async(req, res) => {
     return res.status(500).send({error: "couldnt add sesion to the calendar"})
   }
 }
-    
+
+horariosCtrl.addSessionPaciente = async(req, res) => {
+
+
+
+}    
     // const attendeesEmails = [ { 'email': 'user1@example.com' }, { 'email': 'user2@example.com' } ]; 
     // const event = { 
       //   summary: 'Coding class', 

@@ -9,5 +9,7 @@ router.post('/addSession/:id', horariosCtrl.addSession);
 
 router.get('/get-citas-especialista/:id', horariosCtrl.getCitasEspecialista);
 
+router.post('/addSessionPaciente/:id', horariosCtrl.addSessionPaciente);
+
 
 module.exports = router;

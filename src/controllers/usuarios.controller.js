@@ -20,25 +20,35 @@ const sgMail = require('@sendgrid/mail');
 usuariosCtrl.createEspecialista = async (req, res) => {
     // console.log(req.body);
     //Tipo 1 = Especialista
-    try {
-        
     
     const { usuario, contrasena, id_tipo = 1 } = req.body;
     const { nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento, foto_profesional, cedula, curriculum, precio } = req.body;
 
     let contrasenaEncriptada = usuariosCtrl.encriptar(contrasena)
     console.log(contrasenaEncriptada)
+
+    try{
+        let sql = await pool.query(`INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`);
+        let id_usuario_especialista = await pool.query(`SELECT id_usuario FROM usuarios WHERE usuario = '${usuario}'`);
+        //Desconversion de ROW data package a JSON en [0].id_usuario
+        let id_usuario_especialistaJSON = JSON.stringify(id_usuario_especialista);
+        let id_usuario_especialistaJSON2 = JSON.parse(id_usuario_especialistaJSON);
+        let id_usuario_pos = id_usuario_especialistaJSON2[0].id_usuario;
+        try{
+            let sqlEspecialistas = await pool.query(`INSERT INTO especialistas(id_usuario, nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento,foto_profesional,curriculum,cedula,precio_consulta_general,tiempo_consulta) values ('${id_usuario_pos}', '${nombre}', '${direccion}', '${email}', '${profesion}', '${telefono}', '${sexo}', '${estudios}', '${nacimiento}','${foto_profesional.toString()}','${curriculum.toString()}','${cedula.toString()}', '${precio}', '1')`);
+            res.send({ message: 'Especialista creado!' });
+
+        }catch(err){
+            console.log('Sentencia en Tabla especialistas: ',err)
+        }
+
+    }catch(err){
+        console.log('Sentencia en Tabla especialistas: ', err)
+    }
     //insert en usuarios 
-    let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasenaEncriptada}', '${id_tipo}')`;
-    await pool.query(sql);
-    let sqlEspecialistas = `INSERT INTO especialistas(id_usuario, nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento,foto_profesional,curriculum,cedula,precio_consulta_general,tiempo_consulta) values (LAST_INSERT_ID(), '${nombre}', '${direccion}', '${email}', '${profesion}', '${telefono}', '${sexo}', '${estudios}', '${nacimiento}','${foto_profesional.toString()}','${curriculum.toString()}','${cedula.toString()}',${precio}, 1)`;
-    await pool.query(sqlEspecialistas);
 
     //await pool.query('INSERT INTO especialistas set ?', [req.body]);
-    res.send({ message: 'Especialista creado!' });
-    } catch (error) {
-        console.log(error) 
-    }
+    
 }
 
 //Creacion Paciente
