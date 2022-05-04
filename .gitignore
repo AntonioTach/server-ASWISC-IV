@@ -1,5 +1,5 @@
 node_modules
 
-keys.js
+src/keys.js
 
 package-lock.json
