@@ -19,7 +19,8 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "promise-mysql": "^5.0.4"
+    "promise-mysql": "^5.0.4",
+    "stripe": "^8.222.0"
   },
   "devDependencies": {
     "eslint": "^8.2.0",

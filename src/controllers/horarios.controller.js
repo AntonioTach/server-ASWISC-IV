@@ -10,9 +10,11 @@ const oAuth2Client = new OAuth2('57432841693-mijbi1j1o5fmo3vm7t2jpuudjrdqkcov.ap
 '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'
 )
 
+const stripe = require('stripe')('sk_test_51KvYRzEeE5SQU3ghucCf3UMdwqVBHwTuBBOtyE2zHpzdZCaerMYPPrybVhBNURmIRKym3n2ybjt9A78Khh0lQIqd00bFNsXPwy');
+
 oAuth2Client.setCredentials({
     refresh_token: 
-    '1//04u_b6qPr-glACgYIARAAGAQSNgF-L9IrS1-TjE4Dc_08YZXwPK5c3bHjN139SaV-ZGfRs6_6PgTxTf85-dciZ_DCKSFxKsnTPg',
+    '1//048X9xo1QXQivCgYIARAAGAQSNgF-L9IrE8aLmPgFowWAl8gtx5cAh0xxFwKCijLSASF01ZvDqos78FgevwKpZdlq5q3N94-a7A',
 });
 
 const calendar = google.calendar({ version: 'v3', auth: oAuth2Client })
@@ -265,7 +267,18 @@ horariosCtrl.getCitasEspecialista = async(req, res) => {
 }
 
 horariosCtrl.addSessionPaciente = async(req, res) => {
-
+  
+  
+  //Crear Payment Intent
+  const paymentIntent = await stripe.paymentIntents.create({
+    customer: customer.id,
+    setup_future_usage: 'off_session',
+    amount: 1099,
+    currency: 'eur',
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
 
 
 }    
