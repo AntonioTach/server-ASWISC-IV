@@ -134,18 +134,43 @@ horariosCtrl.generarVideollamada2 = async(req, res) => {
 
 horariosCtrl.addSession = async(req, res) => {
   try {
-    // console.log(req.params.id)
-    // console.log(req.body)
+    console.log(req.params.id)
+    console.log(req.body)
 
-    let { eventName, startTime, endTime, idPaciente, precio, descripcion} = req.body;
+    let { eventName, startTime, endTime, idPaciente, precio, descripcion, nombrePaciente} = req.body;
     let idEspecilista = req.params.id
 
-    if(descripcion == undefined) descripcion = ".";
+    if(descripcion == undefined) descripcion = " ";
 
-    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${descripcion}', '${precio}');`;
+    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio, nombrePaciente) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${descripcion}', '${precio}', '${nombrePaciente}');`;
     await pool.query(sql);
 
     return res.status(200).send({ message: "it works"})
+  } catch (error) {
+    console.error("Error happened\n", error)
+    return res.status(500).send({error: "couldnt add sesion to the calendar"})
+  }
+}
+
+
+
+horariosCtrl.deleteSession = async(req, res) => {
+  try {
+    // console.log(req.params.id)
+    // console.log(req.body.endTimeDate)
+
+    let parametros = req.params.id.split("$")
+    console.log(parametros[0])
+    console.log(parametros[1])
+
+    let fechaInicio = parametros[1].slice(1, parametros[1].length - 1)
+    console.log(Date(parametros[1]))
+
+
+    let sql = `DELETE FROM horarios WHERE id_especialista=${parametros[0]} AND startTime='${parametros[1]}'`;
+    await pool.query(sql);
+
+    return res.status(200).send({ message: "deleted"})
   } catch (error) {
     console.error("Error happened\n", error)
     return res.status(500).send({error: "couldnt add sesion to the calendar"})

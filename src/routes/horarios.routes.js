@@ -7,6 +7,8 @@ router.post('/horarios/', horariosCtrl.generarVideollamada);
 
 router.post('/addSession/:id', horariosCtrl.addSession);
 
+router.delete('/deleteSession/:id', horariosCtrl.deleteSession);
+
 router.get('/get-citas-especialista/:id', horariosCtrl.getCitasEspecialista);
 
 
