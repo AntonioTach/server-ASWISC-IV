@@ -9,6 +9,7 @@ const { json } = require('express/lib/response');
 const res = require('express/lib/response');
 const { Connection } = require('promise-mysql');
 const bcryptjs = require('bcryptjs');
+const nodemailer = require('nodemailer');
 
 const sgMail = require('@sendgrid/mail');
 
@@ -20,25 +21,57 @@ const sgMail = require('@sendgrid/mail');
 usuariosCtrl.createEspecialista = async (req, res) => {
     // console.log(req.body);
     //Tipo 1 = Especialista
-    try {
-        
     
     const { usuario, contrasena, id_tipo = 1 } = req.body;
     const { nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento, foto_profesional, cedula, curriculum, precio } = req.body;
 
     let contrasenaEncriptada = usuariosCtrl.encriptar(contrasena)
     console.log(contrasenaEncriptada)
-    //insert en usuarios 
-    let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasenaEncriptada}', '${id_tipo}')`;
-    await pool.query(sql);
-    let sqlEspecialistas = `INSERT INTO especialistas(id_usuario, nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento,foto_profesional,curriculum,cedula,precio_consulta_general,tiempo_consulta) values (LAST_INSERT_ID(), '${nombre}', '${direccion}', '${email}', '${profesion}', '${telefono}', '${sexo}', '${estudios}', '${nacimiento}','${foto_profesional.toString()}','${curriculum.toString()}','${cedula.toString()}',${precio}, 1)`;
-    await pool.query(sqlEspecialistas);
+    let existeUsuario = false;
+    let existeEmail = false;
 
-    //await pool.query('INSERT INTO especialistas set ?', [req.body]);
-    res.send({ message: 'Especialista creado!' });
-    } catch (error) {
-        console.log(error) 
+    let id_usuario_especialista = await pool.query(`SELECT id_usuario FROM usuarios WHERE usuario = '${usuario}'`);
+    if(Object.entries(id_usuario_especialista).length === 0){
+        //No encontro USERNAME
+        existeUsuario = false;
+    } else {
+        //SI EXISTE USERNAME
+        existeUsuario = true;
     }
+
+    let email_especialista = await pool.query(`SELECT nombre FROM especialistas WHERE email = '${email}'`);
+    if(Object.entries(email_especialista).length === 0){
+        //No encontro USERNAME
+        existeEmail = false;
+    } else {
+        //SI EXISTE USERNAME
+        existeEmail = true;
+    }
+        
+    if (existeUsuario == true || existeEmail == true){
+        res.send(false);
+    } else {
+        try{
+            let sql = await pool.query(`INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasenaEncriptada}', '${id_tipo}')`);
+            let id_usuario_especialista = await pool.query(`SELECT id_usuario FROM usuarios WHERE usuario = '${usuario}'`);
+            //Desconversion de ROW data package a JSON en [0].id_usuario
+            let id_usuario_especialistaJSON = JSON.stringify(id_usuario_especialista);
+            let id_usuario_especialistaJSON2 = JSON.parse(id_usuario_especialistaJSON);
+            let id_usuario_pos = id_usuario_especialistaJSON2[0].id_usuario;
+            try{
+                let sqlEspecialistas = await pool.query(`INSERT INTO especialistas(id_usuario, nombre, direccion, email, profesion, telefono, sexo, estudios, nacimiento,foto_profesional,curriculum,cedula,precio_consulta_general,tiempo_consulta) values ('${id_usuario_pos}', '${nombre}', '${direccion}', '${email}', '${profesion}', '${telefono}', '${sexo}', '${estudios}', '${nacimiento}','${foto_profesional.toString()}','${curriculum.toString()}','${cedula.toString()}', '${precio}', '1')`);
+                res.send(true);
+    
+            }catch(err){
+                console.log('Sentencia en Tabla especialistas: ',err)
+            }
+    
+        }catch(err){
+            console.log('Sentencia en Tabla especialistas: ', err)
+        }
+
+    }
+    
 }
 
 //Creacion Paciente
@@ -51,11 +84,38 @@ usuariosCtrl.createPaciente = async (req, res) => {
 
     let contrasenaEncriptada = usuariosCtrl.encriptar(contrasena)
     console.log(contrasenaEncriptada)
-    //insert en usuarios 
-    let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasenaEncriptada}', '${id_tipo}')`;
-    await pool.query(sql);
-    let sqlPacientes = `INSERT INTO pacientes(id_usuario, nombre, sexo, email, nacimiento, telefono, nombretutor, telefonotutor) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}', '${nacimiento}', '${telefono}', '${nombretutor}', '${telefonotutor}')`;
-    await pool.query(sqlPacientes);
+
+    let usuario_paciente = await pool.query(`SELECT id_usuario FROM usuarios WHERE usuario = '${usuario}'`);
+    if(Object.entries(usuario_paciente).length === 0){
+        //No encontro USERNAME
+        existeUsuario = false;
+    } else {
+        //SI EXISTE USERNAME
+        existeUsuario = true;
+    }
+
+    let email_paciente = await pool.query(`SELECT nombre FROM pacientes WHERE email = '${email}'`);
+    if(Object.entries(email_paciente).length === 0){
+        //No encontro USERNAME
+        existeEmail = false;
+    } else {
+        //SI EXISTE USERNAME
+        existeEmail = true;
+    }
+
+    if (existeUsuario == true || existeEmail == true){
+        res.send(false);
+    } else {
+        //insert en usuarios 
+        let sql = `INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasenaEncriptada}', '${id_tipo}')`;
+        await pool.query(sql);
+        let sqlPacientes = `INSERT INTO pacientes(id_usuario, nombre, sexo, email, nacimiento, telefono, nombretutor, telefonotutor) values (LAST_INSERT_ID(), '${nombre}', '${sexo}', '${email}', '${nacimiento}', '${telefono}', '${nombretutor}', '${telefonotutor}')`;
+        await pool.query(sqlPacientes);
+        res.send(true);
+    }
+
+
+    
 }
 //Registrar a un Paciente por medio del Especialista
 usuariosCtrl.registrarPaciente = async (req, res) => {
@@ -63,22 +123,44 @@ usuariosCtrl.registrarPaciente = async (req, res) => {
     const { usuario, contrasena, id_tipo = 2 } = req.body; //Datos para tabla Usuarios
     const { id_usuario, nombre, sexo, email, nacimiento, telefono, precio_consulta } = req.body;
 
-    try{
-        let sqlUsuarios = await pool.query(`INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`);
-        let id_usuario_especialista = await pool.query(`SELECT id_usuario FROM usuarios WHERE usuario = '${usuario}'`);
-        //Desconversion de ROW data package a JSON en [0].id_usuario
-        let id_usuario_especialistaJSON = JSON.stringify(id_usuario_especialista);
-        let id_usuario_especialistaJSON2 = JSON.parse(id_usuario_especialistaJSON);
-        let id_usuario_pos = id_usuario_especialistaJSON2[0].id_usuario;
+    let usuario_paciente = await pool.query(`SELECT id_usuario FROM usuarios WHERE usuario = '${usuario}'`);
+    if(Object.entries(usuario_paciente).length === 0){
+        //No encontro USERNAME
+        existeUsuario = false;
+    } else {
+        //SI EXISTE USERNAME
+        existeUsuario = true;
+    }
+
+    let email_paciente = await pool.query(`SELECT nombre FROM pacientes WHERE email = '${email}'`);
+    if(Object.entries(email_paciente).length === 0){
+        //No encontro USERNAME
+        existeEmail = false;
+    } else {
+        //SI EXISTE USERNAME
+        existeEmail = true;
+    }
+
+    if (existeUsuario == true || existeEmail == true){
+        res.send(false);
+    } else {
         try{
-            let sqlPacientes = await pool.query(`INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista, precio_consulta) values ('${id_usuario_pos}', '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${id_usuario}', '${precio_consulta}')`);
+            let sqlUsuarios = await pool.query(`INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`);
+            let id_usuario_especialista = await pool.query(`SELECT id_usuario FROM usuarios WHERE usuario = '${usuario}'`);
+            //Desconversion de ROW data package a JSON en [0].id_usuario
+            let id_usuario_especialistaJSON = JSON.stringify(id_usuario_especialista);
+            let id_usuario_especialistaJSON2 = JSON.parse(id_usuario_especialistaJSON);
+            let id_usuario_pos = id_usuario_especialistaJSON2[0].id_usuario;
+            try{
+                let sqlPacientes = await pool.query(`INSERT INTO pacientes(id_usuario,  nombre, sexo, email, nacimiento, telefono, id_especialista, precio_consulta) values ('${id_usuario_pos}', '${nombre}', '${sexo}', '${email}',  '${nacimiento}', '${telefono}', '${id_usuario}', '${precio_consulta}')`);
+                res.send(true);
+            }catch(err){
+                console.log(err);
+            }
         }catch(err){
             console.log(err);
         }
-    }catch(err){
-        console.log(err);
     }
-
 }
 //------------------------------Listar Usuarios por su tipo--------------------------------
 //Listar Todos los Especialistas
@@ -99,7 +181,7 @@ usuariosCtrl.buscarEspecialista = async (req, res) => {
     const { id } = req.params;                      //Se obtiene una parte de un objeto, en este caso el ID
     const EspecialistaID = await pool.query('SELECT * FROM especialistas WHERE id_usuario = ?', [id]);    //Se devuelve el arreglo con los datos que coincida con el id requerido
 
-    console.log(EspecialistaID, id); //asi se obtiene el arreglo por lo que no es lo mejor
+    //console.log(EspecialistaID, id); //asi se obtiene el arreglo por lo que no es lo mejor
 
     if (EspecialistaID.length > 0) {
         return res.json(EspecialistaID[0]); //Se obtiene el objeto
@@ -111,7 +193,7 @@ usuariosCtrl.buscarEspecialistaid_especialista = async (req, res) => {
     const { id } = req.params;                      //Se obtiene una parte de un objeto, en este caso el ID
     const EspecialistaID = await pool.query('SELECT * FROM especialistas WHERE id_especialista= ?', [id]);    //Se devuelve el arreglo con los datos que coincida con el id requerido
 
-    console.log(EspecialistaID, id); //asi se obtiene el arreglo por lo que no es lo mejor
+    //console.log(EspecialistaID, id); //asi se obtiene el arreglo por lo que no es lo mejor
 
     if (EspecialistaID.length > 0) {
         return res.json(EspecialistaID[0]); //Se obtiene el objeto
@@ -142,7 +224,7 @@ usuariosCtrl.buscarPaciente = async (req, res) => {
 usuariosCtrl.buscarPacienteNombre = async (req, res) => {
     const { id } = req.params;
     const paciente = await pool.query('SELECT pacientes.nombre, pacientes.sexo, pacientes.nacimiento, pacientes.email, pacientes.telefono, usuarios.usuario, usuarios.contrasena FROM pacientes INNER JOIN usuarios ON pacientes.id_usuario = usuarios.id_usuario WHERE usuarios.id_usuario = ?', [id]);
-    console.log(paciente);
+   // console.log(paciente);
     return res.json(paciente);
     // return res.json({ paciente, usuario});
 }
@@ -192,6 +274,8 @@ usuariosCtrl.deleteEspecialista = async (req, res) => {
     let UpdateToNull = `UPDATE pacientes SET id_especialista = NULL WHERE id_especialista = ${id_especialista}`;
     await pool.query(UpdateToNull);
     await pool.query(`DELETE FROM articulos WHERE id_especialista=${id_especialista}`)
+    await pool.query(`DELETE FROM aswisc WHERE id_especialista=${id_especialista}`)
+    await pool.query(`DELETE FROM horarios WHERE id_especialista=${id_especialista}`)
      
     await pool.query('DELETE FROM especialistas WHERE id_usuario = ?', [id]);
     //Se elimina el FK, en tabla especialistas se elimina el id_usuario
@@ -213,6 +297,13 @@ usuariosCtrl.deletePaciente = async (req, res) => {
     await pool.query('DELETE FROM usuarios WHERE id_usuario = ?', [id]);
     res.send({ message: 'Paciente Eliminado' });
 }
+
+usuariosCtrl.deleteExpediente = async (req, res) =>{
+    const { id } = req.params;
+    await pool.query('UPDATE pacientes SET ocupacion = NULL, origen = NULL, estudios = NULL, observaciones = NULL WHERE id_paciente = ?', [id]);
+    res.send({ message: 'Expediente Eliminado' });
+}
+
 //eliminar Articulo 
 usuariosCtrl.deleteArticulo = async (req, res) => {
     const { id } = req.params;
@@ -279,7 +370,7 @@ usuariosCtrl.verPruebaPaciente = async (req, res) => {
 //Subir Tarea
 usuariosCtrl.subirTarea = async (req, res) => {
     const { titulo, id_paciente, descripcion, documento } = req.body;
-    console.log(req.body);
+    //console.log(req.body);
     await pool.query(`INSERT INTO tareas(id_paciente, titulo, descripcion, documento) values('${id_paciente}', '${titulo}', '${descripcion}', '${documento}')`);
     res.send({ message: 'Tarea asignada Correctamente' });
 }
@@ -390,7 +481,7 @@ usuariosCtrl.deleteTarea = async (req, res) => {
 usuariosCtrl.modificarPrecio = async (req, res) => {
     const { id } = req.params;
     const { precio_consulta_general } = req.body;
-    console.log(precio_consulta_general);
+    //console.log(precio_consulta_general);
     await pool.query(`UPDATE especialistas SET precio_consulta_general=${precio_consulta_general} WHERE id_especialista=${id}`);
 
     res.send({ message: 'correcto 1' })
@@ -398,7 +489,7 @@ usuariosCtrl.modificarPrecio = async (req, res) => {
 usuariosCtrl.modifcarPrecioPaciente = async (req, res) => {
     const { id } = req.params;
     const { precio_consulta } = req.body;
-    console.log(precio_consulta, id);
+    //console.log(precio_consulta, id);
     // await pool.query(`UPDATE pacientes SET precio_consulta=${precio_consulta} WHERE id_usuario=${id} AND estatus=1`)
     await pool.query(`UPDATE pacientes SET precio_consulta=${precio_consulta} WHERE id_usuario=${id}`)
     res.send({ message: 'correcto 2' })
@@ -437,7 +528,7 @@ usuariosCtrl.verCarrito3 = async (req, res) => {
 usuariosCtrl.signin = async (req, res) => {
     const { usuario, contrasena } = req.body;
     let tipo;
-    console.log(req.body);
+    //console.log(req.body);
     //Obtener USUARIO Y ID_TIPO CUANDO EL NOMBRE DE USUARIO Y CONTRASENA COINCIDA
     await pool.query(`SELECT usuario, id_tipo, id_usuario FROM usuarios WHERE usuario=? and contrasena=?`,
         [usuario, contrasena],
@@ -456,7 +547,7 @@ usuariosCtrl.signin = async (req, res) => {
                 let usuario = JSON.stringify(rows[0].usuario);  //obtener usuario
                 let id_tipo = JSON.stringify(rows[0].id_tipo);  //obtener id tipo
                 let id_usuario = JSON.stringify(rows[0].id_usuario);//obtener id usuario
-                console.log(id_usuario);
+                //console.log(id_usuario);
                 //res.send({message: token});post
                 //console.log(token)
                 // console.log('Sesion iniciada');
@@ -621,30 +712,30 @@ usuariosCtrl.identificarEmailPaciente = async (req, res) => {
 //Mandar email 
 usuariosCtrl.mandarEmail = async (req, res) => {
     const {email, token} = req.body;
-    // const sgMail = require("@sendgrid/mail");
-    // require("dotenv").config();
-    // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    let to = email;
-    let from = 'aswisctliv@gmail.com';
-    let subject = 'TOKEN ASWSIC-IV';
-    let text = token;
-    const msg = {
-        to,
-        from,
-        subject,
-        text
-    }
 
-    sgMail.send(msg, function(err, info) {
-        if(err){
-            console.log('Email no enviado');
-            console.log(err);
-        }
-        else {
-            console.log('Email enviado');
-        }
-    })
+    // const transporter = nodemailer.createTransport({
+    //     host: 'gmail',
+    //     auth: {
+    //         user: 'aswisciv2@gmail.com',
+    //         pass: 'Speedstick2899218'
+    //     }
+    // });
+    
 
+    // var mailOptions = {
+    //     from: "Remitente",
+    //     to: email,
+    //     subject: 'Envio de token para actualizar contraseña',
+    //     text: token
+    // }
+
+    // transporter.sendMail(mailOptions, (error, info) => {
+    //     if(error){
+    //         console.log(error)
+    //     }else {
+    //         console.log('Mail enviado.')
+    //     }
+    // })
 }
 //Update Contrasena Especialista
 usuariosCtrl.updateContrasenaEspecialista = async (req, res) => {

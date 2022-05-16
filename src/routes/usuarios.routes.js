@@ -25,7 +25,9 @@ router.post('/editar-Especialista/:id', usuariosCtrl.editEspecialista);
 router.post('/editar-Paciente/:id', usuariosCtrl.editPaciente);
 router.post('/editar-PacienteNombre/:id', usuariosCtrl.editPacienteNombre);
 //Dejar en null el campo del ID_ESPECIALISRA[PUT]
-router.get('/eli-paciente/:id', usuariosCtrl.deletePacienteFromEspecialista)
+router.get('/eli-paciente/:id', usuariosCtrl.deletePacienteFromEspecialista);
+//Dejar en blanco campos de Expediente clinico 
+router.get('/eli-exp/:id', usuariosCtrl.deleteExpediente);
 //Eliminar un usuario por su Tipo e ID [DELETE]
 router.put('/eliminar-Especialista/:id', usuariosCtrl.deleteEspecialista);
 //Eliminar el id del especialista en e

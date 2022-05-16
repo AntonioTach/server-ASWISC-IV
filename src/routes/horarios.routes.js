@@ -11,5 +11,7 @@ router.delete('/deleteSession/:id', horariosCtrl.deleteSession);
 
 router.get('/get-citas-especialista/:id', horariosCtrl.getCitasEspecialista);
 
+router.post('/addSessionPaciente/:id', horariosCtrl.addSessionPaciente);
+
 
 module.exports = router;

@@ -6,16 +6,26 @@ const { google } = require('googleapis');
 
 const { OAuth2 } = google.auth;
 
+const mercadopago = require('mercadopago');
+
 const oAuth2Client = new OAuth2('57432841693-mijbi1j1o5fmo3vm7t2jpuudjrdqkcov.apps.googleusercontent.com', 
 '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'
 )
 
+const stripe = require('stripe')('sk_test_51KvYRzEeE5SQU3ghucCf3UMdwqVBHwTuBBOtyE2zHpzdZCaerMYPPrybVhBNURmIRKym3n2ybjt9A78Khh0lQIqd00bFNsXPwy');
+//Credenciales Google Developers - Google Calendar y Meet
 oAuth2Client.setCredentials({
     refresh_token: 
-    '1//04u_b6qPr-glACgYIARAAGAQSNgF-L9IrS1-TjE4Dc_08YZXwPK5c3bHjN139SaV-ZGfRs6_6PgTxTf85-dciZ_DCKSFxKsnTPg',
+    '1//04j1oKYGZkJkjCgYIARAAGAQSNgF-L9IrJ4XfL8JwVF1UgI44rm4kEo6aPXov_cpYwH4wI0_36zy30xBYrzSMqRuc7LAe9NYqUw',
 });
 
 const calendar = google.calendar({ version: 'v3', auth: oAuth2Client })
+
+//Credenciales Mercado Pago
+mercadopago.configure({
+  access_token: 'APP_USR-8146102713757673-051002-ef94488b3c9d1a9627f8aecc1eff85f2-1121087910'
+});
+
 
 horariosCtrl.generarVideollamada = async (req, res) => {    
 
@@ -139,13 +149,101 @@ horariosCtrl.addSession = async(req, res) => {
 
     let { eventName, startTime, endTime, idPaciente, precio, descripcion, nombrePaciente} = req.body;
     let idEspecilista = req.params.id
+   console.log(req.body)
+   console.log(Description);
+    // console.log("id Paciente: ", idPaciente);
+    // console.log("id Especialista: ", idEspecilista);
+    if(Description == undefined) Description = ".";
+
+    let correoQueryEspecialista = await pool.query(`SELECT email from especialistas where id_especialista = '${idEspecilista}'`);
+    let correoJSON = JSON.parse(JSON.stringify(correoQueryEspecialista));
+    let correoEspecialista = correoJSON[0].email;
+
+    let correoQueryPaciente = await pool.query(`SELECT email, precio_consulta from pacientes where id_paciente = '${idPaciente}'`);
+    let correoPacienteJSON = JSON.parse(JSON.stringify(correoQueryPaciente));
+    let correoPaciente = correoPacienteJSON[0].email;
+    let precio_consulta = correoPacienteJSON[0].precio_consulta;
+
+    console.log('Correo Especialista: ', correoEspecialista);
+    console.log('Correo Paciente: ', correoPaciente);
 
     if(descripcion == undefined) descripcion = " ";
 
     let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio, nombrePaciente) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${descripcion}', '${precio}', '${nombrePaciente}');`;
     await pool.query(sql);
 
+
+    if(res.status(200)){
+      //Si se inserta correctamente genera la videollamada
+      //GENERATE MEET 
+    
+      const startTime2 = new Date(startTime);
+      const endTime2 = new Date(endTime);
+      //Conversion a Horario MX StartTime
+      let numberOfMlSeconds = startTime2.getTime();
+      let MlSeconds = (5 * 60) * 60000;
+      let timeStartMX = new Date(numberOfMlSeconds - MlSeconds);
+      console.log('Star time Mex ',timeStartMX);
+
+      //Conversion a Horario MX StartTime
+      let numberOfMlSeconds2 = endTime2.getTime();
+      let MlSeconds2 = (5 * 60) * 60000;
+      let timeEndMX = new Date(numberOfMlSeconds2 - MlSeconds2);
+      console.log('End Time MEX ',timeEndMX);
+
+
+      const event = {
+        summary : eventName, 
+        description: Description,
+        start : {
+            dateTime : startTime2,
+            timeZone: 'America/Mexico_City',
+        },
+        end : {
+            dateTime: endTime2,
+            timeZone: 'America/Mexico_City',
+        },
+        colorId: 1,
+        attendees: [
+            {'email': correoEspecialista},
+            {'email': correoPaciente}
+        ],
+        conferenceData: { 
+          createRequest: { 
+            conferenceSolutionKey: { 
+              type: 'hangoutsMeet' }, 
+              requestId: 'coding-calendar-demo' } 
+          },
+        
+        reminders: {
+          useDefault: false,
+            overrides: [
+              {'method': 'email', 'minutes': 24 * 60},
+              {'method': 'popup', 'minutes': 10}
+            ]
+          }
+      };
+
+      try{
+        const response = await calendar.events.insert({ 
+          calendarId: 'primary', 
+          resource: event, 
+          conferenceDataVersion: 1 }); 
+  
+          const { config: { data: { summary, location, start, end, attendees } }, data: { conferenceData } } = response;
+  
+          // Get the Google Meet conference URL in order to join the call
+          const { uri } = conferenceData.entryPoints[0];
+          console.log(`link: ${uri}`);
+      }catch(err){
+        console.log(err);
+      }
+
+      
+    }
+
     return res.status(200).send({ message: "it works"})
+
   } catch (error) {
     console.error("Error happened\n", error)
     return res.status(500).send({error: "couldnt add sesion to the calendar"})
@@ -202,7 +300,71 @@ horariosCtrl.getCitasEspecialista = async(req, res) => {
     return res.status(500).send({error: "couldnt add sesion to the calendar"})
   }
 }
+
+horariosCtrl.addSessionPaciente = async(req, res) => {
+  
+  console.log(res);
+
+
+  //Configuracion de que se va a pagar [sesion de llamada]
+  let preference = {
+    items: [
+      {
+        title: 'Title',
+        unit_price: 10,
+        quantity: 1,
+      }
+    ]
+  };
+  
+  mercadopago.preferences.create(preference)
+    .then(function(response){
+      //Response
+      global.id = response.body.id;
     
+    }).catch(function(error){
+      console.log(error);
+    });
+
+
+}    
+
+const orders = require('../models/especialista');
+//-----------------------------------------------------------------------------------
+//-----------------------ORDEN DE PAGO PACIENTE STRIPE-------------------------------
+  const postItem = async(req, res) => {
+    try{
+      const {amount, name} = req.body;
+      const orderRes = await orders.create({
+        name, 
+        amount
+      })
+
+    } catch (e) {
+      res.status(500);
+      res.send({error: 'Algo ocurrio'})
+    }
+  }
+
+
+
+
+  //Crear Payment Intent
+  // const paymentIntent = await stripe.paymentIntents.create({
+  //   customer: customer.id,
+  //   setup_future_usage: 'off_session',
+  //   amount: 1099,
+  //   currency: 'eur',
+  //   automatic_payment_methods: {
+  //     enabled: true,
+  //   },
+  // });
+
+
+
+
+
+
     // const attendeesEmails = [ { 'email': 'user1@example.com' }, { 'email': 'user2@example.com' } ]; 
     // const event = { 
       //   summary: 'Coding class', 
@@ -223,12 +385,12 @@ horariosCtrl.getCitasEspecialista = async(req, res) => {
 //         }; 
         
         
-//     const response = await calendar.events.insert({ 
-//       calendarId: 'primary', 
-//       resource: event, 
-//       conferenceDataVersion: 1 }); 
+    // const response = await calendar.events.insert({ 
+    //   calendarId: 'primary', 
+    //   resource: event, 
+    //   conferenceDataVersion: 1 }); 
 
-//     const { config: { data: { summary, location, start, end, attendees } }, 
-//     data: { conferenceData } } = response; // Get the Google Meet conference URL in order to join the call const { uri } = conferenceData.entryPoints[0]; console.log(`📅 Calendar event created: ${summary} at ${location}, from ${start.dateTime} to ${end.dateTime}, attendees:\n${attendees.map(person => `🧍 ${person.email}`).join('\n')} \n 💻 Join conference call link: ${uri}`); });
+    // const { config: { data: { summary, location, start, end, attendees } }, 
+    // data: { conferenceData } } = response; // Get the Google Meet conference URL in order to join the call const { uri } = conferenceData.entryPoints[0]; console.log(`📅 Calendar event created: ${summary} at ${location}, from ${start.dateTime} to ${end.dateTime}, attendees:\n${attendees.map(person => `🧍 ${person.email}`).join('\n')} \n 💻 Join conference call link: ${uri}`); });
 
 module.exports = horariosCtrl;

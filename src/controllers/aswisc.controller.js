@@ -3,6 +3,7 @@ const aswiscCtrl = {};
 const e = require("express");
 const pool = require("../database");
 const res = require("express/lib/response");
+const moment = require("moment");
 
 //----------------------Solucion Automatizada WISC-IV "ASWISC-IV"----------------------------
 aswiscCtrl.automatizarPrueba = async (req, res) => {
@@ -36,13 +37,23 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   let fechaEscogida = new Date(Fecha);
   let sql = ` SELECT nacimiento FROM pacientes where id_usuario = ${id_usuario}`;
   let paciente = (await pool.query(sql))[0];
+
   // id_usuario identificar bien cual es??
   //MEJORAR SENTENCIA OBTENER EL NOMBRE DEL PACIENTE
   //let sql2 = ` SELECT nombre FROM pacientes where id_usuario = ${id_usuario}`;
   //let nombrePac = (await pool.query(sql2))[0];
   //let namePaciente = new String(nombrePac.nombre);
 
+  let queryIDS = await pool.query(`SELECT id_paciente, id_especialista FROM pacientes where id_usuario = ${id_usuario}`);
+  let queryIDSJSON = JSON.parse(JSON.stringify(queryIDS));
+  let id_paciente = queryIDSJSON[0].id_paciente;
+  let id_especialistaQuery = queryIDSJSON[0].id_especialista;
+
+  let fecha_evaluacion = moment().format("YYYY-MM-DD");
+  
+
   let fechaNacimiento = new Date(paciente.nacimiento);
+
 
   //MEJORAR SENTENCIA OBTENER EL NOMBRE DEL ESPECIALISTA
   //let sql3 = ` SELECT nombre FROM especialistas where id_especialista = ${id_especialista}`;
@@ -5225,11 +5236,19 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   response["puntuacionMediaCompresionVerbal"] = (comprensionVerbal / 3).toFixed(
     0
   );
+
+  let puntuacionMediaCompresionVerbal = (comprensionVerbal / 3).toFixed(
+    0
+  );
   response["escalaTotal"] = escalaTotal;
   response["puntuacionMediaSubprueba"] = (escalaTotal / 10).toFixed(0);
+  let puntuacionMediaSubprueba = (escalaTotal / 10).toFixed(0);
   response["razonamientoPerceptual"] = razonamientoPerceptual;
   //Puse 2 porque hay otra que se llama igual ?
   response["puntuacionMediaComprensionVerbal2"] = ( 
+    razonamientoPerceptual / 3
+  ).toFixed(0);
+  let puntuacionMediaComprensionVerbal2 = ( 
     razonamientoPerceptual / 3
   ).toFixed(0);
   response["velociedadDeProcesamiento"] = velociedadDeProcesamiento;
@@ -5310,7 +5329,91 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
     }
   }
 
+  insertASWISC(id_paciente, id_especialistaQuery, Fecha, Cubos, Semejanzas, Digitos, Conceptos, Claves, Vocabulario, LetrasNumeros, 
+    Matrices, Comprension, BusquedaSimbolos, FigurasIncompletas, Registros, Informacion, Aritmetica, Pistas, comprensionVerbal, escalaTotal,
+    razonamientoPerceptual, velociedadDeProcesamiento, memoriaDeTrabajo, puntuacionMediaCompresionVerbal, puntuacionMediaSubprueba, 
+    puntuacionMediaComprensionVerbal2
+    );
+
   res.json({ success: true, message: "Exito", data: response });
 };
 
+
+
+async function insertASWISC(id_paciente, id_especialistaQuery, Fecha, Cubos, Semejanzas, Digitos, Conceptos, Claves, Vocabulario, LetrasNumeros, 
+  Matrices, Comprension, BusquedaSimbolos, FigurasIncompletas, Registros, Informacion, Aritmetica, Pistas, comprensionVerbal, escalaTotal,
+  razonamientoPerceptual, velociedadDeProcesamiento, memoriaDeTrabajo, puntuacionMediaCompresionVerbal, puntuacionMediaSubprueba, 
+  puntuacionMediaComprensionVerbal2
+  ){
+
+    try{
+      let sql = await pool.query(
+        `INSERT INTO aswisc(
+          id_paciente, 
+          id_especialista, 
+          fecha_evaluacion,
+          cubos,
+          semejanzas,
+          digitos, 
+          conceptos,
+          claves,
+          vocabulario,
+          letras_numeros,
+          matrices,
+          comprension,
+          busqueda_simbolos,
+          figuras_incompletas,
+          registros,
+          informacion,
+          aritmetica,
+          pistas,
+          comprension_verbal,
+          escala_total,
+          razonamiento_perceptual,
+          velocidad_de_procesamiento,
+          memoria_de_trabajo,
+          puntuacion_media_comprension_verbal,
+          puntuacion_media_subprueba,
+          puntuacion_media_comprension_verbal_2
+          ) 
+        values (
+          '${id_paciente}', 
+          '${id_especialistaQuery}', 
+          '${Fecha}',
+          '${Cubos}',
+          '${Semejanzas}',
+          '${Digitos}',
+          '${Conceptos}',
+          '${Claves}',
+          '${Vocabulario}',
+          '${LetrasNumeros}',
+          '${Matrices}',
+          '${Comprension}',
+          '${BusquedaSimbolos}',
+          '${FigurasIncompletas}',
+          '${Registros}',
+          '${Informacion}',
+          '${Aritmetica}',
+          '${Pistas}',
+          '${comprensionVerbal}',
+          '${escalaTotal}',
+          '${razonamientoPerceptual}',
+          '${velociedadDeProcesamiento}',
+          '${memoriaDeTrabajo}',
+          '${puntuacionMediaCompresionVerbal}',
+          '${puntuacionMediaSubprueba}',
+          '${puntuacionMediaComprensionVerbal2}'
+          )`
+      );
+    } catch(err){
+      console.log('INSERT ASWISC ERROR: ', err);
+    }  
+}
+
+
+
+
+
 module.exports = aswiscCtrl;
+
+
