@@ -6,18 +6,26 @@ const { google } = require('googleapis');
 
 const { OAuth2 } = google.auth;
 
+const mercadopago = require('mercadopago');
+
 const oAuth2Client = new OAuth2('57432841693-mijbi1j1o5fmo3vm7t2jpuudjrdqkcov.apps.googleusercontent.com', 
 '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'
 )
 
 const stripe = require('stripe')('sk_test_51KvYRzEeE5SQU3ghucCf3UMdwqVBHwTuBBOtyE2zHpzdZCaerMYPPrybVhBNURmIRKym3n2ybjt9A78Khh0lQIqd00bFNsXPwy');
-
+//Credenciales Google Developers - Google Calendar y Meet
 oAuth2Client.setCredentials({
     refresh_token: 
-    '1//048X9xo1QXQivCgYIARAAGAQSNgF-L9IrE8aLmPgFowWAl8gtx5cAh0xxFwKCijLSASF01ZvDqos78FgevwKpZdlq5q3N94-a7A',
+    '1//04j1oKYGZkJkjCgYIARAAGAQSNgF-L9IrJ4XfL8JwVF1UgI44rm4kEo6aPXov_cpYwH4wI0_36zy30xBYrzSMqRuc7LAe9NYqUw',
 });
 
 const calendar = google.calendar({ version: 'v3', auth: oAuth2Client })
+
+//Credenciales Mercado Pago
+mercadopago.configure({
+  access_token: 'APP_USR-8146102713757673-051002-ef94488b3c9d1a9627f8aecc1eff85f2-1121087910'
+});
+
 
 horariosCtrl.generarVideollamada = async (req, res) => {    
 
@@ -138,11 +146,13 @@ horariosCtrl.addSession = async(req, res) => {
   try {
     // console.log(req.params.id)
     // console.log(req.body)
-    let { eventName, startTime, endTime, idPaciente, precio, descripcion} = req.body;
+    let { eventName, startTime, endTime, idPaciente, precio, Description} = req.body;
     let idEspecilista = req.params.id
+   console.log(req.body)
+   console.log(Description);
     // console.log("id Paciente: ", idPaciente);
     // console.log("id Especialista: ", idEspecilista);
-    if(descripcion == undefined) descripcion = ".";
+    if(Description == undefined) Description = ".";
 
     let correoQueryEspecialista = await pool.query(`SELECT email from especialistas where id_especialista = '${idEspecilista}'`);
     let correoJSON = JSON.parse(JSON.stringify(correoQueryEspecialista));
@@ -158,7 +168,7 @@ horariosCtrl.addSession = async(req, res) => {
 
 
     //Insert el objeto del bloque 
-    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${descripcion}', '${precio_consulta}');`;
+    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${Description}', '${precio_consulta}');`;
     // let sql = "SELECT * FROM horarios";
     await pool.query(sql);
 
@@ -184,7 +194,7 @@ horariosCtrl.addSession = async(req, res) => {
 
       const event = {
         summary : eventName, 
-        description: descripcion,
+        description: Description,
         start : {
             dateTime : startTime2,
             timeZone: 'America/Mexico_City',
@@ -268,20 +278,68 @@ horariosCtrl.getCitasEspecialista = async(req, res) => {
 
 horariosCtrl.addSessionPaciente = async(req, res) => {
   
+  console.log(res);
+
+
+  //Configuracion de que se va a pagar [sesion de llamada]
+  let preference = {
+    items: [
+      {
+        title: 'Title',
+        unit_price: 10,
+        quantity: 1,
+      }
+    ]
+  };
   
-  //Crear Payment Intent
-  const paymentIntent = await stripe.paymentIntents.create({
-    customer: customer.id,
-    setup_future_usage: 'off_session',
-    amount: 1099,
-    currency: 'eur',
-    automatic_payment_methods: {
-      enabled: true,
-    },
-  });
+  mercadopago.preferences.create(preference)
+    .then(function(response){
+      //Response
+      global.id = response.body.id;
+    
+    }).catch(function(error){
+      console.log(error);
+    });
 
 
 }    
+
+const orders = require('../models/especialista');
+//-----------------------------------------------------------------------------------
+//-----------------------ORDEN DE PAGO PACIENTE STRIPE-------------------------------
+  const postItem = async(req, res) => {
+    try{
+      const {amount, name} = req.body;
+      const orderRes = await orders.create({
+        name, 
+        amount
+      })
+
+    } catch (e) {
+      res.status(500);
+      res.send({error: 'Algo ocurrio'})
+    }
+  }
+
+
+
+
+  //Crear Payment Intent
+  // const paymentIntent = await stripe.paymentIntents.create({
+  //   customer: customer.id,
+  //   setup_future_usage: 'off_session',
+  //   amount: 1099,
+  //   currency: 'eur',
+  //   automatic_payment_methods: {
+  //     enabled: true,
+  //   },
+  // });
+
+
+
+
+
+
     // const attendeesEmails = [ { 'email': 'user1@example.com' }, { 'email': 'user2@example.com' } ]; 
     // const event = { 
       //   summary: 'Coding class', 

@@ -17,8 +17,11 @@
     "express": "^4.17.1",
     "googleapis": "^100.0.0",
     "jsonwebtoken": "^8.5.1",
+    "mercadopago": "^1.5.12",
+    "moment": "^2.29.3",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.7.5",
     "promise-mysql": "^5.0.4",
     "stripe": "^8.222.0"
   },
