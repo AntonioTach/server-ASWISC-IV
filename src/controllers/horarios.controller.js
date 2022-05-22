@@ -16,7 +16,7 @@ const stripe = require('stripe')('sk_test_51KvYRzEeE5SQU3ghucCf3UMdwqVBHwTuBBOty
 //Credenciales Google Developers - Google Calendar y Meet
 oAuth2Client.setCredentials({
     refresh_token: 
-    '1//04j1oKYGZkJkjCgYIARAAGAQSNgF-L9IrJ4XfL8JwVF1UgI44rm4kEo6aPXov_cpYwH4wI0_36zy30xBYrzSMqRuc7LAe9NYqUw',
+    '1//04zXpnioYgYKWCgYIARAAGAQSNgF-L9Ir6eULu2LFYc5du3ezwLkNANgSt0HdO7g7VGsCySNi0ZPiy6T2TmI8GvovMNOR-TVhdg',
 });
 
 const calendar = google.calendar({ version: 'v3', auth: oAuth2Client })
