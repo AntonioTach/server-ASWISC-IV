@@ -223,7 +223,7 @@ usuariosCtrl.buscarPaciente = async (req, res) => {
 //Obtener Paciente Nombre
 usuariosCtrl.buscarPacienteNombre = async (req, res) => {
     const { id } = req.params;
-    const paciente = await pool.query('SELECT pacientes.nombre, pacientes.sexo, pacientes.nacimiento, pacientes.email, pacientes.telefono, usuarios.usuario, usuarios.contrasena FROM pacientes INNER JOIN usuarios ON pacientes.id_usuario = usuarios.id_usuario WHERE usuarios.id_usuario = ?', [id]);
+    const paciente = await pool.query('SELECT pacientes.nombre, pacientes.sexo, pacientes.nacimiento, pacientes.email, pacientes.precio_consulta, pacientes.telefono, usuarios.usuario, usuarios.contrasena FROM pacientes INNER JOIN usuarios ON pacientes.id_usuario = usuarios.id_usuario WHERE usuarios.id_usuario = ?', [id]);
    // console.log(paciente);
     return res.json(paciente);
     // return res.json({ paciente, usuario});

@@ -13,5 +13,6 @@ router.get('/get-citas-especialista/:id', horariosCtrl.getCitasEspecialista);
 
 router.post('/addSessionPaciente/:id', horariosCtrl.addSessionPaciente);
 
+router.post('/paymentIntent/', horariosCtrl.createPaymentIntent);
 
 module.exports = router;

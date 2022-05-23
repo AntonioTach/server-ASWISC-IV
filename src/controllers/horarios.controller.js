@@ -11,8 +11,9 @@ const mercadopago = require('mercadopago');
 const oAuth2Client = new OAuth2('57432841693-mijbi1j1o5fmo3vm7t2jpuudjrdqkcov.apps.googleusercontent.com', 
 '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'
 )
-
-const stripe = require('stripe')('sk_test_51KvYRzEeE5SQU3ghucCf3UMdwqVBHwTuBBOtyE2zHpzdZCaerMYPPrybVhBNURmIRKym3n2ybjt9A78Khh0lQIqd00bFNsXPwy');
+//Stripe and key
+const stripe = require("stripe")
+('sk_test_51KvYRzEeE5SQU3ghucCf3UMdwqVBHwTuBBOtyE2zHpzdZCaerMYPPrybVhBNURmIRKym3n2ybjt9A78Khh0lQIqd00bFNsXPwy');
 //Credenciales Google Developers - Google Calendar y Meet
 oAuth2Client.setCredentials({
     refresh_token: 
@@ -147,7 +148,7 @@ horariosCtrl.addSession = async(req, res) => {
     console.log(req.params.id)
     console.log(req.body)
 
-    let { eventName, startTime, endTime, idPaciente, precio, descripcion, nombrePaciente} = req.body;
+    let { eventName, startTime, endTime, idPaciente, precio, Description, nombrePaciente} = req.body;
     let idEspecilista = req.params.id
    console.log(req.body)
    console.log(Description);
@@ -167,9 +168,9 @@ horariosCtrl.addSession = async(req, res) => {
     console.log('Correo Especialista: ', correoEspecialista);
     console.log('Correo Paciente: ', correoPaciente);
 
-    if(descripcion == undefined) descripcion = " ";
+    if(Description == undefined) Description = " ";
 
-    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio, nombrePaciente) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${descripcion}', '${precio}', '${nombrePaciente}');`;
+    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio, nombrePaciente) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${Description}', '${precio}', '${nombrePaciente}');`;
     await pool.query(sql);
 
 
@@ -302,29 +303,38 @@ horariosCtrl.getCitasEspecialista = async(req, res) => {
 }
 
 horariosCtrl.addSessionPaciente = async(req, res) => {
-  
-  console.log(res);
+
+  console.log('add Session Paciente');
+  console.log(req.body);
+  try{
+    let { eventName, startTime, endTime } = req.body;
+    let id_usuario_paciente = req.params.id_usuario
+
+
+  } catch (err) {
+    console.log(err);
+  }
 
 
   //Configuracion de que se va a pagar [sesion de llamada]
-  let preference = {
-    items: [
-      {
-        title: 'Title',
-        unit_price: 10,
-        quantity: 1,
-      }
-    ]
-  };
+  // let preference = {
+  //   items: [
+  //     {
+  //       title: 'Title',
+  //       unit_price: 10,
+  //       quantity: 1,
+  //     }
+  //   ]
+  // };
   
-  mercadopago.preferences.create(preference)
-    .then(function(response){
-      //Response
-      global.id = response.body.id;
+  // mercadopago.preferences.create(preference)
+  //   .then(function(response){
+  //     //Response
+  //     global.id = response.body.id;
     
-    }).catch(function(error){
-      console.log(error);
-    });
+  //   }).catch(function(error){
+  //     console.log(error);
+  //   });
 
 
 }    
@@ -345,6 +355,25 @@ const orders = require('../models/especialista');
       res.send({error: 'Algo ocurrio'})
     }
   }
+
+  horariosCtrl.createPaymentIntent = async (req, res) => {
+
+    let { amount } = req.body;
+    console.log('this is the amount inside ', amount );
+    try{
+        let paymentIntent = await stripe.paymentIntents.create({
+            payment_method_types: ['card'],
+            amount: amount,
+            currency: 'mxn'
+        })
+        res.status(201).json({client_secret: paymentIntent.client_secret});
+    }catch(err){
+        res.status(500).json({
+            message: "Could not create payment charge",
+            error: err.code
+        });
+    }
+};
 
 
 
