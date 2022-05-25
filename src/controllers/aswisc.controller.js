@@ -5329,89 +5329,118 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
     }
   }
 
-  insertASWISC(id_paciente, id_especialistaQuery, Fecha, Cubos, Semejanzas, Digitos, Conceptos, Claves, Vocabulario, LetrasNumeros, 
-    Matrices, Comprension, BusquedaSimbolos, FigurasIncompletas, Registros, Informacion, Aritmetica, Pistas, comprensionVerbal, escalaTotal,
-    razonamientoPerceptual, velociedadDeProcesamiento, memoriaDeTrabajo, puntuacionMediaCompresionVerbal, puntuacionMediaSubprueba, 
-    puntuacionMediaComprensionVerbal2
+  try{
+    let sql = await pool.query(
+      `INSERT INTO aswisc(
+        id_paciente, 
+        id_especialista, 
+        fecha_evaluacion,
+        cubos,
+        semejanzas,
+        digitos, 
+        conceptos,
+        claves,
+        vocabulario,
+        letras_numeros,
+        matrices,
+        comprension,
+        busqueda_simbolos,
+        figuras_incompletas,
+        registros,
+        informacion,
+        aritmetica,
+        pistas,
+        comprension_verbal,
+        escala_total,
+        razonamiento_perceptual,
+        velocidad_de_procesamiento,
+        memoria_de_trabajo,
+        puntuacion_media_comprension_verbal,
+        puntuacion_media_subprueba,
+        puntuacion_media_comprension_verbal_2
+        ) 
+      values (
+        '${id_paciente}', 
+        '${id_especialistaQuery}', 
+        '${Fecha}',
+        '${Cubos}',
+        '${Semejanzas}',
+        '${Digitos}',
+        '${Conceptos}',
+        '${Claves}',
+        '${Vocabulario}',
+        '${LetrasNumeros}',
+        '${Matrices}',
+        '${Comprension}',
+        '${BusquedaSimbolos}',
+        '${FigurasIncompletas}',
+        '${Registros}',
+        '${Informacion}',
+        '${Aritmetica}',
+        '${Pistas}',
+        '${comprensionVerbal}',
+        '${escalaTotal}',
+        '${razonamientoPerceptual}',
+        '${velociedadDeProcesamiento}',
+        '${memoriaDeTrabajo}',
+        '${puntuacionMediaCompresionVerbal}',
+        '${puntuacionMediaSubprueba}',
+        '${puntuacionMediaComprensionVerbal2}'
+        )`
     );
+    try {
+      let id_aswisc = await pool.query(
+        `SELECT id_aswisc FROM aswisc 
+        WHERE id_paciente = '${id_paciente}' 
+        AND id_especialista = '${id_especialistaQuery}' 
+        AND fecha_evaluacion = '${Fecha}'
+        AND escala_total = '${escalaTotal}'
+        AND puntuacion_media_comprension_verbal_2 = '${puntuacionMediaComprensionVerbal2}'`
+      );
+      let id_aswiscJSON = JSON.parse(JSON.stringify(id_aswisc));
+      let id_ASWISC = id_aswiscJSON[0].id_aswisc;
+      // console.log('ID ASWISC: ', id_ASWISC);
+      response["id_ASWISC"] = id_ASWISC;
+    } catch (error) {
+      console.log('SELECT ASWISC ERROR: ', err);
+    }
+    
+  } catch(err){
+    console.log('INSERT ASWISC ERROR: ', err);
+  }  
+
+  
 
   res.json({ success: true, message: "Exito", data: response });
 };
 
 
 
-async function insertASWISC(id_paciente, id_especialistaQuery, Fecha, Cubos, Semejanzas, Digitos, Conceptos, Claves, Vocabulario, LetrasNumeros, 
-  Matrices, Comprension, BusquedaSimbolos, FigurasIncompletas, Registros, Informacion, Aritmetica, Pistas, comprensionVerbal, escalaTotal,
-  razonamientoPerceptual, velociedadDeProcesamiento, memoriaDeTrabajo, puntuacionMediaCompresionVerbal, puntuacionMediaSubprueba, 
-  puntuacionMediaComprensionVerbal2
-  ){
+// async function insertASWISC(id_paciente, id_especialistaQuery, Fecha, Cubos, Semejanzas, Digitos, Conceptos, Claves, Vocabulario, LetrasNumeros, 
+//   Matrices, Comprension, BusquedaSimbolos, FigurasIncompletas, Registros, Informacion, Aritmetica, Pistas, comprensionVerbal, escalaTotal,
+//   razonamientoPerceptual, velociedadDeProcesamiento, memoriaDeTrabajo, puntuacionMediaCompresionVerbal, puntuacionMediaSubprueba, 
+//   puntuacionMediaComprensionVerbal2
+//   ){
 
-    try{
-      let sql = await pool.query(
-        `INSERT INTO aswisc(
-          id_paciente, 
-          id_especialista, 
-          fecha_evaluacion,
-          cubos,
-          semejanzas,
-          digitos, 
-          conceptos,
-          claves,
-          vocabulario,
-          letras_numeros,
-          matrices,
-          comprension,
-          busqueda_simbolos,
-          figuras_incompletas,
-          registros,
-          informacion,
-          aritmetica,
-          pistas,
-          comprension_verbal,
-          escala_total,
-          razonamiento_perceptual,
-          velocidad_de_procesamiento,
-          memoria_de_trabajo,
-          puntuacion_media_comprension_verbal,
-          puntuacion_media_subprueba,
-          puntuacion_media_comprension_verbal_2
-          ) 
-        values (
-          '${id_paciente}', 
-          '${id_especialistaQuery}', 
-          '${Fecha}',
-          '${Cubos}',
-          '${Semejanzas}',
-          '${Digitos}',
-          '${Conceptos}',
-          '${Claves}',
-          '${Vocabulario}',
-          '${LetrasNumeros}',
-          '${Matrices}',
-          '${Comprension}',
-          '${BusquedaSimbolos}',
-          '${FigurasIncompletas}',
-          '${Registros}',
-          '${Informacion}',
-          '${Aritmetica}',
-          '${Pistas}',
-          '${comprensionVerbal}',
-          '${escalaTotal}',
-          '${razonamientoPerceptual}',
-          '${velociedadDeProcesamiento}',
-          '${memoriaDeTrabajo}',
-          '${puntuacionMediaCompresionVerbal}',
-          '${puntuacionMediaSubprueba}',
-          '${puntuacionMediaComprensionVerbal2}'
-          )`
-      );
-    } catch(err){
-      console.log('INSERT ASWISC ERROR: ', err);
-    }  
+   
+// }
+
+
+aswiscCtrl.getPrueba =  async (req, res) => {
+  const { id } = req.params; //ID WISC-IV
+  // console.log('ID WISC inside GET PRUEBA', id);
+  try {
+    const dataASWISC = await pool.query(`
+            SELECT a.*, e.nombre as EspecialistaNombre, p.nombre as PacienteNombre, p.nacimiento as PacienteNacimiento
+            FROM aswisc a
+            INNER JOIN especialistas e on a.id_especialista = e.id_especialista
+            INNER JOIN pacientes p on a.id_paciente = p.id_paciente
+            WHERE id_aswisc=${id}`); 
+            res.json(dataASWISC);
+  } catch (error) {
+    console.log(error);
+  }
 }
-
-
-
 
 
 module.exports = aswiscCtrl;
