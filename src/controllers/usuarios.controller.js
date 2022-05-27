@@ -145,7 +145,13 @@ usuariosCtrl.registrarPaciente = async (req, res) => {
         res.send(false);
     } else {
         try{
-            let sqlUsuarios = await pool.query(`INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasena}', '${id_tipo}')`);
+
+            let contrasenaEncriptada = contrasena
+                if(contrasena.length != 60){
+                    contrasenaEncriptada = usuariosCtrl.encriptar(contrasena)
+                }
+
+            let sqlUsuarios = await pool.query(`INSERT INTO usuarios(usuario, contrasena, id_tipo) values ('${usuario}', '${contrasenaEncriptada}', '${id_tipo}')`);
             let id_usuario_especialista = await pool.query(`SELECT id_usuario FROM usuarios WHERE usuario = '${usuario}'`);
             //Desconversion de ROW data package a JSON en [0].id_usuario
             let id_usuario_especialistaJSON = JSON.stringify(id_usuario_especialista);
@@ -235,9 +241,15 @@ usuariosCtrl.editEspecialista = async (req, res) => {
     const { id } = req.params;
     const { nombre, direccion, email, profesion, telefono, tiempo_consulta, contrasena, usuario } = req.body;
     debugger
+    
+    let contrasenaEncriptada = contrasena
+    if(contrasena.length != 60){
+        contrasenaEncriptada = usuariosCtrl.encriptar(contrasena)
+    }
+
     //Update tabla paciente
     await pool.query(`UPDATE especialistas set nombre='${nombre}', direccion='${direccion}', email='${email}', profesion = '${profesion}', telefono = '${telefono}', tiempo_consulta = '${tiempo_consulta}' WHERE id_usuario = ${id}`);
-    await pool.query(`UPDATE usuarios set usuario='${usuario}', contrasena = '${contrasena}' WHERE id_usuario = ${id}`);
+    await pool.query(`UPDATE usuarios set usuario='${usuario}', contrasena = '${contrasenaEncriptada}' WHERE id_usuario = ${id}`);
     res.json(req.body);
 }
 //Editar Pacientes
@@ -251,10 +263,16 @@ usuariosCtrl.editPaciente = async (req, res) => {
 usuariosCtrl.editPacienteNombre = async (req, res) => {
     const { id } = req.params;
     const { nombre, email, telefono, usuario, contrasena } = req.body;
+
+    let contrasenaEncriptada = contrasena
+    if(contrasena.length != 60){
+        contrasenaEncriptada = usuariosCtrl.encriptar(contrasena)
+    }
+    
     //Update tabla paciente
     await pool.query(`UPDATE pacientes set nombre='${nombre}', email='${email}', telefono='${telefono}' WHERE id_usuario = ${id}`);
     //Update tabla usuarios
-    await pool.query(`UPDATE usuarios set usuario='${usuario}', contrasena = '${contrasena}' WHERE id_usuario = ${id}`);
+    await pool.query(`UPDATE usuarios set usuario='${usuario}', contrasena = '${contrasenaEncriptada}' WHERE id_usuario = ${id}`);
     res.json(req.body);
 }
 
@@ -524,7 +542,7 @@ usuariosCtrl.verCarrito3 = async (req, res) => {
 // usuariosCtrl.ver
 //-----------------------------Login y creacion TOKEN--------------------------------
 //Login
-// /*
+/*
 usuariosCtrl.signin = async (req, res) => {
     const { usuario, contrasena } = req.body;
     let tipo;
@@ -538,9 +556,6 @@ usuariosCtrl.signin = async (req, res) => {
                 console.log(err);
             }
             if (rows.length > 0) {
-
-                
-
 
                 let data = JSON.stringify(rows[0]); //Guardado de dato 
                 const token = jwt.sign(data, 'warzone');    //creacion del token
@@ -561,9 +576,9 @@ usuariosCtrl.signin = async (req, res) => {
     );
 
 }
-// */
+*/
 
-/*
+
 usuariosCtrl.signin = async (req, res) => {
     const { usuario, contrasena } = req.body;
     let tipo;
@@ -581,27 +596,46 @@ usuariosCtrl.signin = async (req, res) => {
                 let contrasenaPlana = contrasena
                 let contraseñaEncriptada = rows[0].contrasena
 
-                bcryptjs.compare(contrasenaPlana, contraseñaEncriptada, function (err, result) {
-                    if(err){
-                        console.log("error al comparar la contraseña")
-                        return res.status(401).send("error al comparar la contraseña");
-                    }
-                    console.log("resultado", result)
-                    if(result){
-                        console.log(result)
+                console.log(contrasenaPlana)
+                console.log(contraseñaEncriptada)
 
-                        let data = JSON.stringify(rows[0]); //Guardado de dato 
-                        const token = jwt.sign(data, 'warzone');    //creacion del token
-                        let usuario = JSON.stringify(rows[0].usuario);  //obtener usuario
-                        let id_tipo = JSON.stringify(rows[0].id_tipo);  //obtener id tipo
-                        let id_usuario = JSON.stringify(rows[0].id_usuario);//obtener id usuario
-                        console.log(id_usuario);
-                        return res.status(200).json({ token, usuario, id_tipo, id_usuario });
-                    }else{
-                        console.log("El no coincide con la contraseña")
-                        return res.status(401).send("El no coincide con la contraseña");
-                    }
-                })
+                console.log( bcryptjs.hashSync(contrasenaPlana, 8) )
+
+                // bcryptjs.hash(contrasenaPlana, 8, function(err, hash) {
+                //     if (err) { throw (err); }
+
+                //     console.log(hash)
+                
+                    bcryptjs.compare(contrasenaPlana, contraseñaEncriptada, function (err, result) {
+
+                        console.log("result -> ", result)
+                        console.log("error -> ", err)
+                        if(err){
+                            console.log("error al comparar la contraseña")
+                            return res.status(401).send("error al comparar la contraseña");
+                        }
+                        console.log("resultado", result)
+                        if(result){
+                            console.log(result)
+    
+                            let data = JSON.stringify(rows[0]); //Guardado de dato 
+                            const token = jwt.sign(data, 'warzone');    //creacion del token
+                            let usuario = JSON.stringify(rows[0].usuario);  //obtener usuario
+                            let id_tipo = JSON.stringify(rows[0].id_tipo);  //obtener id tipo
+                            let id_usuario = JSON.stringify(rows[0].id_usuario);//obtener id usuario
+                            console.log(id_usuario);
+                            return res.status(200).json({ token, usuario, id_tipo, id_usuario });
+                        }else{
+                            console.log("El usuario no coincide con la contraseña")
+                            return res.status(401).send("El no coincide con la contraseña");
+                        }
+                    })
+                
+                
+                    // });
+
+                // bcryptjs.compare(contrasenaPlana, contraseñaEncriptada, function (err, result) {
+                
                
 
             }
@@ -613,7 +647,7 @@ usuariosCtrl.signin = async (req, res) => {
     );
 
 }
- */
+
 
 
 
@@ -712,30 +746,35 @@ usuariosCtrl.identificarEmailPaciente = async (req, res) => {
 //Mandar email 
 usuariosCtrl.mandarEmail = async (req, res) => {
     const {email, token} = req.body;
+    console.log(req.body)
 
-    // const transporter = nodemailer.createTransport({
-    //     host: 'gmail',
-    //     auth: {
-    //         user: 'aswisciv2@gmail.com',
-    //         pass: 'Speedstick2899218'
-    //     }
-    // });
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,     
+        auth: {
+            user: 'aswisciv@gmail.com',
+            pass: 'tsdoulbyxedjxcss'
+        }
+    });
     
+    var mailOptions = {
+        from: "aswisciv2@gmail.com",
+        to: email,
+        subject: 'Ingresa este token para poder cambiar tu contraseña',
+        text: token,
+        // html: "<h1> Adios </h1>"
+    }
 
-    // var mailOptions = {
-    //     from: "Remitente",
-    //     to: email,
-    //     subject: 'Envio de token para actualizar contraseña',
-    //     text: token
-    // }
-
-    // transporter.sendMail(mailOptions, (error, info) => {
-    //     if(error){
-    //         console.log(error)
-    //     }else {
-    //         console.log('Mail enviado.')
-    //     }
-    // })
+    transporter.sendMail(mailOptions, (error, info) => {
+        if(error){
+            console.log(error)
+            return res.status(500).send({ error: "Error al mandar el mail"})
+        }else {
+            console.log('Mail enviado.')
+            return res.status(200).send({ "status": "Mail enviado"})
+        }
+    })
 }
 //Update Contrasena Especialista
 usuariosCtrl.updateContrasenaEspecialista = async (req, res) => {
@@ -798,6 +837,28 @@ usuariosCtrl.desencriptar = (contrasenaEnviada, contraseña) => {
     // esto por motivos de seguridad, para no desencriptar una y compararala asi
     return bcryptjs.compare(contraseñaPasada, contraseñaGuardadaEnLaBD);
 };
+
+
+usuariosCtrl.watchPacienteEspecialista = async (req, res) => {
+    try {
+        // console.log(req.params)
+        let id = req.params.id
+
+        // console.log(" 1--------------------------1")
+        console.log(id)
+
+        let idEspecialistaInPacientes = await pool.query(`SELECT id_especialista FROM pacientes WHERE id_usuario = '${id}'`);
+        // await pool.query(sql);
+
+        console.log(idEspecialistaInPacientes[0].id_especialista)
+
+        return res.status(200).send({idEspecialista: idEspecialistaInPacientes[0].id_especialista})
+        
+    } catch (error) {
+        console.error("Ocurrio un error\n", error)
+        return res.status(500).send({message: "no se pudo verificar si el paciente tiene un especialista asignado"})
+    }
+}
 
 
 

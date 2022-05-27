@@ -11,7 +11,11 @@ router.delete('/deleteSession/:id', horariosCtrl.deleteSession);
 
 router.get('/get-citas-especialista/:id', horariosCtrl.getCitasEspecialista);
 
+router.get('/get-citas-especialista-paciente/:id', horariosCtrl.getCitasEspecialistaPaciente);
+
 router.post('/addSessionPaciente/:id', horariosCtrl.addSessionPaciente);
+
+router.delete('/delete-session-paciente/:id', horariosCtrl.deleteSessionPaciente);
 
 
 module.exports = router;

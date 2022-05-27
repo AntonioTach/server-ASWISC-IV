@@ -150,10 +150,10 @@ horariosCtrl.addSession = async(req, res) => {
     let { eventName, startTime, endTime, idPaciente, precio, descripcion, nombrePaciente} = req.body;
     let idEspecilista = req.params.id
    console.log(req.body)
-   console.log(Description);
+   console.log(descripcion);
     // console.log("id Paciente: ", idPaciente);
     // console.log("id Especialista: ", idEspecilista);
-    if(Description == undefined) Description = ".";
+    if(descripcion == undefined) descripcion = "";
 
     let correoQueryEspecialista = await pool.query(`SELECT email from especialistas where id_especialista = '${idEspecilista}'`);
     let correoJSON = JSON.parse(JSON.stringify(correoQueryEspecialista));
@@ -168,6 +168,8 @@ horariosCtrl.addSession = async(req, res) => {
     console.log('Correo Paciente: ', correoPaciente);
 
     if(descripcion == undefined) descripcion = " ";
+
+    descripcion += 'https://calendar.google.com/calendar/'
 
     let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio, nombrePaciente) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${descripcion}', '${precio}', '${nombrePaciente}');`;
     await pool.query(sql);
@@ -194,7 +196,7 @@ horariosCtrl.addSession = async(req, res) => {
 
       const event = {
         summary : eventName, 
-        description: Description,
+        description: descripcion,
         start : {
             dateTime : startTime2,
             timeZone: 'America/Mexico_City',
@@ -275,6 +277,58 @@ horariosCtrl.deleteSession = async(req, res) => {
   }
 }
 
+horariosCtrl.deleteSessionPaciente = async(req, res) => {
+  try {
+    let parametros = req.params.id.split("$")
+    console.log(parametros[0])
+    console.log(parametros[1])
+
+    let fechaInicio = parametros[1].slice(1, parametros[1].length - 1)
+    console.log(Date(parametros[1]))
+
+
+    // let sql = `DELETE FROM horarios WHERE id_especialista=${parametros[0]} AND startTime='${parametros[1]}'`;
+    // await pool.query(sql);
+
+    const dataCitas = await pool.query(`SELECT id_paciente FROM pacientes WHERE id_usuario=?`,[parametros[0]],
+    async (err, rows, fields) => {
+        if (err) {
+            console.log(err);
+        }
+        if (rows.length > 0) {
+            console.log(rows[0].id_paciente)
+
+            // await pool.query(`SELECT * FROM horarios WHERE id_especialista=?`,[rows[0].id_especialista],
+            //   (err, rows, fields) => {
+            //       if (err) {
+            //           console.log(err);
+            //       }
+            //       if (rows.length > 0) {
+            //           console.log(rows)
+            //           return res.status(200).send(rows);
+            //       }
+            //       else {
+            //           res.send(false);
+            //       }
+            //   });
+            // return res.status(200).send(rows);
+
+            let sql = `DELETE FROM horarios WHERE id_paciente=${rows[0].id_paciente} AND startTime='${parametros[1]}'`;
+            await pool.query(sql);
+            return res.status(200).send({ message: "deleted"})
+
+        }else {
+            return res.send(false);
+        }
+    });
+
+    return res.status(200).send({ message: "deleted"})
+  } catch (error) {
+    console.error("Error happened\n", error)
+    return res.status(500).send({error: "couldnt add sesion to the calendar"})
+  }
+}
+
 
 horariosCtrl.getCitasEspecialista = async(req, res) => {
   try {
@@ -300,6 +354,53 @@ horariosCtrl.getCitasEspecialista = async(req, res) => {
     return res.status(500).send({error: "couldnt add sesion to the calendar"})
   }
 }
+
+
+horariosCtrl.getCitasEspecialistaPaciente = async(req, res) => {
+  try {
+    let IdPaciente = req.params.id
+
+    console.log(IdPaciente)
+
+    const dataCitas = await pool.query(`SELECT id_especialista FROM pacientes WHERE id_paciente=?`,[IdPaciente],
+    async (err, rows, fields) => {
+        if (err) {
+            console.log(err);
+        }
+        if (rows.length > 0) {
+            console.log(rows[0].id_especialista)
+
+            await pool.query(`SELECT * FROM horarios WHERE id_especialista=?`,[rows[0].id_especialista],
+              (err, rows, fields) => {
+                  if (err) {
+                      console.log(err);
+                  }
+                  if (rows.length > 0) {
+                      console.log(rows)
+                      return res.status(200).send(rows);
+                  }
+                  else {
+                      res.send(false);
+                  }
+              });
+            // return res.status(200).send(rows);
+        }else {
+            return res.send(false);
+        }
+    });
+
+    console.log(dataCitas[0].id_especialista)
+    console.log("-----------------------------------")
+
+    
+
+    return res.status(200).send({ message: "it works"})
+  } catch (error) {
+    console.error("Error happened\n", error)
+    return res.status(500).send({error: "couldnt add sesion to the calendar"})
+  }
+}
+
 
 horariosCtrl.addSessionPaciente = async(req, res) => {
   

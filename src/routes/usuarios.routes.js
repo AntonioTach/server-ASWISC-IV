@@ -97,5 +97,8 @@ router.put('/updateContrasena-Paciente', usuariosCtrl.updateContrasenaPaciente);
 //Mandar Correo para contrasena
 router.post('/mandarEmail', usuariosCtrl.mandarEmail);
 
+// chechar si el paciente tiene un especialista asignado
+router.get('/watch-paciente-especialista/:id', usuariosCtrl.watchPacienteEspecialista);
+
 
 module.exports = router;
