@@ -5227,7 +5227,101 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
     if (indices.includes(prueba)) return acc + response[prueba];
     else return acc;
   }, 0);
+  //---------------------------------------------------------------------
+  //---------------------------------INDICES-----------------------------
+  //---------------------------------------------------------------------
+  let indiceCubos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Cubos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
 
+  let indiceSemejanzas = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Semejanzas"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceDigitos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Digitos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceConceptos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Conceptos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceClaves = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Claves"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceVocabulario = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Vocabulario"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceLetrasNumeros = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["LetrasNumeros"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceMatrices = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Matrices"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceComprension = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Comprension"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceBusquedaSimbolos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["BusquedaSimbolos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceFigurasIncompletas = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["FigurasIncompletas"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceRegistros = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Registros"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceInformacion = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Informacion"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceAritmetica = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Aritmetica"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indicePistas = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Pistas"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+  //---------------------------------------------------------------------
+  //-----------------------------FIN INDICES-----------------------------
+  //---------------------------------------------------------------------
   response["nacimiento"] = fechaNacimiento;
   //response["nombrePaciente"] = namePaciente;
   //response["nombreEspecialista"] = nameEspecialista;
@@ -5329,89 +5423,148 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
     }
   }
 
-  insertASWISC(id_paciente, id_especialistaQuery, Fecha, Cubos, Semejanzas, Digitos, Conceptos, Claves, Vocabulario, LetrasNumeros, 
-    Matrices, Comprension, BusquedaSimbolos, FigurasIncompletas, Registros, Informacion, Aritmetica, Pistas, comprensionVerbal, escalaTotal,
-    razonamientoPerceptual, velociedadDeProcesamiento, memoriaDeTrabajo, puntuacionMediaCompresionVerbal, puntuacionMediaSubprueba, 
-    puntuacionMediaComprensionVerbal2
+  try{
+    let sql = await pool.query(
+      `INSERT INTO aswisc(
+        id_paciente, 
+        id_especialista, 
+        fecha_evaluacion,
+        cubos,
+        semejanzas,
+        digitos, 
+        conceptos,
+        claves,
+        vocabulario,
+        letras_numeros,
+        matrices,
+        comprension,
+        busqueda_simbolos,
+        figuras_incompletas,
+        registros,
+        informacion,
+        aritmetica,
+        pistas,
+        comprension_verbal,
+        escala_total,
+        razonamiento_perceptual,
+        velocidad_de_procesamiento,
+        memoria_de_trabajo,
+        puntuacion_media_comprension_verbal,
+        puntuacion_media_subprueba,
+        puntuacion_media_comprension_verbal_2,
+        indiceCubos,
+        indiceSemejanzas,
+        indiceDigitos,
+        indiceConceptos,
+        indiceClaves,
+        indiceVocabulario,
+        indiceLetrasNumeros,
+        indiceMatrices,
+        indiceComprension,
+        indiceBusquedaSimbolos,
+        indiceFigurasIncompletas,
+        indiceRegistros,
+        indiceInformacion,
+        indiceAritmetica,
+        indicePistas
+        ) 
+      values (
+        '${id_paciente}', 
+        '${id_especialistaQuery}', 
+        '${Fecha}',
+        '${Cubos}',
+        '${Semejanzas}',
+        '${Digitos}',
+        '${Conceptos}',
+        '${Claves}',
+        '${Vocabulario}',
+        '${LetrasNumeros}',
+        '${Matrices}',
+        '${Comprension}',
+        '${BusquedaSimbolos}',
+        '${FigurasIncompletas}',
+        '${Registros}',
+        '${Informacion}',
+        '${Aritmetica}',
+        '${Pistas}',
+        '${comprensionVerbal}',
+        '${escalaTotal}',
+        '${razonamientoPerceptual}',
+        '${velociedadDeProcesamiento}',
+        '${memoriaDeTrabajo}',
+        '${puntuacionMediaCompresionVerbal}',
+        '${puntuacionMediaSubprueba}',
+        '${puntuacionMediaComprensionVerbal2}',
+        '${indiceCubos}',
+        '${indiceSemejanzas}',
+        '${indiceDigitos}',
+        '${indiceConceptos}',
+        '${indiceClaves}',
+        '${indiceVocabulario}',
+        '${indiceLetrasNumeros}',
+        '${indiceMatrices}',
+        '${indiceComprension}',
+        '${indiceBusquedaSimbolos}',
+        '${indiceFigurasIncompletas}',
+        '${indiceRegistros}',
+        '${indiceInformacion}',
+        '${indiceAritmetica}',
+        '${indicePistas}'
+        )`
     );
+    try {
+      let id_aswisc = await pool.query(
+        `SELECT id_aswisc FROM aswisc 
+        WHERE id_paciente = '${id_paciente}' 
+        AND id_especialista = '${id_especialistaQuery}' 
+        AND fecha_evaluacion = '${Fecha}'
+        AND escala_total = '${escalaTotal}'
+        AND puntuacion_media_comprension_verbal_2 = '${puntuacionMediaComprensionVerbal2}'`
+      );
+      let id_aswiscJSON = JSON.parse(JSON.stringify(id_aswisc));
+      let id_ASWISC = id_aswiscJSON[0].id_aswisc;
+      // console.log('ID ASWISC: ', id_ASWISC);
+      response["id_ASWISC"] = id_ASWISC;
+    } catch (error) {
+      console.log('SELECT ASWISC ERROR: ', err);
+    }
+    
+  } catch(err){
+    console.log('INSERT ASWISC ERROR: ', err);
+  }  
+
+  
 
   res.json({ success: true, message: "Exito", data: response });
 };
 
 
 
-async function insertASWISC(id_paciente, id_especialistaQuery, Fecha, Cubos, Semejanzas, Digitos, Conceptos, Claves, Vocabulario, LetrasNumeros, 
-  Matrices, Comprension, BusquedaSimbolos, FigurasIncompletas, Registros, Informacion, Aritmetica, Pistas, comprensionVerbal, escalaTotal,
-  razonamientoPerceptual, velociedadDeProcesamiento, memoriaDeTrabajo, puntuacionMediaCompresionVerbal, puntuacionMediaSubprueba, 
-  puntuacionMediaComprensionVerbal2
-  ){
+// async function insertASWISC(id_paciente, id_especialistaQuery, Fecha, Cubos, Semejanzas, Digitos, Conceptos, Claves, Vocabulario, LetrasNumeros, 
+//   Matrices, Comprension, BusquedaSimbolos, FigurasIncompletas, Registros, Informacion, Aritmetica, Pistas, comprensionVerbal, escalaTotal,
+//   razonamientoPerceptual, velociedadDeProcesamiento, memoriaDeTrabajo, puntuacionMediaCompresionVerbal, puntuacionMediaSubprueba, 
+//   puntuacionMediaComprensionVerbal2
+//   ){
 
-    try{
-      let sql = await pool.query(
-        `INSERT INTO aswisc(
-          id_paciente, 
-          id_especialista, 
-          fecha_evaluacion,
-          cubos,
-          semejanzas,
-          digitos, 
-          conceptos,
-          claves,
-          vocabulario,
-          letras_numeros,
-          matrices,
-          comprension,
-          busqueda_simbolos,
-          figuras_incompletas,
-          registros,
-          informacion,
-          aritmetica,
-          pistas,
-          comprension_verbal,
-          escala_total,
-          razonamiento_perceptual,
-          velocidad_de_procesamiento,
-          memoria_de_trabajo,
-          puntuacion_media_comprension_verbal,
-          puntuacion_media_subprueba,
-          puntuacion_media_comprension_verbal_2
-          ) 
-        values (
-          '${id_paciente}', 
-          '${id_especialistaQuery}', 
-          '${Fecha}',
-          '${Cubos}',
-          '${Semejanzas}',
-          '${Digitos}',
-          '${Conceptos}',
-          '${Claves}',
-          '${Vocabulario}',
-          '${LetrasNumeros}',
-          '${Matrices}',
-          '${Comprension}',
-          '${BusquedaSimbolos}',
-          '${FigurasIncompletas}',
-          '${Registros}',
-          '${Informacion}',
-          '${Aritmetica}',
-          '${Pistas}',
-          '${comprensionVerbal}',
-          '${escalaTotal}',
-          '${razonamientoPerceptual}',
-          '${velociedadDeProcesamiento}',
-          '${memoriaDeTrabajo}',
-          '${puntuacionMediaCompresionVerbal}',
-          '${puntuacionMediaSubprueba}',
-          '${puntuacionMediaComprensionVerbal2}'
-          )`
-      );
-    } catch(err){
-      console.log('INSERT ASWISC ERROR: ', err);
-    }  
+   
+// }
+
+
+aswiscCtrl.getPrueba =  async (req, res) => {
+  const { id } = req.params; //ID WISC-IV
+  // console.log('ID WISC inside GET PRUEBA', id);
+  try {
+    const dataASWISC = await pool.query(`
+            SELECT a.*, e.nombre as EspecialistaNombre, p.nombre as PacienteNombre, p.nacimiento as PacienteNacimiento
+            FROM aswisc a
+            INNER JOIN especialistas e on a.id_especialista = e.id_especialista
+            INNER JOIN pacientes p on a.id_paciente = p.id_paciente
+            WHERE id_aswisc=${id}`); 
+            res.json(dataASWISC);
+  } catch (error) {
+    console.log(error);
+  }
 }
-
-
-
 
 
 module.exports = aswiscCtrl;
