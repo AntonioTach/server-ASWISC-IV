@@ -17,5 +17,6 @@ router.post('/addSessionPaciente/:id', horariosCtrl.addSessionPaciente);
 
 router.delete('/delete-session-paciente/:id', horariosCtrl.deleteSessionPaciente);
 
+router.post('/paymentIntent/', horariosCtrl.createPaymentIntent);
 
 module.exports = router;
