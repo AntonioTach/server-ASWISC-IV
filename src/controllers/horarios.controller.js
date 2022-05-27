@@ -17,7 +17,7 @@ const stripe = require("stripe")
 //Credenciales Google Developers - Google Calendar y Meet
 oAuth2Client.setCredentials({
     refresh_token: 
-    '1//04zXpnioYgYKWCgYIARAAGAQSNgF-L9Ir6eULu2LFYc5du3ezwLkNANgSt0HdO7g7VGsCySNi0ZPiy6T2TmI8GvovMNOR-TVhdg',
+    '1//04FCjAG0OcfjTCgYIARAAGAQSNgF-L9Ir2nrZDlSgzPm8fEwCJxmUuxGtHIb-vQ4EzMhpTmtx_Xb7U3FYx4wqp8FFV01bG7CSqQ',
 });
 
 const calendar = google.calendar({ version: 'v3', auth: oAuth2Client })
@@ -151,10 +151,10 @@ horariosCtrl.addSession = async(req, res) => {
     let { eventName, startTime, endTime, idPaciente, precio, Description, nombrePaciente} = req.body;
     let idEspecilista = req.params.id
    console.log(req.body)
-   console.log(descripcion);
+  //  console.log(descripcion);
     // console.log("id Paciente: ", idPaciente);
     // console.log("id Especialista: ", idEspecilista);
-    if(descripcion == undefined) descripcion = "";
+    if(Description == undefined) Description = "";
 
     let correoQueryEspecialista = await pool.query(`SELECT email from especialistas where id_especialista = '${idEspecilista}'`);
     let correoJSON = JSON.parse(JSON.stringify(correoQueryEspecialista));
@@ -172,7 +172,7 @@ horariosCtrl.addSession = async(req, res) => {
 
     // descripcion += 'https://calendar.google.com/calendar/'
 
-    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio, nombrePaciente) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${descripcion}', '${precio}', '${nombrePaciente}');`;
+    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio, nombrePaciente) VALUES ('${idPaciente}', '${idEspecilista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${Description}', '${precio}', '${nombrePaciente}');`;
     await pool.query(sql);
 
 
@@ -197,7 +197,7 @@ horariosCtrl.addSession = async(req, res) => {
 
       const event = {
         summary : eventName, 
-        description: descripcion,
+        description: Description,
         start : {
             dateTime : startTime2,
             timeZone: 'America/Mexico_City',
@@ -363,7 +363,7 @@ horariosCtrl.getCitasEspecialistaPaciente = async(req, res) => {
 
     console.log(IdPaciente)
 
-    const dataCitas = await pool.query(`SELECT id_especialista FROM pacientes WHERE id_paciente=?`,[IdPaciente],
+    const dataCitas = await pool.query(`SELECT id_especialista FROM pacientes WHERE id_usuario=?`,[IdPaciente],
     async (err, rows, fields) => {
         if (err) {
             console.log(err);

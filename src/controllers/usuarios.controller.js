@@ -229,7 +229,7 @@ usuariosCtrl.buscarPaciente = async (req, res) => {
 //Obtener Paciente Nombre
 usuariosCtrl.buscarPacienteNombre = async (req, res) => {
     const { id } = req.params;
-    const paciente = await pool.query('SELECT pacientes.nombre, pacientes.sexo, pacientes.nacimiento, pacientes.email, pacientes.precio_consulta, pacientes.telefono, usuarios.usuario, usuarios.contrasena FROM pacientes INNER JOIN usuarios ON pacientes.id_usuario = usuarios.id_usuario WHERE usuarios.id_usuario = ?', [id]);
+    const paciente = await pool.query('SELECT pacientes.id_paciente, pacientes.nombre, pacientes.sexo, pacientes.nacimiento, pacientes.email, pacientes.precio_consulta, pacientes.telefono, usuarios.usuario, usuarios.contrasena FROM pacientes INNER JOIN usuarios ON pacientes.id_usuario = usuarios.id_usuario WHERE usuarios.id_usuario = ?', [id]);
    // console.log(paciente);
     return res.json(paciente);
     // return res.json({ paciente, usuario});
@@ -307,8 +307,20 @@ usuariosCtrl.deleteEspecialista = async (req, res) => {
 }
 usuariosCtrl.deletePaciente = async (req, res) => {
     const { id } = req.params;  //id_usuario
+    
+    let query_paciente = await pool.query(`SELECT id_paciente FROM pacientes WHERE id_usuario = '${id}'`);
+            //Desconversion de ROW data package a JSON en [0].id_usuario
+            let id_paciente = JSON.parse(JSON.stringify(query_paciente));
+            let id_pacientePOS = id_paciente[0].id_paciente;
+
     //Si esta registrado a un especialista, se cambia a null el id_especialista
     await pool.query('UPDATE pacientes SET id_especialista = NULL WHERE id_usuario = ?', [id]);
+
+    await pool.query('DELETE FROM pruebas WHERE id_paciente = ?', [id_pacientePOS]);
+    await pool.query('DELETE FROM tareas WHERE id_paciente = ?', [id_pacientePOS]);
+    await pool.query('DELETE FROM horarios WHERE id_paciente = ?', [id_pacientePOS]);
+    await pool.query('DELETE FROM pagos WHERE id_paciente = ?', [id_pacientePOS]);
+    await pool.query('DELETE FROM aswisc WHERE id_paciente = ?', [id_pacientePOS]);
     //Elimina primeramente la FK en la tabla pacientes con el id_usuario
     await pool.query('DELETE FROM pacientes WHERE id_usuario = ?', [id]);
     //PK en usuarios
@@ -582,7 +594,6 @@ usuariosCtrl.signin = async (req, res) => {
 usuariosCtrl.signin = async (req, res) => {
     const { usuario, contrasena } = req.body;
     let tipo;
-    console.log(req.body);
 
     //Obtener USUARIO Y ID_TIPO CUANDO EL NOMBRE DE USUARIO Y CONTRASENA COINCIDA
     await pool.query(`SELECT usuario, contrasena, id_tipo, id_usuario FROM usuarios WHERE usuario=?`,
@@ -596,8 +607,8 @@ usuariosCtrl.signin = async (req, res) => {
                 let contrasenaPlana = contrasena
                 let contraseñaEncriptada = rows[0].contrasena
 
-                console.log(contrasenaPlana)
-                console.log(contraseñaEncriptada)
+                // console.log(contrasenaPlana)
+                // console.log(contraseñaEncriptada)
 
                 console.log( bcryptjs.hashSync(contrasenaPlana, 8) )
 
@@ -612,7 +623,7 @@ usuariosCtrl.signin = async (req, res) => {
                         console.log("error -> ", err)
                         if(err){
                             console.log("error al comparar la contraseña")
-                            return res.status(401).send("error al comparar la contraseña");
+                            return res.send({status:1});
                         }
                         console.log("resultado", result)
                         if(result){
@@ -627,7 +638,7 @@ usuariosCtrl.signin = async (req, res) => {
                             return res.status(200).json({ token, usuario, id_tipo, id_usuario });
                         }else{
                             console.log("El usuario no coincide con la contraseña")
-                            return res.status(401).send("El no coincide con la contraseña");
+                            return res.send({status: 1});
                         }
                     })
                 
@@ -640,7 +651,7 @@ usuariosCtrl.signin = async (req, res) => {
 
             }
             else {
-                res.send(false);
+                return res.send({status: 1});
                 
             }
         }
@@ -755,6 +766,9 @@ usuariosCtrl.mandarEmail = async (req, res) => {
         auth: {
             user: 'aswisciv@gmail.com',
             pass: 'tsdoulbyxedjxcss'
+        },
+        tls: {
+            rejectUnauthorized: false
         }
     });
     
@@ -781,7 +795,9 @@ usuariosCtrl.updateContrasenaEspecialista = async (req, res) => {
     const { contrasena, email } = req.body;
     const id_usuario = await pool.query(`SELECT id_usuario FROM especialistas WHERE email = ?`, [email]);
     let data = JSON.stringify(id_usuario[0].id_usuario); //id_ usuario
-    await pool.query(`UPDATE usuarios SET contrasena = '${contrasena}' WHERE id_usuario= ${data}`);
+
+    let contrasenaEncriptada = usuariosCtrl.encriptar(contrasena)
+    await pool.query(`UPDATE usuarios SET contrasena = '${contrasenaEncriptada}' WHERE id_usuario= ${data}`);
     res.send(true);
 }
 //Update Contrasena Pacieente
@@ -789,7 +805,10 @@ usuariosCtrl.updateContrasenaPaciente = async (req, res) => {
     const { contrasena, email } = req.body;
     const id_usuario = await pool.query(`SELECT id_usuario FROM pacientes WHERE email = ?`, [email]);
     let data = JSON.stringify(id_usuario[0].id_usuario); //id_ usuario
-    await pool.query(`UPDATE usuarios SET contrasena = '${contrasena}' WHERE id_usuario= ${data}`);
+
+    let contrasenaEncriptada = usuariosCtrl.encriptar(contrasena)
+
+    await pool.query(`UPDATE usuarios SET contrasena = '${contrasenaEncriptada}' WHERE id_usuario= ${data}`);
     res.send(true);
 }
 
