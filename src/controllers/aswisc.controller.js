@@ -5227,7 +5227,101 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
     if (indices.includes(prueba)) return acc + response[prueba];
     else return acc;
   }, 0);
+  //---------------------------------------------------------------------
+  //---------------------------------INDICES-----------------------------
+  //---------------------------------------------------------------------
+  let indiceCubos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Cubos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
 
+  let indiceSemejanzas = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Semejanzas"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceDigitos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Digitos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceConceptos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Conceptos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceClaves = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Claves"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceVocabulario = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Vocabulario"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceLetrasNumeros = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["LetrasNumeros"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceMatrices = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Matrices"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceComprension = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Comprension"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceBusquedaSimbolos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["BusquedaSimbolos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceFigurasIncompletas = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["FigurasIncompletas"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceRegistros = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Registros"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceInformacion = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Informacion"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceAritmetica = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Aritmetica"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indicePistas = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Pistas"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+  //---------------------------------------------------------------------
+  //-----------------------------FIN INDICES-----------------------------
+  //---------------------------------------------------------------------
   response["nacimiento"] = fechaNacimiento;
   //response["nombrePaciente"] = namePaciente;
   //response["nombreEspecialista"] = nameEspecialista;
@@ -5357,7 +5451,22 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
         memoria_de_trabajo,
         puntuacion_media_comprension_verbal,
         puntuacion_media_subprueba,
-        puntuacion_media_comprension_verbal_2
+        puntuacion_media_comprension_verbal_2,
+        indiceCubos,
+        indiceSemejanzas,
+        indiceDigitos,
+        indiceConceptos,
+        indiceClaves,
+        indiceVocabulario,
+        indiceLetrasNumeros,
+        indiceMatrices,
+        indiceComprension,
+        indiceBusquedaSimbolos,
+        indiceFigurasIncompletas,
+        indiceRegistros,
+        indiceInformacion,
+        indiceAritmetica,
+        indicePistas
         ) 
       values (
         '${id_paciente}', 
@@ -5385,7 +5494,22 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
         '${memoriaDeTrabajo}',
         '${puntuacionMediaCompresionVerbal}',
         '${puntuacionMediaSubprueba}',
-        '${puntuacionMediaComprensionVerbal2}'
+        '${puntuacionMediaComprensionVerbal2}',
+        '${indiceCubos}',
+        '${indiceSemejanzas}',
+        '${indiceDigitos}',
+        '${indiceConceptos}',
+        '${indiceClaves}',
+        '${indiceVocabulario}',
+        '${indiceLetrasNumeros}',
+        '${indiceMatrices}',
+        '${indiceComprension}',
+        '${indiceBusquedaSimbolos}',
+        '${indiceFigurasIncompletas}',
+        '${indiceRegistros}',
+        '${indiceInformacion}',
+        '${indiceAritmetica}',
+        '${indicePistas}'
         )`
     );
     try {
