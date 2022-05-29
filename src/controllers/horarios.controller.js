@@ -410,6 +410,9 @@ horariosCtrl.addSessionPaciente = async(req, res) => {
     let id_usuario_paciente = req.params.id;
     let Description = 'Sesion'
 
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
     //Email Paciente
     let correoQueryPaciente = await pool.query(`SELECT email, id_especialista, precio_consulta, nombre, id_paciente from pacientes where id_usuario = '${id_usuario_paciente}'`);
     let correoPacienteJSON = JSON.parse(JSON.stringify(correoQueryPaciente));
@@ -428,6 +431,10 @@ horariosCtrl.addSessionPaciente = async(req, res) => {
     let correoEspecialista = correoJSON[0].email;
 
     // console.log(id_usuario_paciente, id_especialista, startTime, endTime, eventName, Description, precio, nombrePaciente);
+
+    //Query Pagos
+    let queryPagos = `INSERT INTO pagos(id_pago, precio_doble, estatus, id_paciente, id_especialista, fecha) VALUES ('${null}', '${precio}', '${2}', '${id_paciente}', '${id_especialista}', '${date}');`;
+    await pool.query(queryPagos);
 
     //Query horarios
     let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio, nombrePaciente) VALUES ('${id_paciente}', '${id_especialista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${Description}', '${precio}', '${nombrePaciente}');`;

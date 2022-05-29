@@ -140,6 +140,9 @@ ALTER TABLE pagos
     ADD CONSTRAINT id_especialistafkpagos FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
 
 ALTER TABLE pagos
+    MODIFY id_pago INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
+
+ALTER TABLE pagos
     ADD CONSTRAINT id_pacientefkpagos FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
 
 ALTER TABLE pagos
