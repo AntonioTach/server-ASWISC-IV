@@ -17,7 +17,7 @@ const stripe = require("stripe")
 //Credenciales Google Developers - Google Calendar y Meet
 oAuth2Client.setCredentials({
     refresh_token: 
-    '1//04FCjAG0OcfjTCgYIARAAGAQSNgF-L9Ir2nrZDlSgzPm8fEwCJxmUuxGtHIb-vQ4EzMhpTmtx_Xb7U3FYx4wqp8FFV01bG7CSqQ',
+    '1//04fA8MKr0lQlmCgYIARAAGAQSNgF-L9IrU58mKyHOPRYSDE3v-Yrr54xdUipGy0OUjjJDbHHmqKEcICuWYogglrns8mv9RBpvwA',
 });
 
 const calendar = google.calendar({ version: 'v3', auth: oAuth2Client })
@@ -454,11 +454,11 @@ horariosCtrl.addSessionPaciente = async(req, res) => {
         summary : eventName, 
         description: Description,
         start : {
-            dateTime : timeStartMX,
+            dateTime : startTime,
             timeZone: 'America/Mexico_City',
         },
         end : {
-            dateTime: timeEndMX,
+            dateTime: endTime,
             timeZone: 'America/Mexico_City',
         },
         colorId: 1,
