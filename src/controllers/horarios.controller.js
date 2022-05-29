@@ -404,12 +404,101 @@ horariosCtrl.getCitasEspecialistaPaciente = async(req, res) => {
 
 
 horariosCtrl.addSessionPaciente = async(req, res) => {
-
-  console.log('add Session Paciente');
+  console.log('add Session Paciente a');
   console.log(req.body);
   try{
-    let { eventName, startTime, endTime } = req.body;
+    let { startTime, endTime } = req.body;
     let id_usuario_paciente = req.params.id_usuario
+    let Description = 'Sesion'
+    
+    //Email Paciente
+    let correoQueryPaciente = await pool.query(`SELECT email, id_especialista, precio_consulta, nombre from pacientes where id_paciente = '${id_usuario_paciente}'`);
+    let correoPacienteJSON = JSON.parse(JSON.stringify(correoQueryPaciente));
+    let correoPaciente = correoPacienteJSON[0].email;
+    let id_especialista = correoPacienteJSON[0].id_especialista;
+    let precio =correoPacienteJSON[0].precio_consulta;
+    let nombrePaciente =correoPacienteJSON[0].nombre;
+
+    let eventName = `Sesion de ${nombrePaciente}`;
+    
+    //Email Especialista
+    let correoQueryEspecialista = await pool.query(`SELECT email from especialistas where id_especialista = '${id_especialista}'`);
+    let correoJSON = JSON.parse(JSON.stringify(correoQueryEspecialista));
+    let correoEspecialista = correoJSON[0].email;
+
+    //Query horarios
+    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio, nombrePaciente) VALUES ('${id_usuario_paciente}', '${id_especialista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${Description}', '${precio}', '${nombrePaciente}');`;
+    await pool.query(sql);
+
+    if(res.status(200)) { //Sesion de Meet
+      const startTime2 = new Date(startTime);
+      const endTime2 = new Date(endTime);
+
+      //Conversion a Horario MX StartTime
+      let numberOfMlSeconds = startTime2.getTime();
+      let MlSeconds = (5 * 60) * 60000;
+      let timeStartMX = new Date(numberOfMlSeconds - MlSeconds);
+      console.log('Star time Mex ',timeStartMX);
+
+       //Conversion a Horario MX endTime
+       let numberOfMlSeconds2 = endTime2.getTime();
+       let MlSeconds2 = (5 * 60) * 60000;
+       let timeEndMX = new Date(numberOfMlSeconds2 - MlSeconds2);
+       console.log('End Time MEX ',timeEndMX);
+
+       //Configuracion meet
+       const event = {
+        summary : eventName, 
+        description: Description,
+        start : {
+            dateTime : timeStartMX,
+            timeZone: 'America/Mexico_City',
+        },
+        end : {
+            dateTime: timeEndMX,
+            timeZone: 'America/Mexico_City',
+        },
+        colorId: 1,
+        attendees: [
+            {'email': correoEspecialista},
+            {'email': correoPaciente}
+        ],
+        conferenceData: { 
+          createRequest: { 
+            conferenceSolutionKey: { 
+              type: 'hangoutsMeet' }, 
+              requestId: 'coding-calendar-demo' } 
+          },
+        
+        reminders: {
+          useDefault: false,
+            overrides: [
+              {'method': 'email', 'minutes': 24 * 60},
+              {'method': 'popup', 'minutes': 10}
+            ]
+          }
+      };
+
+      try {
+        //Realizacion de Meet
+        const response = await calendar.events.insert({ 
+          calendarId: 'primary', 
+          resource: event, 
+          conferenceDataVersion: 1 }); 
+  
+          const { config: { data: { summary, location, start, end, attendees } }, data: { conferenceData } } = response;
+  
+          // Get the Google Meet conference URL in order to join the call
+          const { uri } = conferenceData.entryPoints[0];
+          console.log(`link: ${uri}`);
+        
+      } catch (err) {
+        console.log(err);
+      }
+
+
+
+    }
 
 
   } catch (err) {
