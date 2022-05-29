@@ -404,20 +404,21 @@ horariosCtrl.getCitasEspecialistaPaciente = async(req, res) => {
 
 
 horariosCtrl.addSessionPaciente = async(req, res) => {
-  console.log('add Session Paciente a');
-  console.log(req.body);
+  console.log('add Session Paciente Ya pagado');
   try{
     let { startTime, endTime } = req.body;
-    let id_usuario_paciente = req.params.id_usuario
+    let id_usuario_paciente = req.params.id;
     let Description = 'Sesion'
-    
+
     //Email Paciente
-    let correoQueryPaciente = await pool.query(`SELECT email, id_especialista, precio_consulta, nombre from pacientes where id_paciente = '${id_usuario_paciente}'`);
+    let correoQueryPaciente = await pool.query(`SELECT email, id_especialista, precio_consulta, nombre, id_paciente from pacientes where id_usuario = '${id_usuario_paciente}'`);
     let correoPacienteJSON = JSON.parse(JSON.stringify(correoQueryPaciente));
+
     let correoPaciente = correoPacienteJSON[0].email;
     let id_especialista = correoPacienteJSON[0].id_especialista;
-    let precio =correoPacienteJSON[0].precio_consulta;
-    let nombrePaciente =correoPacienteJSON[0].nombre;
+    let precio = correoPacienteJSON[0].precio_consulta;
+    let nombrePaciente = correoPacienteJSON[0].nombre;
+    let id_paciente = correoPacienteJSON[0].id_paciente;
 
     let eventName = `Sesion de ${nombrePaciente}`;
     
@@ -426,8 +427,10 @@ horariosCtrl.addSessionPaciente = async(req, res) => {
     let correoJSON = JSON.parse(JSON.stringify(correoQueryEspecialista));
     let correoEspecialista = correoJSON[0].email;
 
+    // console.log(id_usuario_paciente, id_especialista, startTime, endTime, eventName, Description, precio, nombrePaciente);
+
     //Query horarios
-    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio, nombrePaciente) VALUES ('${id_usuario_paciente}', '${id_especialista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${Description}', '${precio}', '${nombrePaciente}');`;
+    let sql = `INSERT INTO horarios(id_paciente, id_especialista, id_sesion, startTime, endTime, titulo, descripcion, precio, nombrePaciente) VALUES ('${id_paciente}', '${id_especialista}', '${null}', '${startTime}', '${endTime}', '${eventName}', '${Description}', '${precio}', '${nombrePaciente}');`;
     await pool.query(sql);
 
     if(res.status(200)) { //Sesion de Meet
