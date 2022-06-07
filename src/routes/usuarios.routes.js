@@ -25,7 +25,9 @@ router.post('/editar-Especialista/:id', usuariosCtrl.editEspecialista);
 router.post('/editar-Paciente/:id', usuariosCtrl.editPaciente);
 router.post('/editar-PacienteNombre/:id', usuariosCtrl.editPacienteNombre);
 //Dejar en null el campo del ID_ESPECIALISRA[PUT]
-router.get('/eli-paciente/:id', usuariosCtrl.deletePacienteFromEspecialista)
+router.get('/eli-paciente/:id', usuariosCtrl.deletePacienteFromEspecialista);
+//Dejar en blanco campos de Expediente clinico 
+router.get('/eli-exp/:id', usuariosCtrl.deleteExpediente);
 //Eliminar un usuario por su Tipo e ID [DELETE]
 router.put('/eliminar-Especialista/:id', usuariosCtrl.deleteEspecialista);
 //Eliminar el id del especialista en e
@@ -64,6 +66,10 @@ router.get('/prueba/:id', usuariosCtrl.getPrueba);
 router.get('/tareas/:id', usuariosCtrl.getTareasEspecialista);
 //Subir Tarea
 router.post('/tarea', usuariosCtrl.subirTarea);
+//Actualizar tarea
+router.put('/actualizar-tarea/:id', usuariosCtrl.updateTarea);
+//Eliminar Tarea
+router.delete('/delete-tarea/:id', usuariosCtrl.deleteTarea);
 //ver una tarea
 router.get('/tarea/:id', usuariosCtrl.verTarea);
 //ver las tareas del paciente
@@ -90,6 +96,9 @@ router.put('/updateContrasena-Paciente', usuariosCtrl.updateContrasenaPaciente);
 
 //Mandar Correo para contrasena
 router.post('/mandarEmail', usuariosCtrl.mandarEmail);
+
+// chechar si el paciente tiene un especialista asignado
+router.get('/watch-paciente-especialista/:id', usuariosCtrl.watchPacienteEspecialista);
 
 
 module.exports = router;

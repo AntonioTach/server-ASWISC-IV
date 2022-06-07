@@ -129,7 +129,7 @@ ALTER TABLE pacientes
 
 CREATE TABLE pagos(
     id_pago INT(11) NOT NULL,
-    precio doble() NOT NULL,
+    precio_doble INT(11) NOT NULL,
     estatus INT(11) NOT NULL,
     id_paciente INT(11) NOT NULL,
     id_especialista INT(12) NOT NULL,
@@ -138,6 +138,9 @@ CREATE TABLE pagos(
 
 ALTER TABLE pagos
     ADD CONSTRAINT id_especialistafkpagos FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);
+
+ALTER TABLE pagos
+    MODIFY id_pago INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 ALTER TABLE pagos
     ADD CONSTRAINT id_pacientefkpagos FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
@@ -166,3 +169,59 @@ ALTER TABLE horarios
 -- CREATE TABLE pagos(
 
 -- );
+
+CREATE TABLE ASWISC(
+    id_aswisc INT(12) NOT NULL,
+    id_paciente INT(11) NOT NULL,
+    id_especialista INT(12) NOT NULL,
+    fecha_evaluacion DATE NOT NULL,
+    cubos int(10) NOT NULL, 
+    semejanzas int(10) NOT NULL,
+    digitos int(10) NOT NULL,
+    conceptos int(10) NOT NULL,
+    claves int(10) NOT NULL,
+    vocabulario int(10) NOT NULL,
+    letras_numeros int(10) NOT NULL,
+    matrices int(10) NOT NULL,
+    comprension int(10) NOT NULL,
+    busqueda_simbolos int(10) NOT NULL,
+    figuras_incompletas int(10) NULL,
+    registros int(10) NULL,
+    informacion int(10) NULL,
+    aritmetica int(10) NULL,
+    pistas int(10) NULL,
+    comprension_verbal int(10) NULL,
+    escala_total int(10) NULL,
+    razonamiento_perceptual int(10) NULL,
+    velocidad_de_procesamiento int(10) NULL,
+    memoria_de_trabajo int(10) NULL,
+    puntuacion_media_comprension_verbal int(10) NULL,
+    puntuacion_media_subprueba int(10) NULL,
+    puntuacion_media_comprension_verbal_2 int(10) NULL,
+    indiceCubos int(10) NULL,
+    indiceSemejanzas int(10) NULL,
+    indiceDigitos int(10) NULL,
+    indiceConceptos int(10) NULL,
+    indiceClaves int(10) NULL,
+    indiceVocabulario int(10) NULL,
+    indiceLetrasNumeros int(10) NULL,
+    indiceMatrices int(10) NULL,
+    indiceComprension int(10) NULL,
+    indiceBusquedaSimbolos int(10) NULL,
+    indiceFigurasIncompletas int(10) NULL,
+    indiceRegistros int(10) NULL,
+    indiceInformacion int(10) NULL,
+    indiceAritmetica int(10) NULL,
+    indicePistas int(10) NULL
+);
+ALTER TABLE aswisc
+    ADD PRIMARY KEY (id_aswisc);
+ALTER TABLE aswisc
+    MODIFY id_aswisc INT(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
+
+ALTER TABLE aswisc
+    ADD CONSTRAINT id_pacientefkaswisc FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente);
+
+
+ALTER TABLE aswisc
+    ADD CONSTRAINT id_especialistafkaswisc FOREIGN KEY (id_especialista) REFERENCES especialistas(id_especialista);

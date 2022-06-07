@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
 
+
 const app = express();
 
 
@@ -21,6 +22,8 @@ app.use("/especialistas", require('./routes/especialistas.routes'));
 app.use("/pacientes", require('./routes/pacientes.routes'));
 
 app.use("/aswisc", require('./routes/aswisc.routes'));
+
+app.use("/horarios", require('./routes/horarios.routes'));
 
 
 

@@ -3,6 +3,8 @@ const aswiscCtrl = {};
 const e = require("express");
 const pool = require("../database");
 const res = require("express/lib/response");
+const moment = require("moment");
+
 //----------------------Solucion Automatizada WISC-IV "ASWISC-IV"----------------------------
 aswiscCtrl.automatizarPrueba = async (req, res) => {
   debugger;
@@ -24,6 +26,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
     Semejanzas = 0,
     Vocabulario = 0,
     id_usuario,
+    id_especialista,
   } = req.body;
   let range = (start, end) => {
     return Array(end - start + 1)
@@ -34,18 +37,37 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   let fechaEscogida = new Date(Fecha);
   let sql = ` SELECT nacimiento FROM pacientes where id_usuario = ${id_usuario}`;
   let paciente = (await pool.query(sql))[0];
+
+  // id_usuario identificar bien cual es??
+  //MEJORAR SENTENCIA OBTENER EL NOMBRE DEL PACIENTE
+  //let sql2 = ` SELECT nombre FROM pacientes where id_usuario = ${id_usuario}`;
+  //let nombrePac = (await pool.query(sql2))[0];
+  //let namePaciente = new String(nombrePac.nombre);
+
+  let queryIDS = await pool.query(`SELECT id_paciente, id_especialista FROM pacientes where id_usuario = ${id_usuario}`);
+  let queryIDSJSON = JSON.parse(JSON.stringify(queryIDS));
+  let id_paciente = queryIDSJSON[0].id_paciente;
+  let id_especialistaQuery = queryIDSJSON[0].id_especialista;
+
+  let fecha_evaluacion = moment().format("YYYY-MM-DD");
+  
+
   let fechaNacimiento = new Date(paciente.nacimiento);
+
+
+  //MEJORAR SENTENCIA OBTENER EL NOMBRE DEL ESPECIALISTA
+  //let sql3 = ` SELECT nombre FROM especialistas where id_especialista = ${id_especialista}`;
+  //let nombreEsp = (await pool.query(sql3))[0];
+  //let nameEspecialista = new String(nombreEsp.nombre);
+
   let diff =
     fechaEscogida.getMonth() -
     fechaNacimiento.getMonth() +
     12 * (fechaEscogida.getFullYear() - fechaNacimiento.getFullYear());
-  // if (diff < 72 || diff > 204)
-  //     return res.json({
-  //         success: false,
-  //         message:
-  //             "La prueba no se puede automatizar. Por favor ingresa una fecha válida.",
-  //         data: response,
-  //     });
+    if (diff < 72 || diff > 204){
+      res.send(false);
+    }
+      
   debugger;
   console.log(diff);
   let data = {
@@ -5152,6 +5174,7 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
   }
   //debugger;
   // { 'Cubos': 12, 'Semejanzas': 2 }
+
   let comprensionVerbal = Object.keys(response).reduce((acc, prueba) => {
     let indices = [
       "Semejanzas",
@@ -5204,21 +5227,127 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
     if (indices.includes(prueba)) return acc + response[prueba];
     else return acc;
   }, 0);
+  //---------------------------------------------------------------------
+  //---------------------------------INDICES-----------------------------
+  //---------------------------------------------------------------------
+  let indiceCubos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Cubos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
 
+  let indiceSemejanzas = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Semejanzas"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceDigitos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Digitos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceConceptos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Conceptos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceClaves = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Claves"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceVocabulario = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Vocabulario"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceLetrasNumeros = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["LetrasNumeros"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceMatrices = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Matrices"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceComprension = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Comprension"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceBusquedaSimbolos = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["BusquedaSimbolos"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceFigurasIncompletas = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["FigurasIncompletas"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceRegistros = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Registros"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceInformacion = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Informacion"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indiceAritmetica = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Aritmetica"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+
+  let indicePistas = Object.keys(response).reduce((acc, prueba) => {
+    let indices = ["Pistas"];
+    if (indices.includes(prueba)) return acc + response[prueba];
+    else return acc;
+  }, 0);
+  //---------------------------------------------------------------------
+  //-----------------------------FIN INDICES-----------------------------
+  //---------------------------------------------------------------------
   response["nacimiento"] = fechaNacimiento;
+  //response["nombrePaciente"] = namePaciente;
+  //response["nombreEspecialista"] = nameEspecialista;
   response["fechaEvaluacion"] = fechaEscogida;
   response["comprensionVerbal"] = comprensionVerbal;
   response["puntuacionMediaCompresionVerbal"] = (comprensionVerbal / 3).toFixed(
     0
   );
+
+  let puntuacionMediaCompresionVerbal = (comprensionVerbal / 3).toFixed(
+    0
+  );
   response["escalaTotal"] = escalaTotal;
   response["puntuacionMediaSubprueba"] = (escalaTotal / 10).toFixed(0);
+  let puntuacionMediaSubprueba = (escalaTotal / 10).toFixed(0);
   response["razonamientoPerceptual"] = razonamientoPerceptual;
-  response["puntuacionMediaComprensionVerbal"] = (
+  //Puse 2 porque hay otra que se llama igual ?
+  response["puntuacionMediaComprensionVerbal2"] = ( 
+    razonamientoPerceptual / 3
+  ).toFixed(0);
+  let puntuacionMediaComprensionVerbal2 = ( 
     razonamientoPerceptual / 3
   ).toFixed(0);
   response["velociedadDeProcesamiento"] = velociedadDeProcesamiento;
   response["memoriaDeTrabajo"] = memoriaDeTrabajo;
+  
 
   let rangos = range(45, 155);
 
@@ -5243,58 +5372,429 @@ aswiscCtrl.automatizarPrueba = async (req, res) => {
       [18, 77, 6, "72-85"],
       [19, 79, 8, "73-87"],
       [20, 81, 10, "75-89"],
-      [21, , , ""],
-      [22, , , ""],
-      [23, , , ""],
-      [24, , , ""],
-      [25, , , ""],
-      [26, , , ""],
-      [27, , , ""],
-      [28, , , ""],
-      [29, , , ""],
-      [30, , , ""],
-      [31, , , ""],
-      [32, , , ""],
-      [33, , , ""],
-      [34, , , ""],
-      [35, , , ""],
-      [36, , , ""],
-      [37, , , ""],
-      [38, , , ""],
-      [39, , , ""],
-      [40, , , ""],
-      [41, , , ""],
-      [42, , , ""],
-      [43, , , ""],
-      [44, , , ""],
-      [45, , , ""],
-      [46, , , ""],
-      [47, , , ""],
-      [48, , , ""],
-      [49, , , ""],
-      [50, , , ""],
-      [51, , , ""],
-      [52, , , ""],
-      [53, , , ""],
-      [54, , , ""],
-      [55, , , ""],
-      [56, , , ""],
-      [57, , , ""],
+      [21, 83, 13, "77-91"],
+      [22, 85, 16, "79-93"],
+      [23, 87, 19, "81-95"],
+      [24, 89, 23, "83-96"],
+      [25, 91, 27, "85-98"],
+      [26, 93, 32, "87-100"],
+      [27, 95, 37, "89-102"],
+      [28, 96, 39, "89-103"],
+      [29, 98, 45, "91-105"],
+      [30, 99, 47, "92-106"],
+      [31, 100, 50, "93-107"],
+      [32, 102, 55, "95-109"],
+      [33, 104, 61, "97-111"],
+      [34, 106, 66, "99-112"],
+      [35, 108, 70, "101-114"],
+      [36, 110, 75, "103-116"],
+      [37, 112, 79, "105-118"],
+      [38, 114, 82, "106-120"],
+      [39, 116, 86, "108-122"],
+      [40, 119, 90, "111-125"],
+      [41, 121, 92, "113-127"],
+      [42, 124, 95, "116-129"],
+      [43, 126, 96, "118-131"],
+      [44, 128, 97, "120-133"],
+      [45, 130, 98, "121-135"],
+      [46, 132, 98, "123-137"],
+      [47, 134, 99, "125-139"],
+      [48, 136, 99, "127-141"],
+      [49, 138, 99, "129-142"],
+      [50, 140, 99.6, "131-144"],
+      [51, 142, 99.7, "133-146"],
+      [52, 144, 99.8, "135-148"],
+      [53, 146, 99.8, "136-150"],
+      [54, 148, 99.9, "138-152"],
+      [55, 150, 99.9, "140-154"],
+      [56, 152, 99.9, "142-156"],
+      [57, 155, 99.9, "145-158"],
     ],
-    razonamientoPerceptual: [[], [], [], []],
+    razonamientoPerceptual: [
+      //VALOR, IRP, RANGO, NIVEL CONF 95%
+      [3, 45, 0.1, "42-57"], 
+      [4, 47, 0.1, "44-59"], 
+      [5, 49, 0.1, "45-61"], 
+      [6, 51, 0.1, "47-63"],
+      [7, 53, 0.1, "49-64"],
+
+      [8, 55, 0.1, "51-66"],
+      [9, 57, 0.2, "53-68"],
+      [10, 59, 0.3, "55-70"],
+      [11, 61, 0.5, "56-72"],
+      [12, 63, 1, "58-74"],
+
+      [13, 65, 1, "60-75"],
+      [14, 67, 1, "62-77"],
+      [15, 69, 2, "64-79"],
+      [16, 71, 3, "66-81"],
+      [17, 73, 4, "68-83"],
+
+      [18, 75, 5, "69-85"],
+      [19, 77, 6, "71-86"],
+      [20, 79, 8, "76-88"],
+      [21, 82, 12, "76-91"],
+      [22, 84, 14, "78-93"],
+
+      [23, 86, 18, "79-95"],
+      [24, 88, 21, "81-97"],
+      [25, 90, 25, "83-98"],
+      [26, 92, 30, "85-100"],
+      [27, 94, 34, "87-102"],
+
+      [28, 96, 39, "89-104"],
+      [29, 98, 45, "91-106"],
+      [30, 100, 50, "92-108"],
+      [31, 102, 55, "94-109"],
+      [32, 104, 61, "96-111"],
+
+      [33, 106, 66, "98-113"],
+      [34, 108, 70, "100-115"],
+      [35, 110, 75, "102-117"],
+      [36, 112, 79, "103-119"],
+      [37, 115, 84, "106-121"],
+
+      [38, 117, 87, "108-123"],
+      [39, 119, 90, "110-125"],
+      [40, 121, 92, "112-127"],
+      [41, 123, 94, "114-129"],
+      [42, 125, 95, "115-131"],
+
+      [43, 127, 96, "117-132"],
+      [44, 129, 97, "119-134"],
+      [45, 131, 98, "121-136"],
+      [46, 133, 98, "123-138"],
+      [47, 135, 99, "125-140"],
+
+      [48, 137, 99, "126-142"],
+      [49, 139, 99.5, "128-144"],
+      [50, 141, 99.7, "130-145"],
+      [51, 143, 99.8, "132-147"],
+      [52, 145, 99.9, "134-149"],
+
+      [53, 147, 99.9, "136-151"],
+      [54, 149, 99.9, "137-153"],
+      [55, 151, 99.9, "139-155"],
+      [56, 153, 99.9, "141-156"],
+      [57, 155, 99.9, "143-158"],
+    ],
+    memoriaTrabajo: [
+      //VALOR, IMT, RANGO, NIVEL CONF 95%
+      [2, 50, 0.1, "46-62"], 
+      [3, 52, 0.1, "48-63"], 
+      [4, 54, 0.1, "50-65"], 
+      [5, 56, 0.2, "52-67"],
+      [6, 59, 0.3, "55-70"],
+
+      [7, 62, 1, "57-73"],
+      [8, 65, 1, "60-75"],
+      [9, 68, 2, "63-78"],
+      [10, 71, 3, "66-81"],
+      [11, 74, 4, "68-84"],
+
+      [12, 77, 6, "71-86"],
+      [13, 80, 9, "74-89"],
+      [14, 83, 13, "77-92"],
+      [15, 86, 18, "79-95"],
+      [16, 88, 21, "81-97"],
+
+      [17, 91, 27, "84-99"],
+      [18, 94, 34, "87-102"],
+      [19, 97, 42, "90-105"],
+      [20, 99, 47, "91-107"],
+      [21, 102, 55, "94-109"],
+
+      [22, 104, 61, "96-111"],
+      [23, 107, 68, "99-114"],
+      [24, 110, 75, "102-117"],
+      [25, 113, 81, "104-120"],
+      [26, 116, 86, "107-122"],
+
+      [27, 120, 91, "111-126"],
+      [28, 123, 94, "114-129"],
+      [29, 126, 96, "116-132"],
+      [30, 129, 97, "119-134"],
+      [31, 132, 98, "122-137"],
+
+      [32, 135, 99, "125-140"],
+      [33, 138, 99, "127-143"],
+      [34, 141, 99.7, "130-145"],
+      [35, 144, 99.8, "133-148"],
+      [36, 146, 99.9, "135-150"],
+
+      [37, 148, 99.9, "137-152"],
+      [38, 150, 99.9, "138-154"],
+    ],
+    VelocidadProcesamiento : [
+       //VALOR, IVP, RANGO, NIVEL CONF 95%
+      [2, 50, 0.1, "47-65"], 
+      [3, 53, 0.1, "50-68"], 
+      [4, 56, 0.2, "52-70"], 
+      [5, 59, 0.3, "55-73"],
+      [6, 62, 1, "58-76"],
+
+      [7, 65, 1, "60-78"],
+      [8, 68, 2, "63-81"],
+      [9, 70, 2, "65-83"],
+      [10, 74, 4, "67-85"],
+      [11, 75, 5, "69-87"],
+
+      [12, 78, 7, "72-90"],
+      [13, 80, 9, "73-91"],
+      [14, 83, 13, "76-94"],
+      [15, 85, 16, "78-96"],
+      [16, 88, 21, "80-98"],
+
+      [17, 91, 27, "83-101"],
+      [18, 94, 34, "86-104"],
+      [19, 97, 42, "88-106"],
+      [20, 100, 50, "91-109"],
+      [21, 103, 58, "94-112"],
+
+      [22, 106, 66, "96-114"],
+      [23, 109, 73, "99-117"],
+      [24, 112, 79, "102-120"],
+      [25, 115, 84, "104-122"],
+      [26, 118, 88, "107-125"],
+
+      [27, 121, 92, "110-127"],
+      [28, 123, 94, "111-129"],
+      [29, 126, 96, "114-132"],
+      [30, 128, 97, "116-134"],
+      [31, 131, 98, "118-136"],
+
+      [32, 133, 99, "120-138"],
+      [33, 136, 99, "123-141"],
+      [34, 138, 99, "124-142"],
+      [35, 141, 99.7, "127-145"],
+      [36, 144, 99.8, "130-148"],
+
+      [37, 147, 99.9, "132-150"],
+      [38, 150, 99.9, "135-153"],
+    ],
   };
 
-  for (let llaveEscalar of Object.keys(secondData)) {
-    let prueba = secondData[llaveEscalar];
-    let elemento = prueba.find(
-      (elemento) => elemento[0] == response[llaveEscalar]
+  // for (let llaveEscalar of Object.keys(secondData)) {
+  //   let prueba = secondData[llaveEscalar];
+  //   let elemento = prueba.find(
+  //     (elemento) => elemento[0] == response[llaveEscalar]
+  //   );
+  //   if (prueba) {
+  //     response["equivalentesIndice" + llaveEscalar] = elemento;
+  //   }
+  // }
+
+  // for (let comprensionVerbal of Object.keys(secondData)) {
+  //   let prueba = secondData[comprensionVerbal];
+  //   let elemento = prueba.find(
+  //     (elemento) => elemento[0] == response[comprensionVerbal]
+     
+  //   );
+  //   response["equivalentesIndice" + comprensionVerbal] = elemento;
+  //   console.log('comprensionVerbal', elemento)
+
+  //   if (prueba) {
+  //     response["equivalentesIndice" + comprensionVerbal] = elemento;
+  //     // console.log('comprensionVerbal')
+  //     // console.log(elemento[0])
+  //     // console.log(elemento[1])
+  //     console.log(elemento)
+  //   }
+  // }
+  
+  // for (let razonamientoPerceptual of Object.keys(secondData)) {
+  //   let prueba1 = secondData[razonamientoPerceptual];
+  //   let elemento1 = prueba1.find(
+  //     (elemento1) => elemento1[0] == response[razonamientoPerceptual]
+  //   );
+  //   if (prueba1) {
+  //     response["equivalentesIndice" + razonamientoPerceptual] = elemento1;
+  //     console.log('razonamientoPerceptual')
+  //     // console.log(elemento1[0])
+  //     // console.log(elemento1[1])
+  //     console.log(elemento1)
+  //   }
+  //   response["equivalentesIndice" + razonamientoPerceptual] = elemento1;
+  //   console.log('razonamientoPerceptual',elemento1)
+
+  // } 
+
+  
+  // for (let memoriaTrabajo of Object.keys(secondData)) {
+  //   let prueba2 = secondData[memoriaTrabajo];
+  //   let elemento2 = prueba2.find(
+  //     (elemento2) => elemento2[0] == response[memoriaTrabajo]
+  //   );
+  //   if (prueba2) {
+  //     response["equivalentesIndice" + memoriaTrabajo] = elemento1;
+  //     console.log('memoriaTrabajo')
+  //     // console.log(elemento2[0])
+  //     // console.log(elemento2[1])
+  //     console.log(elemento2)
+  //   }
+  //   response["equivalentesIndice" + memoriaTrabajo] = elemento2;
+  //   console.log('memoriaTrabajo', elemento2)
+  // } 
+
+  // for (let VelocidadProcesamiento of Object.keys(secondData)) {
+  //   let prueba = secondData[VelocidadProcesamiento];
+  //   let elemento3 = prueba.find(
+  //     (elemento3) => elemento3[0] == response[VelocidadProcesamiento]
+  //   );
+  //   if (prueba) {
+  //     response["equivalentesIndice" + VelocidadProcesamiento] = elemento1;
+  //     console.log('VelocidadProcesamiento')
+  //     console.log(elemento3[0])
+  //     console.log(elemento3[1])
+  //     console.log(elemento3)
+  //   }
+  // }
+
+  
+  try{
+    let sql = await pool.query(
+      `INSERT INTO aswisc(
+        id_paciente, 
+        id_especialista, 
+        fecha_evaluacion,
+        cubos,
+        semejanzas,
+        digitos, 
+        conceptos,
+        claves,
+        vocabulario,
+        letras_numeros,
+        matrices,
+        comprension,
+        busqueda_simbolos,
+        figuras_incompletas,
+        registros,
+        informacion,
+        aritmetica,
+        pistas,
+        comprension_verbal,
+        escala_total,
+        razonamiento_perceptual,
+        velocidad_de_procesamiento,
+        memoria_de_trabajo,
+        puntuacion_media_comprension_verbal,
+        puntuacion_media_subprueba,
+        puntuacion_media_comprension_verbal_2,
+        indiceCubos,
+        indiceSemejanzas,
+        indiceDigitos,
+        indiceConceptos,
+        indiceClaves,
+        indiceVocabulario,
+        indiceLetrasNumeros,
+        indiceMatrices,
+        indiceComprension,
+        indiceBusquedaSimbolos,
+        indiceFigurasIncompletas,
+        indiceRegistros,
+        indiceInformacion,
+        indiceAritmetica,
+        indicePistas
+        ) 
+      values (
+        '${id_paciente}', 
+        '${id_especialistaQuery}', 
+        '${Fecha}',
+        '${Cubos}',
+        '${Semejanzas}',
+        '${Digitos}',
+        '${Conceptos}',
+        '${Claves}',
+        '${Vocabulario}',
+        '${LetrasNumeros}',
+        '${Matrices}',
+        '${Comprension}',
+        '${BusquedaSimbolos}',
+        '${FigurasIncompletas}',
+        '${Registros}',
+        '${Informacion}',
+        '${Aritmetica}',
+        '${Pistas}',
+        '${comprensionVerbal}',
+        '${escalaTotal}',
+        '${razonamientoPerceptual}',
+        '${velociedadDeProcesamiento}',
+        '${memoriaDeTrabajo}',
+        '${puntuacionMediaCompresionVerbal}',
+        '${puntuacionMediaSubprueba}',
+        '${puntuacionMediaComprensionVerbal2}',
+        '${indiceCubos}',
+        '${indiceSemejanzas}',
+        '${indiceDigitos}',
+        '${indiceConceptos}',
+        '${indiceClaves}',
+        '${indiceVocabulario}',
+        '${indiceLetrasNumeros}',
+        '${indiceMatrices}',
+        '${indiceComprension}',
+        '${indiceBusquedaSimbolos}',
+        '${indiceFigurasIncompletas}',
+        '${indiceRegistros}',
+        '${indiceInformacion}',
+        '${indiceAritmetica}',
+        '${indicePistas}'
+        )`
     );
-    if (prueba) {
-      response["equivalentesIndice" + llaveEscalar] = elemento;
+    try {
+      let id_aswisc = await pool.query(
+        `SELECT id_aswisc FROM aswisc 
+        WHERE id_paciente = '${id_paciente}' 
+        AND id_especialista = '${id_especialistaQuery}' 
+        AND fecha_evaluacion = '${Fecha}'
+        AND escala_total = '${escalaTotal}'
+        AND puntuacion_media_comprension_verbal_2 = '${puntuacionMediaComprensionVerbal2}'`
+      );
+      let id_aswiscJSON = JSON.parse(JSON.stringify(id_aswisc));
+      let id_ASWISC = id_aswiscJSON[0].id_aswisc;
+      // console.log('ID ASWISC: ', id_ASWISC);
+      response["id_ASWISC"] = id_ASWISC;
+    } catch (error) {
+      console.log('SELECT ASWISC ERROR: ', err);
     }
-  }
+    
+  } catch(err){
+    console.log('INSERT ASWISC ERROR: ', err);
+  }  
+
+  
 
   res.json({ success: true, message: "Exito", data: response });
 };
 
+
+
+// async function insertASWISC(id_paciente, id_especialistaQuery, Fecha, Cubos, Semejanzas, Digitos, Conceptos, Claves, Vocabulario, LetrasNumeros, 
+//   Matrices, Comprension, BusquedaSimbolos, FigurasIncompletas, Registros, Informacion, Aritmetica, Pistas, comprensionVerbal, escalaTotal,
+//   razonamientoPerceptual, velociedadDeProcesamiento, memoriaDeTrabajo, puntuacionMediaCompresionVerbal, puntuacionMediaSubprueba, 
+//   puntuacionMediaComprensionVerbal2
+//   ){
+
+   
+// }
+
+
+aswiscCtrl.getPrueba =  async (req, res) => {
+  const { id } = req.params; //ID WISC-IV
+  // console.log('ID WISC inside GET PRUEBA', id);
+  try {
+    const dataASWISC = await pool.query(`
+            SELECT a.*, e.nombre as EspecialistaNombre, p.nombre as PacienteNombre, p.nacimiento as PacienteNacimiento
+            FROM aswisc a
+            INNER JOIN especialistas e on a.id_especialista = e.id_especialista
+            INNER JOIN pacientes p on a.id_paciente = p.id_paciente
+            WHERE id_aswisc=${id}`); 
+            res.json(dataASWISC);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 module.exports = aswiscCtrl;
+
+
